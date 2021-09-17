@@ -19,6 +19,7 @@ typedef struct client_s {
 	qboolean uploading;
 	qboolean hasusrmsgs;
 	qboolean has_force_unmodified;
+	// NETCHAN INCORRECT
 	netchan_t netchan;
 	int chokecount;
 	int delta_sequence;

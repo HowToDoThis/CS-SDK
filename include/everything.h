@@ -13,3 +13,5 @@
 #include "model.h"
 
 #include "engine.h"
+
+// NETADR_T has 28 but Windows defined has 14

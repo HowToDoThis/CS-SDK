@@ -39,6 +39,7 @@ typedef struct usercmd_s {
 // ENTITY_STATE.h
 #define MAX_PHYSINFO_STRING 256
 
+// REQUIRED 500 but only has 476
 typedef struct clientdata_s {
 	vec3_t				origin;
 	vec3_t				velocity;

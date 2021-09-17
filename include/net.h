@@ -96,6 +96,7 @@ enum {
 };
 
 // Network Connection Channel
+// REQUESTED 17904 but only has 17504
 typedef struct netchan_s {
 	// NS_SERVER or NS_CLIENT, depending on channel.
 	netsrc_t sock;
