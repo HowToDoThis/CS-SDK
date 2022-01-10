@@ -804,3 +804,61 @@ typedef struct event_s {
 	int filesize;
 	const char *pszScript;
 } event_t;
+
+// ZONE.H
+typedef struct hunk_s {
+	int sentinel;
+	int size;
+	char name[64];
+} hunk_t;
+
+typedef struct memblock_s
+{
+	int size;
+	int tag;
+	int id;
+	struct memblock_t *next;
+	struct memblock_t *prev;
+	int pad;
+} memblock_t;
+
+typedef struct memzone_s
+{
+	int size;
+	struct memblock_t blocklist;
+	struct memblock_t *rover;
+} memzone_t;
+
+// APIProxy.h
+typedef struct cmdalias_s
+{
+	struct cmdalias_s	*next;
+	char	name[32];
+	char	*value;
+} cmdalias_t;
+
+// DECAL.h
+typedef struct decalname_s
+{
+	char name[16];
+	unsigned char ucFlags;
+} decalname_t;
+
+typedef struct lumpinfo_s
+{
+	int filepos;
+	int disksize;
+	int size;
+	char type;
+	char compression;
+	char pad1;
+	char pad2;
+	char name[16];
+} lumpinfo_t;
+
+typedef struct lumplist_s
+{
+	lumpinfo_t *lump;
+	qboolean breplaced;
+	lumplist_s *next;
+} lumplist_t;

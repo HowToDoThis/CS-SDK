@@ -1,7 +1,7 @@
 // SERVER.h
 
 #define MAX_DATAGRAM 8000
-#define MAX_INFO_STRING 256
+#define MAX_INFO_STRING 512
 
 typedef struct client_frame_s {
 	double senttime;
@@ -441,12 +441,13 @@ typedef struct packetlag_s {
 	struct packetlag_s *pPrev;
 } packetlag_t;
 
+//  NETADR_T Error? Required 44, only has 24
 typedef struct net_messages_s {
-	struct net_messages_s *next;
-	qboolean preallocated;
-	unsigned char *buffer;
-	netadr_t from;
-	int buffersize;
+	struct net_messages_s *next; // 4
+	qboolean preallocated; // 4
+	unsigned char *buffer; // 4
+	netadr_t from;  // netadr_t size
+	int buffersize; // 4
 } net_messages_t;
 
 // Split long packets. Anything over 1460 is failing on some routers.
