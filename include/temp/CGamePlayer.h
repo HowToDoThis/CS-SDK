@@ -251,3 +251,92 @@ struct CGamePlayer
     int unk4;
     short unk5;
 };
+
+struct CGamePlayerManager_vtables
+{
+    void (__thiscall* Set07)(struct CGamePlayerManager* this, int value);
+    void (__thiscall* Get07)(struct CGamePlayerManager* this);
+    void (__thiscall* CompareUserID)(struct CGamePlayerManager* this);
+    void (__thiscall* CompareUserID2)(struct CGamePlayerManager* this);
+    void (__thiscall* Get08)(struct CGamePlayerManager* this);
+    int  (__thiscall* SendLeaveRoom1_0_0)(struct CGamePlayerManager* this);
+    void (__thiscall* SendRoom3_2or0)(struct CGamePlayerManager* this, int a1);
+    void (__thiscall* SendRoom4)(struct CGamePlayerManager* this);
+    void (__thiscall* Function9)(struct CGamePlayerManager* this);
+    void (__thiscall* SendRoom17)(struct CGamePlayerManager* this);
+    void (__thiscall* SendHost0)(struct CGamePlayerManager* this);
+    void (__thiscall* Function12)(struct CGamePlayerManager* this);
+    void (__thiscall* Function13)(struct CGamePlayerManager* this);
+    void (__thiscall* Function14)(struct CGamePlayerManager* this);
+    void (__thiscall* Function15)(struct CGamePlayerManager* this);
+    void (__thiscall* Function16)(struct CGamePlayerManager* this);
+    void (__thiscall* Function17)(struct CGamePlayerManager* this);
+    void (__thiscall* Function18)(struct CGamePlayerManager* this);
+    void (__thiscall* Function19)(struct CGamePlayerManager* this);
+    void (__thiscall* Function20)(struct CGamePlayerManager* this);
+    void (__thiscall* Function21)(struct CGamePlayerManager* this);
+    void (__thiscall* Function22)(struct CGamePlayerManager* this);
+    void (__thiscall* Function23)(struct CGamePlayerManager* this);
+    void (__thiscall* Function24)(struct CGamePlayerManager* this);
+    void (__thiscall* Function25)(struct CGamePlayerManager* this);
+    void (__thiscall* Function26)(struct CGamePlayerManager* this);
+    void (__thiscall* Function27)(struct CGamePlayerManager* this);
+    void (__thiscall* Function28)(struct CGamePlayerManager* this);
+    void (__thiscall* Function29)(struct CGamePlayerManager* this);
+    void (__thiscall* Function30)(struct CGamePlayerManager* this);
+    void (__thiscall* Function31)(struct CGamePlayerManager* this);
+    void (__thiscall* Function32)(struct CGamePlayerManager* this);
+    void (__thiscall* Function33)(struct CGamePlayerManager* this);
+    void (__thiscall* Function34)(struct CGamePlayerManager* this);
+    void (__thiscall* Function35)(struct CGamePlayerManager* this);
+    void (__thiscall* Function36)(struct CGamePlayerManager* this);
+    void (__thiscall* Function37)(struct CGamePlayerManager* this);
+    void (__thiscall* Function38)(struct CGamePlayerManager* this);
+    void (__thiscall* Function39)(struct CGamePlayerManager* this);
+    void (__thiscall* Function40)(struct CGamePlayerManager* this);
+    void (__thiscall* Function41)(struct CGamePlayerManager* this);
+    void (__thiscall* Function42)(struct CGamePlayerManager* this);
+    void (__thiscall* Function43)(struct CGamePlayerManager* this);
+    void (__thiscall* Function44)(struct CGamePlayerManager* this);
+    void (__thiscall* Function45)(struct CGamePlayerManager* this);
+    void (__thiscall* Function46)(struct CGamePlayerManager* this);
+    void (__thiscall* Function47)(struct CGamePlayerManager* this);
+    void (__thiscall* Function48)(struct CGamePlayerManager* this);
+    void (__thiscall* Function49)(struct CGamePlayerManager* this);
+    void (__thiscall* Function50)(struct CGamePlayerManager* this);
+    void (__thiscall* Get15Size)(struct CGamePlayerManager* this);
+    void (__thiscall* Function52)(struct CGamePlayerManager* this);
+    void (__thiscall* Set15as14)(struct CGamePlayerManager* this);
+    void (__thiscall* Function54)(struct CGamePlayerManager* this);
+    void (__thiscall* Function55)(struct CGamePlayerManager* this);
+    void (__thiscall* Function56)(struct CGamePlayerManager* this);
+    void (__thiscall* SendUpdateInfoFailed)(struct CGamePlayerManager* this);
+    void (__thiscall* SendUpdateInfoCompleted)(struct CGamePlayerManager* this);
+    void (__thiscall* SendUpdateInfo1_0)(struct CGamePlayerManager* this);
+    void (__thiscall* Get17)(struct CGamePlayerManager* this);
+    void (__thiscall* Set17)(struct CGamePlayerManager* this, char value);
+    void (__thiscall* Dispose)(struct CGamePlayerManager* this);
+};
+
+struct CGamePlayerManager
+{
+    CGamePlayerManager_vtables* vfptr;
+    int unk01;
+    int unk02;
+    int unk03;
+    int unk04;
+    int unk05;
+    int unk06;
+    int unk07; // userID related
+    int unk08;
+    int unk09;
+    int unk10;
+    char unk11[16];
+    long unk12;
+    int unk13;
+    int unk14;
+    int unk15;
+    int unk16;
+    char unk17;
+    int unk18; // unk
+};

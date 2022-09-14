@@ -37,3 +37,15 @@ struct CPacketListener
     CPacketListener_vtable* vfptr;
     // idk there is PacketListener stuffs or not
 };
+
+struct CPacketSendInternal
+{
+    int size;
+    int unk2;
+    int unk3;
+};
+
+struct CPacketSend
+{
+    struct CPacketSendInternal* base;
+};
