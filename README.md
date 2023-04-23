@@ -1,11 +1,24 @@
+# DISCLAIMER
+**This project is for learning and educational purposes only**
+
 # CS SDK / Headers
-IDA SDK / Headers For CS Engine.
+This repo are meant to let you know what CSO has been changes with goldsource(aka goldsrc) and I'll try to covering up whole hw.dll every struct or class objects
 
-# IMPORTANT
+Files that will be researched
+- client.dll
+- cstrike-online.exe
+- GameUI.dll
+- hw.dll
+- mp.dll
+- nmconew.dll (NexonMessenger Services)
+- vgui2.dll
 
-**This project intend for learning and communication purposes, and it is strictly prohibited to be used for any commercial piracy and other acts. Please delete it within 24 hours.**
+Research Client Version
+- China
+  - May31 2016
 
 ## Referenced Project
-
-[MoeMod's CSNZ SDK](https://github.com/MoeMod/csnz-sdk)
-
+Thanks to their awesome projects!
+- [MoeMod's CSNZ SDK](https://github.com/MoeMod/csnz-sdk)
+- [dreamstalker's rehlds](https://github.com/dreamstalker/rehlds)
+- [9yx's GoldSourceRebuild](https://github.com/9yx/GoldSourceRebuild)
