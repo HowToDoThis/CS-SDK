@@ -178,3 +178,22 @@ typedef struct netchan_s {
 	flow_t flow[MAX_FLOWS];
 } netchan_t;
 
+// Use this to pick apart the network stream, must be packed
+#pragma pack(push, 1)
+typedef struct SPLITPACKET_t
+{
+	int netID;
+	int sequenceNumber;
+	unsigned char packetID;
+} SPLITPACKET;
+#pragma pack(pop)
+
+typedef struct packetlag_s
+{
+	unsigned char *pPacketData;	// Raw stream data is stored.
+	int nSize;
+	netadr_t net_from_;
+	float receivedTime;
+	struct packetlag_s *pNext;
+	struct packetlag_s *pPrev;
+} packetlag_t;

@@ -5,9 +5,9 @@ struct CServerChannelManager_vtables
     void (__thiscall* Shutdown)(struct CServerChannelManager* this);
     void (__thiscall* SendRequestChannel)(struct CServerChannelManager* this);
     void (__thiscall* Function5)(struct CServerChannelManager* this);
-    void (__thiscall* Function6)(struct CServerChannelManager* this);
-    void (__thiscall* Function7)(struct CServerChannelManager* this);
-    void (__thiscall* Function8)(struct CServerChannelManager* this);
+    void (__thiscall* Function6)(struct CServerChannelManager* this, int a2);
+    void (__thiscall* Function7)(struct CServerChannelManager* this, int a2, int a3);
+    void (__thiscall* Function8)(struct CServerChannelManager* this, int a2);
     void (__thiscall* Function9)(struct CServerChannelManager* this);
 };
 

@@ -160,16 +160,42 @@ struct CRoom
     int unk23;
 };
 
+struct CGameRoomManagerVfptr
+{
+    void (__thiscall* Init)(struct CGameRoomManager* this);
+    void (__thiscall* Shutdown)(struct CGameRoomManager* this);
+    void (__thiscall* Function3)(struct CGameRoomManager* this);
+    void (__thiscall* Function4)(struct CGameRoomManager* this);
+    void (__thiscall* SendVoteKick)(struct CGameRoomManager* this,int,int,char*,char);
+    void (__thiscall* SendVoteSelect)(struct CGameRoomManager* this);
+    void (__thiscall* SendRoom20)(struct CGameRoomManager* this);
+    void (__thiscall* SendRoom10)(struct CGameRoomManager* this);
+    void (__thiscall* Function9)(struct CGameRoomManager* this);
+    void (__thiscall* Function10)(struct CGameRoomManager* this);
+    void (__thiscall* Function11)(struct CGameRoomManager* this);
+    int  (__thiscall* Function12)(struct CGameRoomManager* this);
+    char (__thiscall* GetRoomState)(struct CGameRoomManager* this);
+    void (__thiscall* Function14)(struct CGameRoomManager* this);
+    void (__thiscall* Function15)(struct CGameRoomManager* this);
+    void (__thiscall* SendRoom4)(struct CGameRoomManager* this);
+    void (__thiscall* Function17)(struct CGameRoomManager* this);
+    void (__thiscall* NULLFUNC18)(struct CGameRoomManager* this);
+    void (__thiscall* NULLFUNC19)(struct CGameRoomManager* this);
+    void (__thiscall* Function20)(struct CGameRoomManager* this);
+};
+
+// CHN160531
+// size 68 (44)
 struct CGameRoomManager
 {
-    void* vfptr;
+    CGameRoomManagerVfptr* vfptr;
 
     int unk1; // array?
     int unk2;
     int unk3;
 
     int unk4;
-    char unk5a;
+    char roomState;
     char unk5b;
     int unk6;
     short unk7;
@@ -185,11 +211,6 @@ struct CGameRoomManager
     int unk14; // array?
     int unk15;
     int unk16;
-
-    int unk17;
-    int unk18;
-    int unk19;
-    int unk20;
 };
 
 struct CGameRoom

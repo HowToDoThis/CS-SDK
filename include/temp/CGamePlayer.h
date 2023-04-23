@@ -1,9 +1,9 @@
 struct CGameUser_vtables
 {
-    int (__thiscall* GetUserID)(struct CGameUser* this);
+    int  (__thiscall* GetUserID)(struct CGameUser* this);
     void (__thiscall* Function2)(struct CGameUser* this);
-    void (__thiscall* Function3)(struct CGameUser* this);
-    void (__thiscall* Function4)(struct CGameUser* this);
+    void (__thiscall* GetName)(struct CGameUser* this);
+    void (__thiscall* GetLevel)(struct CGameUser* this);
     void (__thiscall* Function5)(struct CGameUser* this);
     void (__thiscall* Function6)(struct CGameUser* this);
     void (__thiscall* Function7)(struct CGameUser* this);
@@ -57,8 +57,8 @@ struct CGameUser_vtables
     void (__thiscall* Function55)(struct CGameUser* this);
     void (__thiscall* Function56)(struct CGameUser* this);
     void (__thiscall* Function57)(struct CGameUser* this);
-    void (__thiscall* Function58)(struct CGameUser* this);
-    void (__thiscall* Function59)(struct CGameUser* this);
+    char (__thiscall* GetTournamentB)(struct CGameUser* this);
+    char (__thiscall* GetTournamentC)(struct CGameUser* this);
     void (__thiscall* Function60)(struct CGameUser* this);
     void (__thiscall* Function61)(struct CGameUser* this);
     void (__thiscall* Function62)(struct CGameUser* this);
@@ -67,7 +67,7 @@ struct CGameUser_vtables
     void (__thiscall* Function65)(struct CGameUser* this);
     void (__thiscall* Function66)(struct CGameUser* this);
     void (__thiscall* Function67)(struct CGameUser* this);
-    void (__thiscall* Function68)(struct CGameUser* this);
+    void (__thiscall* SetUserRoomStatus)(struct CGameUser* this, int status);
     void (__thiscall* Function69)(struct CGameUser* this);
     void (__thiscall* Function70)(struct CGameUser* this);
     void (__thiscall* Function71)(struct CGameUser* this);
@@ -110,20 +110,21 @@ struct CGameUser_vtables
 };
 
 // CHN160531
-// int size 166
+// size 668 (29C)
 struct CGameUser
 {
     CGameUser_vtables* vfptr;
 
-    // achievement? quest?
+    // achievement list
     int unk1;
     int unk2;
     int unk3;
 
-    int unk4;
-    int unk5;
+    // honor
+    int titleID;
+    int honorPoints;
 
-    // title / honor
+    // titles
     int unk6;
     int unk7;
     int unk8;
@@ -151,9 +152,11 @@ struct CGameUser
     int a8; // 4
     int a9;
     int a10;
+
     long long exp;
     long long cash;
     long long points;
+
     // stats
     int battles;
     int win;
@@ -176,7 +179,8 @@ struct CGameUser
     int a35;
     int a36;
 
-    int unk20[6];
+    int unk20[3];
+    int unk20B[3]; // first userID
     int unkB[64];
 
     // Clan section
@@ -189,11 +193,11 @@ struct CGameUser
     char unk22;
     char unk23;
 
-    const char* unk24; // region name?
+    const char* unk24; // unk
     int nation;
     int city;
     int town;
-    const char* unk28; // packetdumper?
+    const char* unk28; // pcbangName
     int unk29;
 
     // tournament
@@ -204,14 +208,14 @@ struct CGameUser
     char unk31;  // & 4 SharedDataMgrFunc26
 
     // Ranking
-    int unk32[4]; // 4 rank stuff
-    int unk33; // rank stuff
+    int ranking[4]; // 4 rank stuff
+    int currentLeague; // rank stuff
 
     int unk34;
-    int unk35;
+    int roomStatus; // ready
     char roomTeam;
     
-    // 0x8000
+    // 0x8000 Campaign related
     char unk36b;
     int unk37;
     char unk38a;
@@ -239,16 +243,19 @@ struct CGameUser
     // Login???
     char* replyMsg;
     int replyCode; // why char not int?
+
+    int flag;
 };
 
+// CHN160531
+// size 688 (2B0)
 struct CGamePlayer
 {
     struct CGameUser base;
-    void* vfptr;
-    int unk1;
+    int   unk1;
     short unk2;
-    int unk3;
-    int unk4;
+    int   unk3;
+    int   unk4;
     short unk5;
 };
 
@@ -270,13 +277,13 @@ struct CGamePlayerManager_vtables
     void (__thiscall* Function14)(struct CGamePlayerManager* this);
     void (__thiscall* Function15)(struct CGamePlayerManager* this);
     void (__thiscall* Function16)(struct CGamePlayerManager* this);
-    void (__thiscall* Function17)(struct CGamePlayerManager* this);
+    void (__thiscall* ExecuteSomethingFunc2)(struct CGamePlayerManager* this, int);
     void (__thiscall* Function18)(struct CGamePlayerManager* this);
     void (__thiscall* Function19)(struct CGamePlayerManager* this);
     void (__thiscall* Function20)(struct CGamePlayerManager* this);
     void (__thiscall* Function21)(struct CGamePlayerManager* this);
     void (__thiscall* Function22)(struct CGamePlayerManager* this);
-    void (__thiscall* Function23)(struct CGamePlayerManager* this);
+    int  (__thiscall* GetUserByID)(struct CGamePlayerManager* this, int);
     void (__thiscall* Function24)(struct CGamePlayerManager* this);
     void (__thiscall* Function25)(struct CGamePlayerManager* this);
     void (__thiscall* Function26)(struct CGamePlayerManager* this);

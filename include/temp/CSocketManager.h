@@ -1,4 +1,3 @@
-struct CSocket;
 struct CSocket_vtable
 {
 
@@ -8,27 +7,31 @@ struct CSocket
     CSocket_vtable* vfptr;
     SOCKET socket;
     sockaddr_in socketInfo; // original sockaddr
-    int* ssl;  // encrypt related
-    char unk7A; // encrypt related
-    char unk7B;
+    SSL* ssl;
+    char crypt;
+    char crypt2;
     int unk8;  // optval
     int unk9;  // buffSize
-    char* bufferA; // optval
+    char* szSendBuffer; // optval
     char* bufferB; // buffSize
-    int unk12; // optval
+    int iSent; // optval
     int unk13; // buffSize
     char unk14A;
     char unk14B;
-    char unk15;
+    char sequence;
     int optVal;
     int bufferSize;
     char unk17;
-    char szUnk1[128];
+    char unk18A;
+    char unk18B;
+    char unk18C;
+    struct EVP_CIPHER_CTX* ctx2;
+    char szUnk1[121];
     // related EVP or ENCRYPT
     int tempa;
     int tempb;
     int tempc;
-    int ctx;
+    struct EVP_CIPHER_CTX* ctx;
     int tempe;
     int tempf;
     int tempg;
@@ -39,109 +42,108 @@ struct CSocket
     char szUnk2[32];
     char szUnk3[16];
     int unk18;
-    int unk19;
+    char* header;
     char* lastError; // related string, prob lastError
 };
 
 struct CLogFile
 {
-    FILE* file;
+    FILE* fs;
     char flush; // flush
-    LPCRITICAL_SECTION critical;
-    int unk3;
-    int unk4;
-    int unk5;
-    int unk6;
-    int unk7;
-    int unk8; // function pointer?
-    int unk9;
-    int unk10;
-    int unk11;
+    CRITICAL_SECTION critical;
+    void (__cdecl *function)(void*);
 };
 
-struct CSocketManager;
 struct CSocketManager_vtable
 {
-    
+    void (__thiscall* descructor)(struct CSocketManager* ptr, int);
 };
 
 // can reference as PacketID
 struct CSocketManagerPacket
 {
-    int gVersion; // 0
-    int gReply;
-    int gTransfer;
-    int gLogin;
-    int unk4;
-    int gServerList; // 5
-    int gCreateCharacter;
-    int gRequestRoomList;
-    int unk8[2];
-    int gChannelList; // 10
-    int unk11;
-    int gRecvCrypt;
-    int unk13[2];
-    int gMileageBingo; // 15
-    int gStatistics;
-    int unk14;
-    int gMobile; // 18
-    int unka[46];
-    int gRoom; // 65
-    int gClientCheck;
-    int gUMSG;
-    int gHost;
-    int gUpdateInfo; // 69
-    int gUDP; // 70
-    int gClan;
-    int gShop;
-    int gRank;
-    int gBan;
-    int gOption;
-    int gFavourite;
-    int gItem; // 78
-    int gItem2;
-    int unk79a;
-    int gSearchRoom; // 80
-    int gHostServer;
-    int gHShield;
-    int gReport;
-    int gTitle;
-    int gBuff;       // 85
-    int gQuickStart; // 86
-    int gUserSurvey;
-    int gQuest;
-    int gMinigame;
-    int gHack; // 90
-    int gMetadata;
-    int gSNS;
-    int gMessenger;
-    int gComrade;
-    int gWeeklyClanLeague; // 95
-    int gGiftItem;
-    int g2ndPassword;
-    int g2ndPassword2;
-    int gGameMatch;
-    int gZBEnhance; // 100
-    int gCleanSystem;
-    int gRibbonSystem; // 102
-    int iunk2[47];
-    int gUserStart; // 150
-    int gRoomList;
-    int gInventory_Default;
-    int gLobby;
-    int gInventory;
-    int gInventory_ClanStock; // 155
-    int gInventory_CafeItems;
-    int gUserInfo;
-    int gInventory_FabItems;
-    int gEvent;
-    int gInventory_Costume; // 160
-    int gZombieScenarioMaps;
-    int gInventory_RotationWeapon;
-    int unkb;
-    int gAlarm; // 164
-    int iunk4[35]; // 49 + gUserStart
-    int iunk3[56];
+    struct CPacket* gVersion; // 0
+    struct CPacket* gReply;
+    struct CPacket* gTransfer;
+    struct CPacket* gLogin;
+    struct CPacket* unk4;
+    struct CPacket* gServerList; // 5
+    struct CPacket* gCreateCharacter;
+    struct CPacket* gRequestRoomList;
+    struct CPacket* unk8[2];
+    struct CPacket* gChannelList; // 10
+    struct CPacket* unk11;
+    struct CPacket* gRecvCrypt;
+    struct CPacket* unk13[2];
+    struct CPacket* gMileageBingo; // 15
+    struct CPacket* gStatistics;
+    struct CPacket* unk14;
+    struct CPacket* gMobile; // 18
+    struct CPacket* unka[46];
+    struct CPacket* gRoom; // 65
+    struct CPacket* gClientCheck;
+    struct CPacket* gUMSG;
+    struct CPacket* gHost;
+    struct CPacket* gUpdateInfo; // 69
+    struct CPacket* gUDP; // 70
+    struct CPacket* gClan;
+    struct CPacket* gShop;
+    struct CPacket* gRank;
+    struct CPacket* gBan;
+    struct CPacket* gUnk75;
+    struct CPacket* gOption;
+    struct CPacket* gFavourite;
+    struct CPacket* gItem; // 78
+    struct CPacket* unk79a;
+    struct CPacket* gSearchRoom; // 80
+    struct CPacket* gHostServer;
+    struct CPacket* gHShield;
+    struct CPacket* gReport;
+    struct CPacket* gTitle;
+    struct CPacket* gBuff;       // 85
+    struct CPacket* gQuickStart; // 86
+    struct CPacket* gUserSurvey;
+    struct CPacket* gQuest;
+    struct CPacket* gMinigame;
+    struct CPacket* gHack; // 90
+    struct CPacket* gMetadata;
+    struct CPacket* gSNS;
+    struct CPacket* gMessenger;
+    struct CPacket* gComrade;
+    struct CPacket* gWeeklyClanLeague; // 95
+    struct CPacket* gGiftItem;
+    struct CPacket* g2ndPassword;
+    struct CPacket* g2ndPassword2;
+    struct CPacket* gGameMatch;
+    struct CPacket* gZBEnhance; // 100
+    struct CPacket* gCleanSystem;
+    struct CPacket* gRibbonSystem; // 102
+    struct CPacket* iunk2[47];
+    struct CPacket* gUserStart; // 150
+    struct CPacket* gRoomList;
+    struct CPacket* gInventory_Default;
+    struct CPacket* gLobby;
+    struct CPacket* gInventory;
+    struct CPacket* gInventory_ClanStock; // 155
+    struct CPacket* gInventory_CafeItems;
+    struct CPacket* gUserInfo;
+    struct CPacket* gInventory_FabItems;
+    struct CPacket* gEvent;
+    struct CPacket* gInventory_Costume; // 160
+    struct CPacket* gZombieScenarioMaps;
+    struct CPacket* gInventory_RotationWeapon;
+    struct CPacket* unkb;
+    struct CPacket* gAlarm; // 164
+    struct CPacket* iunk3[35]; // 49 + gUserStart
+    struct CPacket* iunk4[55];
+    struct CPacket* iunk5;
+};
+
+struct TestStuff
+{
+    TestStuff* prev;
+    TestStuff* next;
+    int unk3;
 };
 
 struct CSocketManager
@@ -155,7 +157,7 @@ struct CSocketManager
     char unk6;
     int unk7;
     int unk8;
-    int* unk9; // some holder
+    TestStuff* unk9; // some holder
     CLogFile* log;
-    LPCRITICAL_SECTION* critical;
+    CRITICAL_SECTION critical;
 };

@@ -2,33 +2,33 @@
 // 1 + 233 (CHN160531)
 struct CSharedDataMgr_vtables
 {
-    void (__thiscall* descructor)(struct CSharedDataMgr* this);
-    void (__thiscall* Function1)(struct CSharedDataMgr* this);
-    void (__thiscall* Function2)(struct CSharedDataMgr* this);
-    void (__thiscall* Function3)(struct CSharedDataMgr* this);
-    void (__thiscall* Function4)(struct CSharedDataMgr* this);
-    void (__thiscall* Function5)(struct CSharedDataMgr* this);
-    void (__thiscall* Function6)(struct CSharedDataMgr* this);
-    void (__thiscall* Function7)(struct CSharedDataMgr* this);
-    void (__thiscall* Function8)(struct CSharedDataMgr* this);
+    void (__thiscall* Function0)(struct CSharedDataMgr* this);
+    void (__thiscall* ShutdownRibbonSystem)(struct CSharedDataMgr* this);
+    void (__thiscall* ReturnUnk1)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk1)(struct CSharedDataMgr* this);
+    void (__thiscall* GetGameUI28)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk234)(struct CSharedDataMgr* this, int* a2); // 3 array
+    void (__thiscall* GetUnk2)(struct CSharedDataMgr* this);
+    void (__thiscall* TestCSOLight)(struct CSharedDataMgr* this, char a2); // set Unk5A
+    void (__thiscall* GetUnk5A)(struct CSharedDataMgr* this);
     void (__thiscall* Function9)(struct CSharedDataMgr* this);
-    void (__thiscall* Function10)(struct CSharedDataMgr* this);
-    void (__thiscall* Function11)(struct CSharedDataMgr* this);
-    void (__thiscall* Function12)(struct CSharedDataMgr* this);
-    void (__thiscall* Function13)(struct CSharedDataMgr* this);
-    void (__thiscall* Function14)(struct CSharedDataMgr* this);
-    void (__thiscall* Function15)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk5B)(struct CSharedDataMgr* this, char a2);
+    void (__thiscall* GetUnk5B)(struct CSharedDataMgr* this);
+    void (__thiscall* SomethingException1)(struct CSharedDataMgr* this);
+    void (__thiscall* SomethingException2)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk6A)(struct CSharedDataMgr* this, char a2);
+    void (__thiscall* GetUnk6A)(struct CSharedDataMgr* this);
     void (__thiscall* Function16)(struct CSharedDataMgr* this);
     void (__thiscall* Function17)(struct CSharedDataMgr* this);
-    void (__thiscall* Function18)(struct CSharedDataMgr* this,int,int,int,int,int,int,int);
-    void (__thiscall* Function19)(struct CSharedDataMgr* this);
-    void (__thiscall* Function20)(struct CSharedDataMgr* this);
-    void (__thiscall* Function21)(struct CSharedDataMgr* this);
-    void (__thiscall* Function22)(struct CSharedDataMgr* this);
-    void (__thiscall* Function23)(struct CSharedDataMgr* this);
-    void (__thiscall* Function24)(struct CSharedDataMgr* this);
-    void (__thiscall* Function25)(struct CSharedDataMgr* this);
-    int (__thiscall* Function26)(struct CSharedDataMgr* this, int, int);
+    int  (__thiscall* Function18)(struct CSharedDataMgr* this,int,int,int,int,int,int,int); // DLL FUNC
+    void (__thiscall* Function19)(struct CSharedDataMgr* this); // DLL FUNC
+    void (__thiscall* SetUnk9)(struct CSharedDataMgr* this);
+    void (__thiscall* GetUnk9)(struct CSharedDataMgr* this);
+    void (__thiscall* GetRegistry2)(struct CSharedDataMgr* this);
+    void (__thiscall* GetRegistry3)(struct CSharedDataMgr* this);
+    void (__thiscall* GetRegistry4)(struct CSharedDataMgr* this);
+    void (__thiscall* GetRegistry5)(struct CSharedDataMgr* this);
+    int (__thiscall* GetCSOFacade1)(struct CSharedDataMgr* this, int, int);
     void (__thiscall* Function27)(struct CSharedDataMgr* this);
     void (__thiscall* Function28)(struct CSharedDataMgr* this);
     void (__thiscall* Function29)(struct CSharedDataMgr* this);
@@ -63,20 +63,20 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function58)(struct CSharedDataMgr* this);
     void (__thiscall* Function59)(struct CSharedDataMgr* this);
     void (__thiscall* Function60)(struct CSharedDataMgr* this);
-    void (__thiscall* Function61)(struct CSharedDataMgr* this);
-    void (__thiscall* Function62)(struct CSharedDataMgr* this);
-    void (__thiscall* Function63)(struct CSharedDataMgr* this);
-    void (__thiscall* Function64)(struct CSharedDataMgr* this);
-    void (__thiscall* Function65)(struct CSharedDataMgr* this);
-    void (__thiscall* Function66)(struct CSharedDataMgr* this);
-    void (__thiscall* Function67)(struct CSharedDataMgr* this);
-    void (__thiscall* Function68)(struct CSharedDataMgr* this);
-    void (__thiscall* Function69)(struct CSharedDataMgr* this);
-    void (__thiscall* Function70)(struct CSharedDataMgr* this);
-    void (__thiscall* Function71)(struct CSharedDataMgr* this);
-    void (__thiscall* Function72)(struct CSharedDataMgr* this);
-    void (__thiscall* Function73)(struct CSharedDataMgr* this);
-    void (__thiscall* Function74)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost11)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost13)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost14)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost15)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost100)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost101)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost103_0)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost103_1)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost103_2)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost103_3)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost102)(struct CSharedDataMgr* this);
+    void (__thiscall* AnnounceTable)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost21)(struct CSharedDataMgr* this);
+    void (__thiscall* SendRibbonSystem0)(struct CSharedDataMgr* this);
     void (__thiscall* Function75)(struct CSharedDataMgr* this);
     void (__thiscall* Function76)(struct CSharedDataMgr* this);
     void (__thiscall* Function77)(struct CSharedDataMgr* this);
@@ -114,14 +114,14 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function109)(struct CSharedDataMgr* this);
     void (__thiscall* Function110)(struct CSharedDataMgr* this);
     void (__thiscall* Function111)(struct CSharedDataMgr* this);
-    void (__thiscall* Function112)(struct CSharedDataMgr* this);
+    void (__thiscall* ZombieParamDump)(struct CSharedDataMgr* this);
     void (__thiscall* Function113)(struct CSharedDataMgr* this);
     void (__thiscall* Function114)(struct CSharedDataMgr* this);
     void (__thiscall* Function115)(struct CSharedDataMgr* this);
     void (__thiscall* Function116)(struct CSharedDataMgr* this);
     void (__thiscall* Function117)(struct CSharedDataMgr* this);
     void (__thiscall* Function118)(struct CSharedDataMgr* this);
-    void (__thiscall* Function119)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost19)(struct CSharedDataMgr* this);
     void (__thiscall* Function120)(struct CSharedDataMgr* this);
     void (__thiscall* Function121)(struct CSharedDataMgr* this);
     void (__thiscall* Function122)(struct CSharedDataMgr* this);
@@ -184,8 +184,8 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function179)(struct CSharedDataMgr* this);
     void (__thiscall* Function180)(struct CSharedDataMgr* this, int);
     void (__thiscall* Function181)(struct CSharedDataMgr* this);
-    void (__thiscall* Function182)(struct CSharedDataMgr* this);
-    void (__thiscall* Function183)(struct CSharedDataMgr* this);
+    void (__thiscall* ZombieUX)(struct CSharedDataMgr* this);
+    void (__thiscall* HelpPageEvent)(struct CSharedDataMgr* this);
     void (__thiscall* Function184)(struct CSharedDataMgr* this);
     void (__thiscall* Function185)(struct CSharedDataMgr* this);
     void (__thiscall* Function186)(struct CSharedDataMgr* this);
@@ -203,7 +203,7 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function198)(struct CSharedDataMgr* this);
     void (__thiscall* Function199)(struct CSharedDataMgr* this);
     void (__thiscall* Function200)(struct CSharedDataMgr* this);
-    void (__thiscall* Function201)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost104_0)(struct CSharedDataMgr* this);
     void (__thiscall* Function202)(struct CSharedDataMgr* this);
     void (__thiscall* Function203)(struct CSharedDataMgr* this);
     void (__thiscall* Function204)(struct CSharedDataMgr* this);
@@ -223,19 +223,19 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function218)(struct CSharedDataMgr* this);
     void (__thiscall* Function219)(struct CSharedDataMgr* this);
     void (__thiscall* Function220)(struct CSharedDataMgr* this);
-    void (__thiscall* Function221)(struct CSharedDataMgr* this);
-    void (__thiscall* Function222)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost22)(struct CSharedDataMgr* this);
+    void (__thiscall* UpdateInfo9)(struct CSharedDataMgr* this);
     void (__thiscall* Function223)(struct CSharedDataMgr* this);
     void (__thiscall* Function224)(struct CSharedDataMgr* this);
     void (__thiscall* Function225)(struct CSharedDataMgr* this);
-    void (__thiscall* Function226)(struct CSharedDataMgr* this);
+    void (__thiscall* SendHost23)(struct CSharedDataMgr* this);
     void (__thiscall* Function227)(struct CSharedDataMgr* this);
     void (__thiscall* Function228)(struct CSharedDataMgr* this);
     void (__thiscall* Function229)(struct CSharedDataMgr* this);
     void (__thiscall* Function230)(struct CSharedDataMgr* this);
     void (__thiscall* Function231)(struct CSharedDataMgr* this);
     void (__thiscall* Function232)(struct CSharedDataMgr* this);
-    void (__thiscall* Function233)(struct CSharedDataMgr* this);
+    void (__thiscall* desctructor)(struct CSharedDataMgr* this);
 };
 
 struct CSharedDataMgrWeird
@@ -345,7 +345,7 @@ struct CSharedDataMgr
     int unk42;
     int unk43;
     
-    int* gZombieSkillTable; // func111
+    struct ZombieSkillTable* gZombieSkillTable; // func111
 
     int unkF[123];
 

@@ -1,8 +1,8 @@
 // COMMON.h
 typedef struct sizebuf_s {
 	const char *buffername;
-	uint16 flags;
-	byte *data;
+	unsigned short flags;
+	unsigned char *data;
 	int maxsize;
 	int cursize;
 } sizebuf_t;

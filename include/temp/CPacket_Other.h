@@ -65,3 +65,17 @@ struct Packet_UserStart
     int unk6;
     int unk7;
 };
+
+struct Packet_ClientCheck
+{
+    void* vfptr;
+    struct CPacketBase base;
+    char* szCPUName;
+    char* szGPUName;
+    int iCPUHertz;
+    int iShiftedMemory;
+    int iUpload;
+    int unk6;
+    int iNetworkConfig;
+    int unk8;
+};

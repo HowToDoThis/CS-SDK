@@ -1,8 +1,8 @@
 struct CPacket_vtables
 {
-    void (__thiscall* descructor)(struct CPacket* this);
-    void (__thiscall* Function1)(struct CPacket* this);
-    void (__thiscall* Function2)(struct CPacket* this);
+    void (__thiscall* descructor)(struct CPacket* ptr);
+    void (__thiscall* Function1)(struct CPacket* ptr);
+    char (__thiscall* Parse)(struct CPacket* ptr, unsigned char* packet, int size);
 };
 
 struct CPacketBase
