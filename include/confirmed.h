@@ -20,6 +20,10 @@
 #define MAX_GENERIC 2048
 #define MAX_SOUNDS_HASHLOOKUP_SIZE 2647
 #define MAX_LIGHTSTYLES 64
+#define MIPLEVELS	4
+#define MAX_MODEL_NAME		64
+#define MAX_MAP_HULLS		4
+#define MAXLIGHTMAPS		4
 
 typedef int BOOL;
 typedef int qboolean;
@@ -174,6 +178,21 @@ typedef struct modinfo_s {
 	int num_edicts;
 } modinfo_t;
 
+typedef enum modtype_e {
+	mod_bad = -1,
+	mod_brush,
+	mod_sprite,
+	mod_alias,
+	mod_studio,
+} modtype_t;
+
+typedef enum AUTH_IDTYPE {
+	AUTH_IDTYPE_UNKNOWN	= 0,
+	AUTH_IDTYPE_STEAM	= 1,
+	AUTH_IDTYPE_VALVE	= 2,
+	AUTH_IDTYPE_LOCAL	= 3
+};
+
 const int MAX_EXTENSION_DLL = 50;
 
 typedef struct functiontable_s {
@@ -199,6 +218,25 @@ typedef struct sizebuf_s {
 	int maxsize;
 	int cursize;
 } sizebuf_t;
+
+typedef struct mplane_s {
+	vec3_t			normal;			// surface normal
+	float			dist;			// closest appoach to origin
+	byte			type;			// for texture axis selection and fast side tests
+	byte			signbits;		// signx + signy<<1 + signz<<1
+	byte			pad[2];
+} mplane_t;
+
+typedef struct mnode_s {
+	int				contents;		// 0, to differentiate from leafs
+	int				visframe;		// node needs to be traversed if current
+	short			minmaxs[6];		// for bounding box culling
+	struct mnode_s	*parent;
+	mplane_t		*plane;
+	struct mnode_s	*children[2];
+	unsigned short	firstsurface;
+	unsigned short	numsurfaces;
+} mnode_t;
 
 typedef struct entvars_s {
 	string_t	classname;
@@ -268,10 +306,10 @@ typedef struct entvars_s {
 	struct edict_t		*owner;
 	struct edict_t		*groundentity;
 	int			spawnflags;
-	int			flags;
+	float		max_health;
 	int			colormap;		// lowbyte topcolor, highbyte bottomcolor
 	int			team;
-	float		max_health;
+	int			flags;
 	float		teleport_time;
 	float		armortype;
 	float		armorvalue;
@@ -279,11 +317,11 @@ typedef struct entvars_s {
 	int			watertype;
 	string_t	target;
 	string_t	targetname;
-	string_t	netname;
+	float		dmg;
 	string_t	message;
 	float		dmg_take;
 	float		dmg_save;
-	float		dmg;
+	string_t	netname;
 	float		dmgtime;
 	string_t	noise;
 	string_t	noise1;
@@ -325,11 +363,13 @@ typedef struct entvars_s {
 	struct edict_t		*euser2;
 	struct edict_t		*euser3;
 	struct edict_t		*euser4;
+
+	int unk[4];
+	int userID;
 } entvars_t;
 
 typedef struct USERID_s {
 	int idtype;
-	uint64 m_SteamID;
 	unsigned int clientip;
 } USERID_t;
 
@@ -343,6 +383,161 @@ typedef struct customization_s {
 	void *pBuffer;       // Buffer that holds the data for the customization (the raw .wad data)
 	struct customization_s *pNext; // Next in chain
 } customization_t;
+
+typedef struct lump_s {
+	int				fileofs;
+	int				filelen;
+} lump_t;
+
+typedef struct cache_user_s {
+	void	*data;
+} cache_user_t;
+
+typedef struct cachepic_s {
+	char			name[64];
+	cache_user_t	cache;
+} cachepic_t;
+
+typedef enum synctype_e {
+	ST_SYNC = 0,
+	ST_RAND = 1,
+} synctype_t;
+
+typedef void(*PFNCACHE)(struct cachewad_t *, unsigned char *);
+typedef struct cachewad_s {
+	char			*name;
+	cachepic_t		*cache;
+	int				cacheCount;
+	int				cacheMax;
+	struct lumpinfo_s *lumps;
+	int				lumpCount;
+	int				cacheExtra;
+	PFNCACHE		pfnCacheBuild;
+	int				numpaths;
+	char			**basedirs;
+	int				*lumppathindices;
+	int				tempWad;
+} cachewad_t;
+
+typedef struct texture_s {
+	char			name[16];
+	unsigned		width, height;
+	int			gl_texturenum;
+	struct msurface_s *	texturechain;
+	int				anim_total;			// total tenths in sequence ( 0 = no)
+	int				anim_min, anim_max;	// time for this frame min <=time< max
+	struct texture_s *anim_next;		// in the animation sequence
+	struct texture_s *alternate_anims;	// bmodels in frame 1 use these
+	unsigned		offsets[MIPLEVELS];	// four mip maps stored
+	byte *pPal;
+} texture_t;
+
+typedef struct dmodel_s {
+	float			mins[3], maxs[3];
+	float			origin[3];
+	int				headnode[MAX_MAP_HULLS];
+	int				visleafs;		// not including the solid leaf 0
+	int				firstface, numfaces;
+} dmodel_t;
+
+typedef struct mvertex_s {
+	vec3_t			position;
+} mvertex_t;
+
+typedef struct medge_s {
+	unsigned short	v[2];
+	unsigned int	cachededgeoffset;
+} medge_t;
+
+typedef struct mtexinfo_s {
+	float			vecs[2][4];
+	float			mipadjust;		// ?? mipmap limits for very small surfaces
+	texture_t		*texture;
+	int				flags;			// sky or slime, no lightmap or 256 subdivision
+} mtexinfo_t;
+
+typedef struct decal_s {
+	struct decal_t	*pnext;			// linked list for each surface
+	struct msurface_t	*psurface;		// Surface id for persistence / unlinking
+	short			dx;				// Offsets into surface texture (in texture coordinates, so we don't need floats)
+	short			dy;
+	short			texture;		// Decal texture
+	byte			scale;			// Pixel scale
+	byte			flags;			// Decal flags
+
+	short			entityIndex;	// Entity this is attached to
+} decal_t;
+
+typedef struct msurface_s {
+	int				visframe;		// should be drawn when node is crossed
+	int				dlightframe;	// last frame the surface was checked by an animated light
+	int				dlightbits;
+	mplane_t		*plane;			// pointer to shared plane
+	int				flags;			// see SURF_ #defines
+	int				firstedge;	// look up in model->surfedges[], negative numbers
+	int				numedges;	// are backwards edges
+	struct surfcache_s *cachespots[MIPLEVELS];
+	short			texturemins[2]; // smallest s/t position on the surface.
+	short			extents[2];		// ?? s/t texture size, 1..256 for all non-sky surfaces
+	mtexinfo_t		*texinfo;
+	byte			styles[MAXLIGHTMAPS];
+	color24			*samples;
+	decal_t			*pdecals;
+} msurface_t;
+
+typedef struct dclipnode_s {
+	int				planenum;
+	short			children[2];	// negative numbers are contents
+} dclipnode_t;
+
+typedef struct hull_s {
+	dclipnode_t		*clipnodes;
+	mplane_t		*planes;
+	int				firstclipnode;
+	int				lastclipnode;
+	vec3_t			clip_mins, clip_maxs;
+} hull_t;
+
+typedef struct model_s {
+	char			name[MAX_MODEL_NAME];
+	int		needload;		// bmodels and sprites don't cache normally
+	modtype_t		type;
+	int				numframes;
+	synctype_t		synctype;
+	int				flags;
+	vec3_t			mins, maxs;
+	float			radius;
+	int				firstmodelsurface, nummodelsurfaces;
+	int				numsubmodels;
+	dmodel_t		*submodels;
+	int				numplanes;
+	mplane_t		*planes;
+	int				numleafs;		// number of visible leafs, not counting 0
+	struct mleaf_s	*leafs;
+	int				numvertexes;
+	mvertex_t		*vertexes;
+	int				numedges;
+	medge_t			*edges;
+	int				numnodes;
+	mnode_t			*nodes;
+	int				numtexinfo;
+	mtexinfo_t		*texinfo;
+	int				numsurfaces;
+	msurface_t		*surfaces;
+	int				numsurfedges;
+	int				*surfedges;
+	int				numclipnodes;
+	dclipnode_t		*clipnodes;
+	int				nummarksurfaces;
+	msurface_t		**marksurfaces;
+	hull_t			hulls[MAX_MAP_HULLS];
+	int				numtextures;
+	texture_t		**textures;
+	byte			*visdata;
+	color24			*lightdata;
+	char			*entities;
+	cache_user_t	cache;			// only access through Mod_Extradata
+} model_t;
 
 // zone.h
 typedef struct hunk_s {
@@ -650,6 +845,17 @@ typedef struct hash_pack_queue_s {
 	struct hash_pack_queue_s *next;
 } hash_pack_queue_t;
 
+typedef struct hash_pack_entry_s {
+	resource_t resource;
+	int nOffset;
+	int nFileLength;
+} hash_pack_entry_t;
+
+typedef struct hash_pack_directory_s {
+	int nEntries;
+	hash_pack_entry_t *p_rgEntries;
+} hash_pack_directory_t;
+
 // md5.h
 typedef struct {
 	unsigned int buf[4];
@@ -688,6 +894,7 @@ typedef struct usercmd_s {
 	byte	weaponselect;	// Current weapon id
 	int		impact_index;
 	vec3_t	impact_position;
+	int unk1;
 } usercmd_t;
 
 // entity_state.h
@@ -816,6 +1023,40 @@ typedef struct event_s {
 	const char *pszScript;
 } event_t;
 
+// progdefs.h
+typedef struct globalvars_s {	
+	float		time;
+	float		frametime;
+	float		force_retouch;
+	string_t	mapname;
+	string_t	startspot;
+	float		deathmatch_;
+	float		coop_;
+	float		teamplay;
+	float		serverflags;
+	float		found_secrets;
+	vec3_t		v_forward;
+	vec3_t		v_up;
+	vec3_t		v_right;
+	float		trace_allsolid;
+	float		trace_startsolid;
+	float		trace_fraction;
+	vec3_t		trace_endpos;
+	vec3_t		trace_plane_normal;
+	float		trace_plane_dist;
+	edict_t		*trace_ent;
+	float		trace_inopen;
+	float		trace_inwater;
+	int			trace_hitgroup;
+	int			trace_flags;
+	int			msg_entity;
+	int			cdAudioTrack;
+	int			maxClients;
+	int			maxEntities;
+	const char	*pStringBase;
+	void		*pSaveData;
+	vec3_t		vecLandmarkOffset;
+} globalvars_t;
 
 // baseline.h
 #define NUM_BASELINES 64
@@ -896,12 +1137,12 @@ typedef struct client_s {
 	int crcValue;
 	int lw;
 	int lc;
-	char physinfo[MAX_INFO_STRING];
+	char physinfo[MAX_INFO_STRING / 2];
 	qboolean m_bLoopback;
 	uint32 m_VoiceStreams[2];
 	double m_lastvoicetime;
-	int m_sendrescount;
-	qboolean m_bSentNewResponse;
+
+	int unk3[516];
 } client_t;
 
 typedef struct server_s {
@@ -912,7 +1153,7 @@ typedef struct server_s {
 	double oldtime;
 	int lastcheck;
 	double lastchecktime;
-	char name[260];
+	char name[64];
 	char oldname[64];
 	char startspot[64];
 	char modelname[64];
@@ -993,3 +1234,42 @@ typedef struct saverestore_s {
 	char		szCurrentMapName[32];	// To check global entities
 
 } SAVERESTOREDATA;
+
+// server_static.h
+typedef struct server_log_s {
+	qboolean active;
+	qboolean net_log_;
+	netadr_t net_address_;
+	void *file;
+} server_log_t;
+
+typedef struct server_stats_s {
+	int num_samples;
+	int at_capacity;
+	int at_empty;
+	float capacity_percent;
+	float empty_percent;
+	int minusers;
+	int maxusers;
+	float cumulative_occupancy;
+	float occupancy;
+	int num_sessions;
+	float cumulative_sessiontime;
+	float average_session_len;
+	float cumulative_latency;
+	float average_latency;
+} server_stats_t;
+
+typedef struct server_static_s {
+	qboolean dll_initialized;
+	client_t *clients;
+	int maxclients;
+	int maxclientslimit;
+	int spawncount;
+	int serverflags;
+	server_log_t log;
+	double next_cleartime;
+	double next_sampletime;
+	server_stats_t stats;
+	qboolean isSecure;
+} server_static_t;
