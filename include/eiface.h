@@ -647,12 +647,8 @@ typedef void (*HUD_DIRECTORMESSAGE_FUNC)( int iSize, void *pbuf );
 typedef int ( *HUD_STUDIO_INTERFACE_FUNC )( int version, struct r_studio_interface_s **ppinterface, struct engine_studio_api_s *pstudio );
 typedef void (*HUD_CHATINPUTPOSITION_FUNC)( int *x, int *y );
 typedef int (*HUD_GETPLAYERTEAM)(int iplayer);
-typedef void *(*CLIENTFACTORY)(); // this should be CreateInterfaceFn but that means including interface.h
-									// which is a C++ file and some of the client files a C only... 
-									// so we return a void * which we then do a typecast on later.
+typedef void *(*CLIENTFACTORY)();
 
-
-// Pointers to the exported client functions themselves
 typedef struct
 {
 	INITIALIZE_FUNC						pInitFunc;
@@ -697,7 +693,7 @@ typedef struct
 	HUD_STUDIO_INTERFACE_FUNC			pStudioInterface;	// Not used by all clients
 	HUD_CHATINPUTPOSITION_FUNC			pChatInputPosition;	// Not used by all clients
 	HUD_GETPLAYERTEAM					pGetPlayerTeam; // Not used by all clients
-	CLIENTFACTORY						pClientFactory;
+	CLIENTFACTORY				        pClientFactory;
     void (__cdecl* Func1)();
     void (__cdecl* Func2)();
     void (__cdecl* Func3)();
