@@ -24,6 +24,8 @@
 #define MAX_MODEL_NAME		64
 #define MAX_MAP_HULLS		4
 #define MAXLIGHTMAPS		4
+#define CON_MAX_NOTIFY_STRING 80
+#define MAX_KNOWN_MODELS 4096
 
 typedef int BOOL;
 typedef int qboolean;
@@ -403,6 +405,15 @@ typedef enum synctype_e {
 	ST_RAND = 1,
 } synctype_t;
 
+typedef enum cactive_t {
+	ca_dedicated = 0,	// This is a dedicated server, client code is inactive
+	ca_disconnected,	// full screen console with no connection
+	ca_connecting,		// netchan_t established, waiting for svc_serverdata
+	ca_connected,		// processing data lists, donwloading, etc
+	ca_uninitialized,
+	ca_active			// everything is in, so frames can be rendered
+};
+
 typedef void(*PFNCACHE)(struct cachewad_t *, unsigned char *);
 typedef struct cachewad_s {
 	char			*name;
@@ -439,6 +450,11 @@ typedef struct dmodel_s {
 	int				visleafs;		// not including the solid leaf 0
 	int				firstface, numfaces;
 } dmodel_t;
+
+typedef struct dheader_s {
+	int				version;
+	lump_t			lumps[15];
+} dheader_t;
 
 typedef struct mvertex_s {
 	vec3_t			position;
@@ -536,8 +552,174 @@ typedef struct model_s {
 	byte			*visdata;
 	color24			*lightdata;
 	char			*entities;
+	int unk[8];
 	cache_user_t	cache;			// only access through Mod_Extradata
 } model_t;
+
+typedef struct mod_known_info_s {
+	qboolean		shouldCRC;
+	qboolean		firstCRCDone;
+	CRC32_t			initialCRC;
+} mod_known_info_t;
+
+typedef enum synctype_e {
+	ST_SYNC = 0,
+	ST_RAND = 1,
+} synctype_t;
+
+typedef struct dsprite_s {
+	int				ident;
+	int				version;
+	int				type;
+	int				texFormat;
+	float			boundingradius;
+	int				width;
+	int				height;
+	int				numframes;
+	float			beamlength;
+	synctype_t		synctype;
+	int unk;
+} dsprite_t;
+
+typedef struct dspriteframe_s {
+	int				origin[2];
+	int				width;
+	int				height;
+} dspriteframe_t;
+
+typedef struct mspriteframe_t {
+	int				width;
+	int				height;
+	void			*pcachespot;
+	float			up, down, left, right;
+	byte			pixels[4];
+} mspriteframe_s;
+
+typedef struct mdl_s {
+	int				ident;
+	int				version;
+	vec3_t			scale;
+	vec3_t			scale_origin;
+	float			boundingradius;
+	vec3_t			eyeposition;
+	int				numskins;
+	int				skinwidth;
+	int				skinheight;
+	int				numverts;
+	int				numtris;
+	int				numframes;
+	synctype_t		synctype;
+	int				flags;
+	float			size;
+	//int unk;
+} mdl_t;
+
+// dalias
+typedef enum aliasframetype_s {
+	ALIAS_SINGLE = 0,
+	ALIAS_GROUP = 1,
+} aliasframetype_t;
+typedef enum aliasskintype_s {
+	ALIAS_SKIN_SINGLE = 0,
+	ALIAS_SKIN_GROUP = 1,
+} aliasskintype_t;
+
+typedef struct trivertx_s {
+	byte			v[3];
+	byte			lightnormalindex;
+} trivertx_t;
+
+typedef struct daliasframe_s {
+	trivertx_t		bboxmin, bboxmax;
+	char			name[16];
+} daliasframe_t;
+
+typedef struct daliasgroup_s {
+	int				numframes;
+	trivertx_t		bboxmin, bboxmax;
+} daliasgroup_t;
+
+typedef struct daliasskingroup_s {
+	int				numskins;
+} daliasskingroup_t;
+
+typedef struct daliasinterval_s {
+	float			interval;
+} daliasinterval_t;
+
+typedef struct daliasskininterval_s {
+	float			interval;
+} daliasskininterval_t;
+
+typedef struct daliasframetype_s {
+	aliasframetype_t type;
+} daliasframetype_t;
+
+typedef struct daliasskintype_s {
+	aliasskintype_t type;
+} daliasskintype_t;
+
+// 
+typedef struct wadinfo_s {
+	char identification[4];
+	int numlumps;
+	int infotableofs;
+} wadinfo_t;
+
+typedef struct lumpinfo_s {
+	int filepos;
+	int disksize;
+	int size;
+	char type;
+	char compression;
+	char pad1;
+	char pad2;
+	char name[16];
+} lumpinfo_t;
+
+typedef struct texlumpinfo_s {
+	lumpinfo_t lump;
+	int iTexFile;
+} texlumpinfo_t;
+
+struct da_notify_t {
+	char szNotify[CON_MAX_NOTIFY_STRING];
+	float expire;
+	float color[3];
+};
+
+typedef struct {
+	const char* name;
+	int keynum;
+} keyname_t;
+
+// GL.h
+typedef struct {
+	const char *name;
+	int minimize, maximize;
+} glmode_t;
+
+typedef struct {
+	int texnum;
+	char* identifier;
+	int width, height;
+	int unk;
+	qboolean mipmap;
+} gltexture_t;
+
+// command.h
+typedef void(*xcommand_t)(void);
+typedef struct cmd_function_s {
+	struct cmd_function_s *next;
+	const char *name;
+	xcommand_t function;
+	int flags;
+} cmd_function_t;
+
+typedef enum cmd_source_s {
+	src_client = 0,		// came in over a net connection as a clc_stringcmd. host_client will be valid during this state.
+	src_command = 1,	// from the command buffer.
+} cmd_source_t;
 
 // zone.h
 typedef struct hunk_s {
@@ -545,6 +727,14 @@ typedef struct hunk_s {
 	int size;
 	char name[64];
 } hunk_t;
+
+typedef struct cache_system_s {
+	int size; // including this header
+	cache_user_t *user;
+	char name[64];
+	struct cache_system_s *prev, *next;
+	struct cache_system_s *lru_prev, *lru_next; // for LRU flushing
+} cache_system_t;
 
 // delta.h
 typedef enum {
@@ -862,6 +1052,37 @@ typedef struct {
 	unsigned int bits[2];
 	unsigned char in[64];
 } MD5Context_t;
+
+// sound.h
+typedef struct {
+	qboolean gamealive;
+	qboolean soundalive;
+	qboolean splitbuffer;
+	int channels;
+	int samples;          // mono samples in buffer
+	int submission_chunk; // don't mix less than this #
+	int samplepos;        // in mono samples
+	int samplebits;
+	int speed;
+	unsigned char *buffer;
+	int unk1;
+} dma_t;
+
+// 512
+typedef struct sfx_s {
+	char name[MAX_QPATH];
+	cache_user_t cache;
+	int unk;
+} sfx_t;
+
+typedef struct {
+	int length;
+	int loopstart;
+	int speed;
+	int width;
+	int stereo;
+	byte data[1]; // variable sized
+} sfxcache_t;
 
 // filesystem.h
 typedef FILE* FileHandle_t;

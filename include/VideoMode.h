@@ -17,8 +17,8 @@ struct CVideoMode_Common_vt
     void (__thiscall* Function15)(struct CVideoMode_Common* this);
     void (__thiscall* Function16)(struct CVideoMode_Common* this);
     void (__thiscall* Function17)(struct CVideoMode_Common* this);
-    void (__thiscall* BackgroundSomething)(struct CVideoMode_Common* this);
-    void (__thiscall* PlayStartupVideo)(struct CVideoMode_Common* this);
+    void (__thiscall* BackgroundSomething)(struct CVideoMode_Common* this, int unk);
+    void (__thiscall* PlayStartupVideo)(struct CVideoMode_Common* this, int unk);
     void (__thiscall* NULLFUNC3)(struct CVideoMode_Common* this);
     void (__thiscall* NULLFUNC4)(struct CVideoMode_Common* this);
     void (__thiscall* NULLFUNC5)(struct CVideoMode_Common* this);

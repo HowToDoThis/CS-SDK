@@ -34,15 +34,15 @@ struct CUDPHolePuncher
     void* vfptr;
     CUDPHolePuncherUnknown base;
     int unk1;
-    int unk2;
+    int unk2; // array
     int unk3;
-    int unk4;
+    int unk4; // array
     int unk5;
     int unk6;
     int iUnk2[28]; // related lock
     short unk7A;
     short unk7B;
-    //int unk7;
-    int iUnk3[2];
     int unk8;
+    int unk9;
+    int unk10;
 };
