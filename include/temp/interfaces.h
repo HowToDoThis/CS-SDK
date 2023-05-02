@@ -158,9 +158,8 @@ struct CThread
     int unk6;
 };
 
-struct CEngine_vt
+struct CEngine_vt : IBaseInterface
 {
-    void (__thiscall* free)(struct CEngine* this);
     void (__thiscall* Load)(struct CEngine* this, bool dedicated, char* basedir, char* cmdline);
     void (__thiscall* Unload)(struct CEngine* this);
     void (__thiscall* SetState)(struct CEngine* this, int state);
@@ -213,4 +212,19 @@ struct CLanguage
 {
     char langName[16];
     LanguageCode langCode;
+};
+
+struct CSOCoreSDM
+{
+    int unk1; // vector
+    int unk2;
+    int unk3;
+
+    int unk4;
+
+    int unk5; // vector
+    int unk6;
+    int unk7;
+
+    int unk8;
 };

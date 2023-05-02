@@ -452,7 +452,7 @@ typedef struct cl_enginefuncs_s
     const char* (*PhysInfo_ValueForKey)   (const char* key);
     const char* (*ServerInfo_ValueForKey) (const char* key);
     float                       (*GetClientMaxspeed)      (void);
-    int                         (*CheckParm)              (char* parm, char** ppnext);
+    int                         (__cdecl*CheckParm)              (char* parm, char** ppnext);
     void                        (*Key_Event)              (int key, int down);
     void                        (*GetMousePosition)       (int* mx, int* my);
     int                         (*IsNoClipping)           (void);
@@ -496,7 +496,7 @@ typedef struct cl_enginefuncs_s
     int                         (*IsSpectateOnly)         (void);
     struct model_s* (*LoadMapSprite)          (const char* filename);
     void                        (*COM_AddAppDirectoryToSearchPath) (const char* pszBaseDir, const char* appName);
-    int                         (*COM_ExpandFilename)              (const char* fileName, char* nameOutBuffer, int nameOutBufferSize);
+    int                         (__cdecl*COM_ExpandFilename)              (const char* fileName, char* nameOutBuffer, int nameOutBufferSize);
     const char* (*PlayerInfo_ValueForKey)          (int playerNum, const char* key);
     void                        (*PlayerInfo_SetValueForKey)       (const char* key, const char* value);
     qboolean(*GetPlayerUniqueID)      (int iPlayer, char playerID[16]);

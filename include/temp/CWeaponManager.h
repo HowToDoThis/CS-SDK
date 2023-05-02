@@ -36,7 +36,7 @@ struct CWeaponMgrTable
     struct CWeaponData* (__thiscall* FindByCommand)(struct CWeaponMgr* ptr, const char* a2);
     struct CWeaponData* (__thiscall* FindByResource)(struct CWeaponMgr* ptr, const char* a2);
     bool (__thiscall* IsSomething)(struct CWeaponMgr* ptr, int a2);
-    void (__thiscall* GetSomething)(struct CWeaponMgr* ptr);
+    void (__thiscall* GetSomething)(struct CWeaponMgr* ptr, int weaponID, float *fGround, float *fAir, float *fFly, float *fDuck, float *fStun, bool *fFlagUnk);
     void (__thiscall* FindByUnk)(struct CWeaponMgr* ptr, const char* a2);
     void (__thiscall* desctuctor)(struct CWeaponMgr* ptr);
 };
@@ -44,7 +44,5 @@ struct CWeaponMgrTable
 struct CWeaponMgr
 {
     struct CWeaponMgrTable* vfptr;
-    struct CWeaponData* weapons;
-    int unk1;
-    int unk2;
+    struct vector weaponData;
 };

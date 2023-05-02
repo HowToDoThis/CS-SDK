@@ -26,6 +26,7 @@
 #define MAXLIGHTMAPS		4
 #define CON_MAX_NOTIFY_STRING 80
 #define MAX_KNOWN_MODELS 4096
+#define NUM_AMBIENTS 4
 
 typedef int BOOL;
 typedef int qboolean;
@@ -233,6 +234,7 @@ typedef struct mnode_s {
 	int				contents;		// 0, to differentiate from leafs
 	int				visframe;		// node needs to be traversed if current
 	short			minmaxs[6];		// for bounding box culling
+	int undef[3];
 	struct mnode_s	*parent;
 	mplane_t		*plane;
 	struct mnode_s	*children[2];
@@ -500,6 +502,19 @@ typedef struct msurface_s {
 	color24			*samples;
 	decal_t			*pdecals;
 } msurface_t;
+
+typedef struct mleaf_s {
+	int			contents;		// wil be a negative contents number
+	int			visframe;		// node needs to be traversed if current
+	short		minmaxs[6];		// for bounding box culling // TODO: float for gl quake render
+	struct mnode_s	*parent;
+	byte		*compressed_vis;
+	struct efrag_s *efrags;
+	msurface_t	**firstmarksurface;
+	int			nummarksurfaces;
+	int			key;			// BSP sequence number for leaf's contents
+	byte		ambient_sound_level[NUM_AMBIENTS];
+} mleaf_t;
 
 typedef struct dclipnode_s {
 	int				planenum;
@@ -1068,11 +1083,10 @@ typedef struct {
 	int unk1;
 } dma_t;
 
-// 512
 typedef struct sfx_s {
 	char name[MAX_QPATH];
 	cache_user_t cache;
-	int unk;
+	int servercount;
 } sfx_t;
 
 typedef struct {
@@ -1083,6 +1097,53 @@ typedef struct {
 	int stereo;
 	byte data[1]; // variable sized
 } sfxcache_t;
+
+typedef struct {
+	sfx_t *sfx;      // sfx number
+	int leftvol;     // 0-255 volume
+	int rightvol;    // 0-255 volume
+	int end;         // end time in global paintsamples
+	int pos;         // sample position in sfx
+	int looping;     // where to loop, -1 = no looping
+	int entnum;      // to allow overriding a specific sound
+	int entchannel;  //
+	vec3_t origin;   // origin of sound effect
+	vec_t dist_mult; // distance multiplier (attenuation/clipK)
+	int master_vol;  // 0-255 master volume
+	int iSentence;
+	int iWord;
+	int Pitch;
+	int undef[2];
+} channel_t;
+
+struct voxword_t {
+	int		volume;					// increase percent, ie: 125 = 125% increase
+	int		pitch;					// pitch shift up percent
+	int		start;					// offset start of wave percent
+	int		end;					// offset end of wave percent
+	int		cbtrim;					// end of wave after being trimmed to 'end'
+	int		fKeepCached;			// 1 if this word was already in cache before sentence referenced it
+	int		samplefrac;				// if pitch shifting, this is position into wav * 256
+	int		timecompress;			// % of wave to skip during playback (causes no pitch shift)
+	sfx_t*	sfx;					// name and cache pointer
+};
+
+struct wavinfo_t {
+	int		rate;
+	int		width;
+	int		channels;
+	int		loopstart;
+	int		samples;
+	int		dataofs;		// chunk starts this many bytes from file start
+};
+
+struct wavstream_t {
+	int		csamplesplayed;
+	int		csamplesinmem;
+	FileHandle_t hFile;
+	wavinfo_t info;
+	int		lastposloaded;
+};
 
 // filesystem.h
 typedef FILE* FileHandle_t;
@@ -1297,6 +1358,113 @@ typedef struct consistency_s {
 	float mins[3];
 	float maxs[3];
 } consistency_t;
+
+// sequence.h
+typedef enum sequenceModifierBits {
+	SEQUENCE_MODIFIER_EFFECT_BIT		= (1 << 1),
+	SEQUENCE_MODIFIER_POSITION_BIT		= (1 << 2),
+	SEQUENCE_MODIFIER_COLOR_BIT			= (1 << 3),
+	SEQUENCE_MODIFIER_COLOR2_BIT		= (1 << 4),
+	SEQUENCE_MODIFIER_FADEIN_BIT		= (1 << 5),
+	SEQUENCE_MODIFIER_FADEOUT_BIT		= (1 << 6),
+	SEQUENCE_MODIFIER_HOLDTIME_BIT		= (1 << 7),
+	SEQUENCE_MODIFIER_FXTIME_BIT		= (1 << 8),
+	SEQUENCE_MODIFIER_SPEAKER_BIT		= (1 << 9),
+	SEQUENCE_MODIFIER_LISTENER_BIT		= (1 << 10),
+	SEQUENCE_MODIFIER_TEXTCHANNEL_BIT	= (1 << 11),
+} sequenceModifierBits_e;
+
+typedef enum sequenceCommandEnum_ {
+	SEQUENCE_COMMAND_ERROR = -1,
+	SEQUENCE_COMMAND_PAUSE = 0,
+	SEQUENCE_COMMAND_FIRETARGETS,
+	SEQUENCE_COMMAND_KILLTARGETS,
+	SEQUENCE_COMMAND_TEXT,
+	SEQUENCE_COMMAND_SOUND,
+	SEQUENCE_COMMAND_GOSUB,
+	SEQUENCE_COMMAND_SENTENCE,
+	SEQUENCE_COMMAND_REPEAT,
+	SEQUENCE_COMMAND_SETDEFAULTS,
+	SEQUENCE_COMMAND_MODIFIER,
+	SEQUENCE_COMMAND_POSTMODIFIER,
+	SEQUENCE_COMMAND_NOOP,
+
+	SEQUENCE_MODIFIER_EFFECT,
+	SEQUENCE_MODIFIER_POSITION,
+	SEQUENCE_MODIFIER_COLOR,
+	SEQUENCE_MODIFIER_COLOR2,
+	SEQUENCE_MODIFIER_FADEIN,
+	SEQUENCE_MODIFIER_FADEOUT,
+	SEQUENCE_MODIFIER_HOLDTIME,
+	SEQUENCE_MODIFIER_FXTIME,
+	SEQUENCE_MODIFIER_SPEAKER,
+	SEQUENCE_MODIFIER_LISTENER,
+	SEQUENCE_MODIFIER_TEXTCHANNEL,
+} sequenceCommandEnum_e;
+
+typedef enum sequenceCommandType_ {
+	SEQUENCE_TYPE_COMMAND,
+	SEQUENCE_TYPE_MODIFIER,
+} sequenceCommandType_e;
+
+typedef struct sequenceCommandMapping_ {
+	sequenceCommandEnum_e	commandEnum;
+	const char*				commandName;
+	sequenceCommandType_e	commandType;
+} sequenceCommandMapping_s;
+
+typedef struct client_textmessage_s {
+	int		effect;
+	byte	r1, g1, b1, a1;		// 2 colors for effects
+	byte	r2, g2, b2, a2;
+	float	x;
+	float	y;
+	float	fadein;
+	float	fadeout;
+	float	holdtime;
+	float	fxtime;
+	const char *pName;
+	const char *pMessage;
+} client_textmessage_t;
+
+typedef struct sequenceCommandLine_ {
+	int						commandType;		// Specifies the type of command
+	client_textmessage_t	clientMessage;		// Text HUD message struct
+	char*					speakerName;		// Targetname of speaking entity
+	char*					listenerName;		// Targetname of entity being spoken to
+	char*					soundFileName;		// Name of sound file to play
+	char*					sentenceName;		// Name of sentences.txt to play
+	char*					fireTargetNames;	// List of targetnames to fire
+	char*					killTargetNames;	// List of targetnames to remove
+	float					delay;				// Seconds 'till next command
+	int						repeatCount;		// If nonzero, reset execution pointer to top of block (N times, -1 = infinite)
+	int						textChannel;		// Display channel on which text message is sent
+	int						modifierBitField;	// Bit field to specify what clientmessage fields are valid
+	sequenceCommandLine_s*	nextCommandLine;	// Next command (linked list)
+} sequenceCommandLine_s;
+
+typedef struct sequenceEntry_ {
+	char*					fileName;		// Name of sequence file without .SEQ extension
+	char*					entryName;		// Name of entry label in file
+	sequenceCommandLine_s*	firstCommand;	// Linked list of commands in entry
+	sequenceEntry_s*		nextEntry;		// Next loaded entry
+	qboolean				isGlobal;		// Is entry retained over level transitions?
+} sequenceEntry_s;
+
+typedef struct sentenceEntry_ {
+	char*					data;			// sentence data (ie "We have hostiles" )
+	sentenceEntry_s*		nextEntry;		// Next loaded entry
+	qboolean				isGlobal;		// Is entry retained over level transitions?
+	unsigned int			index;			// this entry's position in the file.
+} sentenceEntry_s;
+
+typedef struct sentenceGroupEntry_ {
+	char*					groupName;		// name of the group (ie CT_ALERT )
+	unsigned int			numSentences;	// number of sentences in group
+	sentenceEntry_s*		firstSentence;	// head of linked list of sentences in group
+	struct sentenceGroupEntry_s*	nextEntry;		// next loaded group
+} sentenceGroupEntry_s;
+
 
 // server.h
 typedef struct client_frame_s {
