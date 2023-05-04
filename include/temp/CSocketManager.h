@@ -59,7 +59,6 @@ struct CSocketManager_vtable
     void (__thiscall* descructor)(struct CSocketManager* ptr, int);
 };
 
-// can reference as PacketID
 struct CSocketManagerPacket
 {
     struct CPacket* gVersion; // 0
@@ -92,7 +91,7 @@ struct CSocketManagerPacket
     struct CPacket* gShop;
     struct CPacket* gRank;
     struct CPacket* gBan;
-    struct CPacket* gUnk75;
+    struct CPacket* gUnk75; // 75
     struct CPacket* gOption;
     struct CPacket* gFavourite;
     struct CPacket* gItem; // 78
@@ -120,19 +119,19 @@ struct CSocketManagerPacket
     struct CPacket* gZBEnhance; // 100
     struct CPacket* gCleanSystem;
     struct CPacket* gRibbonSystem; // 102
-    struct CPacket* gVoxelGameSave; // gVoxelOutUI ???
+    struct CPacket* gVoxel; // Packet_VoxelGameSave & Packet_VoxelOutUI
     struct CPacket* gWeaponAuctionEvent;
-    struct CPacket* gAnalysis;
+    struct CPacket* gAnalysis; // 105
     struct CPacket* gLiveStream;
     struct CPacket* gCoDissamble;
     struct CPakcet* gMileageShop; // 108
     struct CPakcet* gHelp;
-    struct CPacket* gPopularInfo;
+    struct CPacket* gPopularInfo; // 110
     struct CPacket* undefc;
     struct CPacket* gKick;
     struct CPacket* gHonorShop;
     struct CPacket* gEpicPieceShop; // 114
-    struct CPacket* gAddon;
+    struct CPacket* gAddon; // 115
     struct CPacket* gQuestBadgeShop; // 116
     struct CPacket* gundefi;
     struct CPacket* gSeasonSystem;
@@ -154,22 +153,22 @@ struct CSocketManagerPacket
     struct CPacket* gInventory_RotationWeapon;
     struct CPacket* gSaleCoupon;
     struct CPacket* gAlarm; // 164
-    struct CPacket* gInventory_MonthlyWeapon;
+    struct CPacket* gInventory_MonthlyWeapon; // 165
     struct CPacket* gInventory_LiveWeapon;
-    struct CPacket* gVIPSystem;
+    struct CPacket* gVIP;
     struct CPacket* gInventory_FreePassWeapon;
     struct CPacket* gServerLog;
-    struct CPacket* undefg;
+    struct CPacket* undefg; // 170
     struct CPacket* gNxLog;
     struct CPacket* gDictionary; // encyclopedia
     struct CPacket* testpacket; // ???
     struct CPacket* gZBSGoldenZB;
-    struct CPacket* gFriend;
+    struct CPacket* gFriend; // 175
     struct CPacket* gInventory_EventItem;
     struct CPacket* gExpedition;
     struct CPacket* gScenarioTX;
     struct CPacket* gUserRestrict;
-    struct CPacket* gLeague;
+    struct CPacket* gLeague; // 180
     struct CPacket* gInventory_Class;
     struct CPacket* gInventory_Parts;
     struct CPacket* gInventory_Item;
@@ -191,7 +190,7 @@ struct CSocketManager
     int unk2;
     HWND windowHandle;
     //CSocketManagerPacket packets; // just a easier way to know packetID
-    int packets[0x400]; // why CSO implement like this...
+    struct CPacket* packetFunction[0x400];
     int unk10;
     char encrypt;
     char unk6;
