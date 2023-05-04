@@ -3,14 +3,16 @@ struct CPacket_vtables
     void (__thiscall* descructor)(struct CPacket* ptr);
     void (__thiscall* Function1)(struct CPacket* ptr);
     char (__thiscall* Parse)(struct CPacket* ptr, unsigned char* packet, int size);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION1)(struct CPacket* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION2)(struct CPacket* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION3)(struct CPacket* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION4)(struct CPacket* ptr);
 };
 
 struct CPacketBase
 {
     int unk1;
-    int unk2;
-    int unk3;
-    int unk4;
+    struct vector idk;
     int unk5;
 };
 

@@ -7,7 +7,7 @@ struct CSocket
     CSocket_vtable* vfptr;
     SOCKET socket;
     sockaddr_in socketInfo; // original sockaddr
-    SSL* ssl;
+    struct SSL* ssl;
     char crypt;
     char crypt2;
     int unk8;  // optval
@@ -46,7 +46,7 @@ struct CSocket
     char* lastError; // related string, prob lastError
 };
 
-struct CLogFile
+struct LogFile
 {
     FILE* fs;
     char flush; // flush
@@ -69,15 +69,17 @@ struct CSocketManagerPacket
     struct CPacket* unk4;
     struct CPacket* gServerList; // 5
     struct CPacket* gCreateCharacter;
-    struct CPacket* gRequestRoomList;
-    struct CPacket* unk8[2];
+    struct CPacket* gCrypt;
+    struct CPacket* gUnk8;
+    struct CPacket* gUnk9;
     struct CPacket* gChannelList; // 10
-    struct CPacket* unk11;
+    struct CPacket* gUnk11;
     struct CPacket* gRecvCrypt;
-    struct CPacket* unk13[2];
+    struct CPacket* gUnk13;
+    struct CPacket* gUnk14;
     struct CPacket* gMileageBingo; // 15
     struct CPacket* gStatistics;
-    struct CPacket* unk14;
+    struct CPacket* gSessionID;
     struct CPacket* gMobile; // 18
     struct CPacket* unka[46];
     struct CPacket* gRoom; // 65
@@ -118,7 +120,25 @@ struct CSocketManagerPacket
     struct CPacket* gZBEnhance; // 100
     struct CPacket* gCleanSystem;
     struct CPacket* gRibbonSystem; // 102
-    struct CPacket* iunk2[47];
+    struct CPacket* gVoxelGameSave; // gVoxelOutUI ???
+    struct CPacket* gWeaponAuctionEvent;
+    struct CPacket* gAnalysis;
+    struct CPacket* gLiveStream;
+    struct CPacket* gCoDissamble;
+    struct CPakcet* gMileageShop; // 108
+    struct CPakcet* gHelp;
+    struct CPacket* gPopularInfo;
+    struct CPacket* undefc;
+    struct CPacket* gKick;
+    struct CPacket* gHonorShop;
+    struct CPacket* gEpicPieceShop; // 114
+    struct CPacket* gAddon;
+    struct CPacket* gQuestBadgeShop; // 116
+    struct CPacket* gundefi;
+    struct CPacket* gSeasonSystem;
+    struct CPacket* gundefj;
+    struct CPacket* gGuideQuest; // 120
+    struct CPacket* iunk2[29];
     struct CPacket* gUserStart; // 150
     struct CPacket* gRoomList;
     struct CPacket* gInventory_Default;
@@ -132,11 +152,29 @@ struct CSocketManagerPacket
     struct CPacket* gInventory_Costume; // 160
     struct CPacket* gZombieScenarioMaps;
     struct CPacket* gInventory_RotationWeapon;
-    struct CPacket* unkb;
+    struct CPacket* gSaleCoupon;
     struct CPacket* gAlarm; // 164
-    struct CPacket* iunk3[35]; // 49 + gUserStart
-    struct CPacket* iunk4[55];
-    struct CPacket* iunk5;
+    struct CPacket* gInventory_MonthlyWeapon;
+    struct CPacket* gInventory_LiveWeapon;
+    struct CPacket* gVIPSystem;
+    struct CPacket* gInventory_FreePassWeapon;
+    struct CPacket* gServerLog;
+    struct CPacket* undefg;
+    struct CPacket* gNxLog;
+    struct CPacket* gDictionary; // encyclopedia
+    struct CPacket* testpacket; // ???
+    struct CPacket* gZBSGoldenZB;
+    struct CPacket* gFriend;
+    struct CPacket* gInventory_EventItem;
+    struct CPacket* gExpedition;
+    struct CPacket* gScenarioTX;
+    struct CPacket* gUserRestrict;
+    struct CPacket* gLeague;
+    struct CPacket* gInventory_Class;
+    struct CPacket* gInventory_Parts;
+    struct CPacket* gInventory_Item;
+    struct CPacket* gSwitchConfig;
+    struct CPacket* iunk3[71];
 };
 
 struct TestStuff
@@ -148,16 +186,18 @@ struct TestStuff
 
 struct CSocketManager
 {
-    CSocketManager_vtable* vfptr;
-    CSocket* socket;
+    struct CSocketManager_vtable* vfptr;
+    struct CSocket* socket;
     int unk2;
     HWND windowHandle;
-    CSocketManagerPacket packets;
+    //CSocketManagerPacket packets; // just a easier way to know packetID
+    int packets[0x400]; // why CSO implement like this...
+    int unk10;
     char encrypt;
     char unk6;
     int unk7;
     int unk8;
     TestStuff* unk9; // some holder
-    CLogFile* log;
+    LogFile* log;
     CRITICAL_SECTION critical;
 };
