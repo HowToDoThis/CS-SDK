@@ -1,16 +1,74 @@
-struct Packet_Match
+struct Packet_Match : CPacket
 {
-    void* vfptr;
-    struct CPacketBase base;
     int unk1; // a2
-    int unk2; // KeyValues
+    struct KeyValues* kv;
     int unk3;
     int unk4;
+    int unk5;
+    int unk6;
 };
 
 struct CClanMatchManager_tables
 {
-
+    void (__thiscall* Init)(struct CClanMatchManager* this);
+    void (__thiscall* Function2)(struct CClanMatchManager* this);
+    void (__thiscall* Function3)(struct CClanMatchManager* this);
+    void (__thiscall* Function4)(struct CClanMatchManager* this);
+    void (__thiscall* Function5)(struct CClanMatchManager* this);
+    void (__thiscall* Function6)(struct CClanMatchManager* this);
+    void (__thiscall* Function7)(struct CClanMatchManager* this);
+    void (__thiscall* Function8)(struct CClanMatchManager* this);
+    void (__thiscall* Function9)(struct CClanMatchManager* this);
+    void (__thiscall* Function10)(struct CClanMatchManager* this);
+    void (__thiscall* Function11)(struct CClanMatchManager* this);
+    void (__thiscall* Function12)(struct CClanMatchManager* this);
+    void (__thiscall* Function13)(struct CClanMatchManager* this);
+    void (__thiscall* Function14)(struct CClanMatchManager* this);
+    void (__thiscall* Function15)(struct CClanMatchManager* this);
+    void (__thiscall* Function16)(struct CClanMatchManager* this);
+    void (__thiscall* Function17)(struct CClanMatchManager* this);
+    void (__thiscall* Function18)(struct CClanMatchManager* this);
+    void (__thiscall* Function19)(struct CClanMatchManager* this);
+    void (__thiscall* Function20)(struct CClanMatchManager* this);
+    void (__thiscall* Function21)(struct CClanMatchManager* this);
+    void (__thiscall* Function22)(struct CClanMatchManager* this);
+    void (__thiscall* Function23)(struct CClanMatchManager* this);
+    void (__thiscall* Function24)(struct CClanMatchManager* this);
+    void (__thiscall* Function25)(struct CClanMatchManager* this);
+    void (__thiscall* Function26)(struct CClanMatchManager* this);
+    void (__thiscall* Function27)(struct CClanMatchManager* this);
+    void (__thiscall* Function28)(struct CClanMatchManager* this);
+    void (__thiscall* Function29)(struct CClanMatchManager* this);
+    void (__thiscall* Function30)(struct CClanMatchManager* this);
+    void (__thiscall* Function31)(struct CClanMatchManager* this);
+    void (__thiscall* Function32)(struct CClanMatchManager* this);
+    void (__thiscall* Function33)(struct CClanMatchManager* this);
+    void (__thiscall* Function34)(struct CClanMatchManager* this);
+    void (__thiscall* Function35)(struct CClanMatchManager* this);
+    void (__thiscall* Function36)(struct CClanMatchManager* this);
+    void (__thiscall* Function37)(struct CClanMatchManager* this);
+    void (__thiscall* Function38)(struct CClanMatchManager* this);
+    void (__thiscall* Function39)(struct CClanMatchManager* this);
+    void (__thiscall* Function40)(struct CClanMatchManager* this);
+    void (__thiscall* Function41)(struct CClanMatchManager* this);
+    void (__thiscall* Function42)(struct CClanMatchManager* this);
+    void (__thiscall* Function43)(struct CClanMatchManager* this);
+    void (__thiscall* Function44)(struct CClanMatchManager* this);
+    void (__thiscall* Function45)(struct CClanMatchManager* this);
+    void (__thiscall* Function46)(struct CClanMatchManager* this);
+    void (__thiscall* Function47)(struct CClanMatchManager* this);
+    void (__thiscall* Function48)(struct CClanMatchManager* this);
+    void (__thiscall* Function49)(struct CClanMatchManager* this);
+    void (__thiscall* Function50)(struct CClanMatchManager* this);
+    void (__thiscall* Function51)(struct CClanMatchManager* this);
+    void (__thiscall* Function52)(struct CClanMatchManager* this);
+    void (__thiscall* Function53)(struct CClanMatchManager* this);
+    void (__thiscall* Function54)(struct CClanMatchManager* this);
+    void (__thiscall* Function55)(struct CClanMatchManager* this);
+    void (__thiscall* Function56)(struct CClanMatchManager* this);
+    void (__thiscall* Function57)(struct CClanMatchManager* this);
+    void (__thiscall* Function58)(struct CClanMatchManager* this);
+    void (__thiscall* Function59)(struct CClanMatchManager* this);
 };
 
 struct CClanMatchManager
@@ -19,7 +77,7 @@ struct CClanMatchManager
     void* packetListener;
 
     int unk001;
-    int unk002;
+    Packet_Match* gPacket_Match;
     int unk003;
     int unk004;
     int unk005;
@@ -143,4 +201,5 @@ struct CClanMatchManager
     int unk121;
     int unk122;
     int unk123;
+    int unk124;
 };

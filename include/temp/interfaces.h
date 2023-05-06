@@ -15,19 +15,19 @@ struct CGame_vfunc : IBaseInterface
     bool  (__thiscall* CGame::Init)(struct CGame* this, void *pvInstance);
     void  (__thiscall* CGame::Function1)(struct CGame* this, int unk);
     void  (__thiscall* CGame::Function2)(struct CGame* this);
-	bool  (__thiscall* CGame::Shutdown)(struct CGame* this);
+    bool  (__thiscall* CGame::Shutdown)(struct CGame* this);
     void  (__thiscall* CGame::ShutdownCSO)(struct CGame* this);
-	bool  (__thiscall* CGame::CreateGameWindow)(struct CGame* this);
-	void  (__thiscall* CGame::SleepUntilInput)(struct CGame* this, int time);
-	HWND  (__thiscall* CGame::GetMainWindow)(struct CGame* this);
-	HWND* (*CGame::GetMainWindowAddress)();
-	void  (__thiscall* CGame::SetWindowXY)(struct CGame* this, int x, int y);
-	void  (__thiscall* CGame::SetWindowSize)(struct CGame* this, int w, int h);
-	void  (__thiscall* CGame::GetWindowRect)(struct CGame* this, int *x, int *y, int *w, int *h);
-	bool  (*CGame::IsActiveApp)();
-	bool  (*CGame::IsMultiplayer)();
-	void  (*CGame::PlayStartupVideos)();
-	void  (__thiscall* CGame::PlayAVIAndWait)(struct CGame* this, const char *aviFile);
+    bool  (__thiscall* CGame::CreateGameWindow)(struct CGame* this);
+    void  (__thiscall* CGame::SleepUntilInput)(struct CGame* this, int time);
+    HWND  (__thiscall* CGame::GetMainWindow)(struct CGame* this);
+    HWND* (*CGame::GetMainWindowAddress)();
+    void  (__thiscall* CGame::SetWindowXY)(struct CGame* this, int x, int y);
+    void  (__thiscall* CGame::SetWindowSize)(struct CGame* this, int w, int h);
+    void  (__thiscall* CGame::GetWindowRect)(struct CGame* this, int *x, int *y, int *w, int *h);
+    bool  (*CGame::IsActiveApp)();
+    bool  (*CGame::IsMultiplayer)();
+    void  (*CGame::PlayStartupVideos)();
+    void  (__thiscall* CGame::PlayAVIAndWait)(struct CGame* this, const char *aviFile);
 };
 
 struct CGame
@@ -227,4 +227,114 @@ struct CSOCoreSDM
     int unk7;
 
     int unk8;
+};
+
+typedef int HKeySymbol;
+struct IKeyValues_vt : IBaseInterface
+{
+    void (__thiscall* RegisterSizeofKeyValues)(struct IKeyValues* this, int size);
+    void* (__thiscall* AllocKeyValuesMemory)(struct IKeyValues* this, int size);
+    void (__thiscall* FreeKeyValuesMemory)(struct IKeyValues* this, void* kv);
+    HKeySymbol  (__thiscall* GetSymbolForString)(struct IKeyValues* this, const char *name);
+    const char* (__thiscall* GetStringForSymbol)(struct IKeyValues* this, HKeySymbol symbol);
+    void (__thiscall* GetLocalizedFromANSI)(struct IKeyValues* this);
+    void (__thiscall* GetANSIFromLocalized)(struct IKeyValues* this);
+    void (__thiscall* AddKeyValuesToMemoryLeakList)(struct IKeyValues* this);
+    void (__thiscall* RemoveKeyValuesFromMemoryLeakList)(struct IKeyValues* this);
+};
+
+struct IKeyValues
+{
+    IKeyValues_vt* vfptr;
+};
+
+typedef enum KeyValues::types_t
+{
+    TYPE_NONE = 0,
+    TYPE_STRING,
+    TYPE_INT,
+    TYPE_FLOAT,
+    TYPE_PTR,
+    TYPE_WSTRING,
+    TYPE_COLOR,
+    TYPE_UINT64,
+    TYPE_NUMTYPES, 
+};
+
+struct KeyValues_vt
+{
+    void (__thiscall* GetName)(struct KeyValues* this);
+    int  (__thiscall* GetNameSymbol)(struct KeyValues* this);
+    void (__thiscall* Function3)(struct KeyValues* this);
+    void (__thiscall* SaveToFile)(struct KeyValues* this);
+    struct KeyValues* (__thiscall* FindKey1)(struct KeyValues* this, int keySymbol);
+    struct KeyValues* (__thiscall* FindKey2)(struct KeyValues* this, const char *keyName, bool bCreate);
+    struct KeyValues* (__thiscall* CreateNewKey)(struct KeyValues* this);
+    void (__thiscall* AddSubKey)(struct KeyValues* this, struct KeyValues* pSubkey);
+    struct KeyValues* (__thiscall* GetFirstSubKey)(struct KeyValues* this);
+    struct KeyValues* (__thiscall* GetNextKey)(struct KeyValues* this);
+    int (__thiscall* GetInt)(struct KeyValues* this, const char *keyName, int defaultValue);
+    float (__thiscall* GetFloat)(struct KeyValues* this, const char *keyName, float defaultValue);
+    const char* (__thiscall* GetString)(struct KeyValues* this, const char *keyName, const char defaultValue);
+    const wchar_t* (__thiscall* GetWString)(struct KeyValues* this, const char *keyName, const wchar_t defaultValue);
+    void* (__thiscall* GetPtr)(struct KeyValues* this, const char *keyName, void* defaultValue);
+    bool (__thiscall* IsEmpty)(struct KeyValues* this, int keySymbol);
+    void (__thiscall* SetWString)(struct KeyValues* this, const char *keyName, const wchar_t *value);
+    void (__thiscall* SetString)(struct KeyValues* this, const char *keyName, const char *value);
+    void (__thiscall* SetInt)(struct KeyValues* this, const char *keyName, int value);
+    void (__thiscall* SetFloat)(struct KeyValues* this, const char *keyName, float value);
+    void (__thiscall* SetPtr)(struct KeyValues* this, const char *keyName, void *value);
+    struct KeyValues* (__thiscall* MakeCopy)(struct KeyValues* this);
+    void (__thiscall* Function23)(struct KeyValues* this);
+    KeyValues::types_t (__thiscall* GetDataType)(struct KeyValues* this, const char *keyName);
+    void (__thiscall* deleteThis)(struct KeyValues* this);
+};
+
+struct KeyValues
+{
+    KeyValues_vt* vfptr;
+    int m_iKeyName;
+    void* m_pValue;
+    short m_iDataType;
+    short m_iAllocationSize;
+    KeyValues* m_pPeer;
+    KeyValues* m_pSub;
+};
+
+struct CServerChannelManager_vtables : IBaseInterface
+{
+    void (__thiscall* Init)(struct CServerChannelManager* this);
+    void (__thiscall* Shutdown)(struct CServerChannelManager* this);
+    void (__thiscall* SendRequestChannel)(struct CServerChannelManager* this);
+    void (__thiscall* RegisterChannels)(struct CServerChannelManager* this);
+    void (__thiscall* Function6)(struct CServerChannelManager* this, int a2);
+    void (__thiscall* SendRequestRoomList)(struct CServerChannelManager* this, int serverID, int serverChannelID);
+    void (__thiscall* Function8)(struct CServerChannelManager* this, int a2);
+    void (__thiscall* Function9)(struct CServerChannelManager* this);
+};
+
+struct CServerChannelManager
+{
+    CServerChannelManager_vtables* vfptr;
+    void* vfptr2; // packetListener
+
+    int unk1;
+    int unk2;
+    int unk3;
+
+    int unk4; // serverInfo
+    int unk5;
+    int unk6;
+    int unk7;
+    int serverID;
+    int serverChannelID;
+    int serverCategory;
+    int unk11;
+    int unk12;
+    int unk13;
+    int unk14;
+    int unk15;
+    int unk16;
+    int unk17;
+    int unk18;
 };

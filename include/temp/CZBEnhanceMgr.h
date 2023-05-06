@@ -1,8 +1,11 @@
+#define ZombieCount 14
+#define ZombieSkillCount 7
+
 struct CZBEnhanceMgr_vtables
 {
-    void (__thiscall* descructor)(struct CZBEnhanceMgr* this);
-    void (__thiscall* InitUnk2)(struct CZBEnhanceMgr* this);
-    void (__thiscall* DeleteUnk2)(struct CZBEnhanceMgr* this);
+    void (__thiscall* Init)(struct CZBEnhanceMgr* this);
+    void (__thiscall* InitList)(struct CZBEnhanceMgr* this);
+    void (__thiscall* DeleteList)(struct CZBEnhanceMgr* this);
     void (__thiscall* SendEvolveInfo)(struct CZBEnhanceMgr* this);
     void (__thiscall* SendEvolveExp)(struct CZBEnhanceMgr* this);
     void (__thiscall* SendEvolveRequest)(struct CZBEnhanceMgr* this, int zbType);
@@ -20,19 +23,14 @@ struct CZBEnhanceMgr_vtables
     void (__thiscall* SetDNASkill)(struct CZBEnhanceMgr* this, int a, bool b, int c = 0);
 };
 
-struct CZBEnhanceDetail
-{
-    int skill[7];
-};
-
 struct CZBEnhanceMgr
 {
     CZBEnhanceMgr_vtables* vfptr;
     void* vfptr2; // another table? related PacketListener
     struct CPacket_ZBEnhance* packetZBEnhance;
-    int iZombie[14]; // Func 9
-    CZBEnhanceDetail iZombieSkill[14];
-    CZBEnhanceDetail iZombieSkillExp[14];
+    int iZombie[ZombieCount];
+    int iZombieSkill[ZombieCount][ZombieSkillCount];
+    int iZombieSkillExp[ZombieCount][ZombieSkillCount];
     int dnaPoints;
     char dnaSkill[18];
     char unk7;

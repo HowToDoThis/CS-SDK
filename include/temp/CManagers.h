@@ -1,13 +1,12 @@
-struct Packet_MileageBingo
+struct Packet_MileageBingo : CPacket
 {
-    struct CPacket base;
     int unk3;
     int unk4;
 };
 
 struct CMileageBingoMgr_vtables
 {
-    void (__thiscall* desctuctor)(struct CMileageBingoMgr* this);
+    void (__thiscall* Init)(struct CMileageBingoMgr* this);
     void (__thiscall* Func1)(struct CMileageBingoMgr* this);
     void (__thiscall* Func2)(struct CMileageBingoMgr* this);
     void (__thiscall* SendType0)(struct CMileageBingoMgr* this);

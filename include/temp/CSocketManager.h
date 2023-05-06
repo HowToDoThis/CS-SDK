@@ -10,39 +10,27 @@ struct CSocket
     struct SSL* ssl;
     char crypt;
     char crypt2;
-    int unk8;  // optval
-    int unk9;  // buffSize
-    char* szSendBuffer; // optval
-    char* bufferB; // buffSize
-    int iSent; // optval
-    int unk13; // buffSize
+    int unk8;
+    int unk9;
+    unsigned char* szSendBuffer1;
+    unsigned char* szSendBuffer2;
+    unsigned char* szSendFinal;
+    int unk13;
     char unk14A;
     char unk14B;
     char sequence;
-    int optVal;
-    int bufferSize;
-    char unk17;
-    char unk18A;
+    int iUnk1;
+    int iUnk2;
+    char bReadWithEVP;
+    char bSendWithEVP;
     char unk18B;
     char unk18C;
-    struct EVP_CIPHER_CTX* ctx2;
-    char szUnk1[121];
-    // related EVP or ENCRYPT
-    int tempa;
-    int tempb;
-    int tempc;
-    struct EVP_CIPHER_CTX* ctx;
-    int tempe;
-    int tempf;
-    int tempg;
-    int temph;
-    char temp1[64];
-    char temp2[32];
-    char szUnk1b[256];
-    char szUnk2[32];
-    char szUnk3[16];
+    struct EVP_CIPHER_CTX ctxRecvEncrypt;
+    struct EVP_CIPHER_CTX ctxRecvDecrypt;
+    struct EVP_CIPHER_CTX ctxSendEncrypt;
+    struct EVP_CIPHER_CTX ctxSendDecrypt;
     int unk18;
-    char* header;
+    char* packetData;
     char* lastError; // related string, prob lastError
 };
 
@@ -190,8 +178,8 @@ struct CSocketManager
     int unk2;
     HWND windowHandle;
     //CSocketManagerPacket packets; // just a easier way to know packetID
-    struct CPacket* packetFunction[0x400];
-    int unk10;
+    struct CPacket* packetFunction[0x100];
+    //int unk10;
     char encrypt;
     char unk6;
     int unk7;
