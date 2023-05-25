@@ -29,7 +29,7 @@ struct GameOptionManager_vtables
     void (__thiscall* Function27)(struct GameOptionManager* this);
     void (__thiscall* Function28)(struct GameOptionManager* this);
     void (__thiscall* Function29)(struct GameOptionManager* this);
-    void (__thiscall* Function30)(struct GameOptionManager* this);
+    int  (__thiscall* Function30)(struct GameOptionManager* this);
     void (__thiscall* Function31)(struct GameOptionManager* this);
     void (__thiscall* Function32)(struct GameOptionManager* this);
     void (__thiscall* Function33)(struct GameOptionManager* this);

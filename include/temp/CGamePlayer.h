@@ -93,7 +93,7 @@ struct CGameUser_vtables
     void (__thiscall* Function91)(struct CGameUser* this);
     void (__thiscall* Function92)(struct CGameUser* this);
     void (__thiscall* Function93)(struct CGameUser* this);
-    void (__thiscall* Function94)(struct CGameUser* this);
+    int  (__thiscall* Function94)(struct CGameUser* this);
     void (__thiscall* Function95)(struct CGameUser* this);
     void (__thiscall* Function96)(struct CGameUser* this);
     void (__thiscall* Function97)(struct CGameUser* this);
@@ -109,25 +109,28 @@ struct CGameUser_vtables
     void (__thiscall* Function107)(struct CGameUser* this);
 };
 
+struct NetworkConfig
+{
+    unsigned int   ip;
+    unsigned short server;
+    unsigned short client;
+};
+
 // CHN160531
 // size 668 (29C)
 struct CGameUser
 {
-    CGameUser_vtables* vfptr;
+    struct CGameUser_vtables* vfptr;
 
     // achievement list
-    int unk1;
-    int unk2;
-    int unk3;
+    vector achievement;
 
     // honor
     int titleID;
     int honorPoints;
 
     // titles
-    int unk6;
-    int unk7;
-    int unk8;
+    vector titles;
 
     int unk9;
     int unk10;
@@ -142,11 +145,10 @@ struct CGameUser
     int unk19;
 
     short a1;
-    int a2;
-    int a3;
-    int a4;
-    short a5;
-    short a5b;
+    
+    NetworkConfig external;
+    NetworkConfig internal;
+
     int a6; // 4
     int a7; // 4
     int a8; // 4
@@ -188,7 +190,7 @@ struct CGameUser
     int b2;
     int clanID;
     int clanMarkID;
-    const char* clanName;
+    const char* szClanName;
     char unk21;
     char unk22;
     char unk23;
@@ -197,14 +199,14 @@ struct CGameUser
     int nation;
     int city;
     int town;
-    const char* unk28; // pcbangName
+    const char* szPCBangName;
     int unk29;
 
     // tournament
-    char unk30A;
-    char unk30B; // & 1
-    char unk30C; // & 2
-    char unk30D; // & 8
+    char iTournamentA;
+    char iTournamentB; // & 1
+    char iTournamentC; // & 2
+    char iTournamentD; // & 8
     char unk31;  // & 4 SharedDataMgrFunc26
 
     // Ranking
@@ -226,37 +228,24 @@ struct CGameUser
 
     int codeBox;
     int unk41; // 0x20000
-    short unk42;
+    string unk42; // std::string
 
-    int c1;
-    int c2;
-    int c3;
-    int c4;
-    int c5;
-
-    int unk43; // 0x800000
-    int unk44; // 0x1000000
-    int unk45; // 0x4000000
-    int d1;    // 0x20000000
-    int d2;
-
-    // Login???
-    char* replyMsg;
-    int replyCode; // why char not int?
-
-    int flag;
+    int unk43;    // 0x800000
+    int unk44;    // 0x1000000
+    int unk45;    // 0x4000000
+    vector unk46; // 0x20000000
 };
 
 // CHN160531
 // size 688 (2B0)
-struct CGamePlayer
+struct CGamePlayer : CGameUser
 {
-    struct CGameUser base;
-    int   unk1;
-    short unk2;
-    int   unk3;
-    int   unk4;
-    short unk5;
+    int unk1;
+    int unk2;
+    int unk3;
+    int unk4;
+    int unk5;
+    int unk6;
 };
 
 struct CGamePlayerManager_vtables

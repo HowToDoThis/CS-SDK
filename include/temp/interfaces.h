@@ -121,6 +121,40 @@ struct CGameUI_vt : IBaseInterface
 struct CGameUI
 {
     CGameUI_vt* vfptr;
+    void* vfptr2; // IBuffListener
+    int unk2;
+    int unk3;
+    int unk4;
+    int unk5;
+    int unk6;
+    int unk7;
+    int unk8;
+    int unk9;
+    char unk10;
+    
+    int big1[71];
+    
+    int unk11;
+    int unk12;
+    char unk13;
+    int unk14; // not showing
+    int unk15; // string
+    int unk16;
+
+    int big2[4];
+
+    int unk17;
+    int unk18;
+    int unk19;
+    int unk20;
+    int unk21;
+    int unk22;
+    int unk23;
+    int unk24;
+    int unk25;
+    int unk26;
+    int unk27;
+    char unk28;
 };
 
 struct CGameConsole_vt : IBaseInterface

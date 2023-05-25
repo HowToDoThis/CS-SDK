@@ -9,17 +9,12 @@ struct CPacket_vtables
     void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION4)(struct CPacket* ptr);
 };
 
-struct CPacketBase
-{
-    int unk1;
-    struct vector idk;
-    int unk5;
-};
-
 struct CPacket
 {
     CPacket_vtables* vfptr;
-    CPacketBase base;
+    int unk1;
+    struct vector idk;
+    int unk5;
 };
 
 struct CPacketReader
@@ -50,4 +45,11 @@ struct CPacketSendInternal
 struct CPacketSend
 {
     struct CPacketSendInternal* base;
+};
+
+struct Packet_HostServer : CPacket
+{
+    int serverIP;
+    int serverPort;
+    int hostip;
 };

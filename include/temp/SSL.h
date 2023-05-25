@@ -30,8 +30,7 @@ typedef struct asn1_string_st ASN1_UTF8STRING;
 typedef int ASN1_BOOLEAN;
 typedef int ASN1_NULL;
 
-typedef struct asn1_object_st
-{
+typedef struct asn1_object_st {
 	const char *sn,*ln;
 	int nid;
 	int length;
@@ -39,8 +38,7 @@ typedef struct asn1_object_st
 	int flags;	/* Should we free this one */
 } ASN1_OBJECT;
 
-typedef struct asn1_string_st
-{
+typedef struct asn1_string_st {
 	int length;
 	int type;
 	unsigned char *data;
@@ -56,15 +54,13 @@ typedef struct evp_cipher_ctx_st EVP_CIPHER_CTX;
 typedef struct engine_st ENGINE;
 typedef struct evp_pkey_st EVP_PKEY;
 
-typedef struct ASN1_ENCODING_st
-{
+typedef struct ASN1_ENCODING_st {
 	unsigned char *enc;	/* DER encoding */
 	long len;		/* Length of encoding */
 	int modified;		 /* set to 1 if 'enc' is invalid */
 } ASN1_ENCODING;
 
-typedef struct asn1_type_st
-{
+typedef struct asn1_type_st {
 	int type;
 	union	{
 		char *ptr;
@@ -92,8 +88,7 @@ typedef struct asn1_type_st
 		} value;
 } ASN1_TYPE;
 
-typedef struct stack_st
-{
+typedef struct stack_st {
 	int num;
 	char **data;
 	int sorted;
@@ -102,8 +97,7 @@ typedef struct stack_st
 	int (*comp)(const char * const *, const char * const *);
 } STACK;
 
-struct evp_cipher_st
-{
+struct evp_cipher_st {
 	int nid;
 	int block_size;
 	int key_len;		/* Default value for variable length ciphers */
@@ -119,8 +113,7 @@ struct evp_cipher_st
 	void *app_data;		/* Application data */
 } /* EVP_CIPHER */;
 
-struct evp_cipher_ctx_st
-{
+struct evp_cipher_ctx_st {
 	const EVP_CIPHER *cipher;
 	ENGINE *engine;	/* functional reference if 'cipher' is ENGINE-provided */
 	int encrypt;		/* encrypt or decrypt */
@@ -140,15 +133,13 @@ struct evp_cipher_ctx_st
 	unsigned char final[EVP_MAX_BLOCK_LENGTH];/* possible final block */
 } /* EVP_CIPHER_CTX */;
 
-typedef struct evp_cipher_info_st
-{
+typedef struct evp_cipher_info_st {
 	const EVP_CIPHER *cipher;
 	unsigned char iv[EVP_MAX_IV_LENGTH];
 } EVP_CIPHER_INFO;
 
 /* a sequence of these are used */
-typedef struct x509_attributes_st
-{
+typedef struct x509_attributes_st {
 	ASN1_OBJECT *object;
 	int single; /* 0 for a set, 1 for a single item (which is wrong) */
 	union	{
@@ -158,8 +149,7 @@ typedef struct x509_attributes_st
 		} value;
 } X509_ATTRIBUTE;
 
-struct evp_pkey_st
-{
+struct evp_pkey_st {
 	int type;
 	int save_type;
 	int references;
@@ -187,14 +177,12 @@ typedef struct X509_POLICY_TREE_st X509_POLICY_TREE;
 
 typedef struct crypto_ex_data_st CRYPTO_EX_DATA;
 
-struct crypto_ex_data_st
-{
+struct crypto_ex_data_st {
 	STACK *sk;
 	int dummy; /* gcc is screwing up this data structure :-( */
 };
 
-typedef struct X509_crl_info_st
-{
+typedef struct X509_crl_info_st {
 	ASN1_INTEGER *version;
 	X509_ALGOR *sig_alg;
 	X509_NAME *issuer;
@@ -205,8 +193,7 @@ typedef struct X509_crl_info_st
 	ASN1_ENCODING enc;
 } X509_CRL_INFO;
 
-struct X509_crl_st
-{
+struct X509_crl_st {
 	/* actual signature */
 	X509_CRL_INFO *crl;
 	X509_ALGOR *sig_alg;
@@ -214,43 +201,37 @@ struct X509_crl_st
 	int references;
 } /* X509_CRL */;
 
-struct X509_algor_st
-{
+struct X509_algor_st {
 	ASN1_OBJECT *algorithm;
 	ASN1_TYPE *parameter;
 } /* X509_ALGOR */;
 
-typedef struct X509_name_entry_st
-{
+typedef struct X509_name_entry_st {
 	ASN1_OBJECT *object;
 	ASN1_STRING *value;
 	int set;
 	int size; 	/* temp variable */
 } X509_NAME_ENTRY;
 
-struct X509_name_st
-{
+struct X509_name_st {
 	STACK_OF(X509_NAME_ENTRY) *entries;
 	int modified;	/* true if 'bytes' needs to be built */
 	char *bytes;
 	unsigned long hash; /* Keep the hash around for lookups */
 } /* X509_NAME */;
 
-typedef struct X509_val_st
-{
+typedef struct X509_val_st {
 	ASN1_TIME *notBefore;
 	ASN1_TIME *notAfter;
 } X509_VAL;
 
-typedef struct X509_pubkey_st
-{
+typedef struct X509_pubkey_st {
 	X509_ALGOR *algor;
 	ASN1_BIT_STRING *public_key;
 	EVP_PKEY *pkey;
 } X509_PUBKEY;
 
-typedef struct x509_cinf_st
-{
+typedef struct x509_cinf_st {
 	ASN1_INTEGER *version;		/* [ 0 ] default of v1 */
 	ASN1_INTEGER *serialNumber;
 	X509_ALGOR *signature;
@@ -263,8 +244,7 @@ typedef struct x509_cinf_st
 	STACK_OF(X509_EXTENSION) *extensions;	/* [ 3 ] optional in v3 */
 } X509_CINF;
 
-typedef struct x509_cert_aux_st
-{
+typedef struct x509_cert_aux_st {
 	STACK_OF(ASN1_OBJECT) *trust;		/* trusted uses */
 	STACK_OF(ASN1_OBJECT) *reject;		/* rejected uses */
 	ASN1_UTF8STRING *alias;			/* "friendly name" */
@@ -297,8 +277,7 @@ struct x509_st
 
 typedef struct x509_lookup_st X509_LOOKUP;
 
-typedef struct x509_object_st
-{
+typedef struct x509_object_st {
 	/* one of the above types */
 	int type;
 	union	{
@@ -329,8 +308,7 @@ typedef struct x509_lookup_method_st
 			    X509_OBJECT *ret);
 } X509_LOOKUP_METHOD;
 
-struct x509_lookup_st
-{
+struct x509_lookup_st {
 	int init;			/* have we been started */
 	int skip;			/* don't use us. */
 	X509_LOOKUP_METHOD *method;	/* the functions */
@@ -339,8 +317,7 @@ struct x509_lookup_st
 	X509_STORE *store_ctx;	/* who owns us */
 } /* X509_LOOKUP */;
 
-typedef struct private_key_st
-{
+typedef struct private_key_st {
 	int version;
 	/* The PKCS#8 data types */
 	X509_ALGOR *enc_algor;
@@ -360,8 +337,7 @@ typedef struct private_key_st
 	int references;
 } X509_PKEY;
 
-typedef struct X509_info_st
-{
+typedef struct X509_info_st {
 	X509 *x509;
 	X509_CRL *crl;
 	X509_PKEY *x_pkey;
@@ -375,8 +351,7 @@ typedef struct X509_info_st
 
 typedef struct buf_mem_st BUF_MEM;
 
-struct buf_mem_st
-{
+struct buf_mem_st {
 	int length;	/* current number of bytes */
 	char *data;
 	int max;	/* size of buffer */
@@ -387,8 +362,7 @@ typedef __int64 __time64_t;
 typedef __time32_t time_t;
 typedef __time64_t time_t;
 
-typedef struct X509_VERIFY_PARAM_st
-{
+typedef struct X509_VERIFY_PARAM_st {
 	char *name;
 	time_t check_time;	/* Time to use */
 	unsigned long inh_flags; /* Inheritance flags */
@@ -399,8 +373,7 @@ typedef struct X509_VERIFY_PARAM_st
 	STACK_OF(ASN1_OBJECT) *policies;	/* Permissible policies */
 } X509_VERIFY_PARAM;
 
-struct x509_store_st
-{
+struct x509_store_st {
 	/* The following is a cache of trusted certs */
 	int cache; 	/* if true, stash any hits */
 	STACK_OF(X509_OBJECT) *objs;	/* Cache of all objects */
@@ -425,8 +398,7 @@ struct x509_store_st
 	int references;
 } /* X509_STORE */;
 
-struct x509_store_ctx_st      /* X509_STORE_CTX */
-{
+struct x509_store_ctx_st {
 	X509_STORE *ctx;
 	int current_method;	/* used when looking up certs */
 
@@ -471,8 +443,7 @@ struct x509_store_ctx_st      /* X509_STORE_CTX */
 typedef struct env_md_st EVP_MD;
 typedef struct env_md_ctx_st EVP_MD_CTX;
 
-struct env_md_st
-{
+struct env_md_st {
 	int type;
 	int pkey_type;
 	int md_size;
@@ -494,8 +465,7 @@ struct env_md_st
 	int ctx_size; /* how big does the ctx->md_data need to be */
 } /* EVP_MD */;
 
-struct env_md_ctx_st
-{
+struct env_md_ctx_st {
 	const EVP_MD *digest;
 	ENGINE *engine; /* functional reference if 'digest' is ENGINE-provided */
 	unsigned long flags;
@@ -507,8 +477,7 @@ typedef struct ssl_ctx_st SSL_CTX;
 
 typedef int (*GEN_SESSION_CB)(const SSL *ssl, unsigned char *id, unsigned int *id_len);
 
-typedef struct ssl_cipher_st
-{
+typedef struct ssl_cipher_st {
 	int valid;
 	const char *name;		/* text name */
 	unsigned long id;		/* id, 4 bytes, first is version */
@@ -521,8 +490,7 @@ typedef struct ssl_cipher_st
 	unsigned long mask_strength;	/* also used for matching */
 } SSL_CIPHER;
 
-typedef struct ssl_session_st
-{
+typedef struct ssl_session_st {
 	int ssl_version;	/* what ssl version session info is
 				 * being kept in here? */
 
@@ -575,8 +543,7 @@ typedef struct ssl_session_st
 } SSL_SESSION;
 
 /* Used to hold functions for SSLv2 or SSLv3/TLSv1 functions */
-typedef struct ssl_method_st
-{
+typedef struct ssl_method_st {
 	int version;
 	int (*ssl_new)(SSL *s);
 	void (*ssl_clear)(SSL *s);
@@ -610,8 +577,7 @@ typedef struct ssl_method_st
 	long (*ssl_ctx_callback_ctrl)(SSL_CTX *s, int cb_id, void (*fp)(void));
 } SSL_METHOD;
 
-struct ssl_st
-{
+struct ssl_st {
 	/* protocol version
 	 * (one of SSL2_VERSION, SSL3_VERSION, TLS1_VERSION, DTLS1_VERSION)
 	 */
@@ -751,8 +717,7 @@ struct ssl_st
 				 * SSLv3/TLS rollback check */
 };
 
-struct ssl_ctx_st
-{
+struct ssl_ctx_st {
 	SSL_METHOD *method;
 
 	STACK_OF(SSL_CIPHER) *cipher_list;

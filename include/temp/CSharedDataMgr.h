@@ -187,7 +187,7 @@ struct CSharedDataMgr_vtables
     void (__thiscall* ZombieUX)(struct CSharedDataMgr* this);
     void (__thiscall* HelpPageEvent)(struct CSharedDataMgr* this);
     void (__thiscall* Function184)(struct CSharedDataMgr* this);
-    void (__thiscall* Function185)(struct CSharedDataMgr* this);
+    void (__thiscall* Function185)(struct CSharedDataMgr* this, int);
     void (__thiscall* Function186)(struct CSharedDataMgr* this);
     void (__thiscall* Function187)(struct CSharedDataMgr* this);
     void (__thiscall* Function188)(struct CSharedDataMgr* this);

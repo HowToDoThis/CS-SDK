@@ -83,10 +83,10 @@ struct CSocketManagerPacket
     struct CPacket* gOption;
     struct CPacket* gFavourite;
     struct CPacket* gItem; // 78
-    struct CPacket* unk79a;
+    struct CPacket* gGameGuard;
     struct CPacket* gSearchRoom; // 80
     struct CPacket* gHostServer;
-    struct CPacket* gHShield;
+    struct CPacket* gHackShield;
     struct CPacket* gReport;
     struct CPacket* gTitle;
     struct CPacket* gBuff;       // 85
@@ -133,7 +133,7 @@ struct CSocketManagerPacket
     struct CPacket* gInventory;
     struct CPacket* gInventory_ClanStock; // 155
     struct CPacket* gInventory_CafeItems;
-    struct CPacket* gUserInfo;
+    struct CPacket* gUserUpdateInfo;
     struct CPacket* gInventory_FabItems;
     struct CPacket* gEvent;
     struct CPacket* gInventory_Costume; // 160
@@ -187,4 +187,19 @@ struct CSocketManager
     TestStuff* unk9; // some holder
     LogFile* log;
     CRITICAL_SECTION critical;
+};
+
+struct CSocketManagerOld
+{
+    void* vfptr; // only 1 desctructor
+    int unk2;
+    int unk3;
+    int unk4;
+    struct CPacket* packet[0x100];
+    char encrypt;
+    char unk6;
+    int unk7;
+    int unk8;
+    int unk9;
+    int unk10;
 };

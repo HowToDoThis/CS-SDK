@@ -9,10 +9,8 @@ struct CPacket_ZBEnhance
     int unk5;
 };
 
-struct Packet_Host
+struct Packet_Host : CPacket
 {
-    void* vfptr;
-    struct CPacketBase base;
     int hostID;
     int type;
     uint ip;
@@ -26,6 +24,7 @@ struct Packet_Host
     int useScenUserID;
     short useScenItemID;
     char useScenUnk;
+    int unk1;
 };
 
 struct Packet_Transfer

@@ -1,12 +1,12 @@
-struct CAuthManager_vtables
+struct AuthManager_vtables
 {
-    //void (__thiscall* desctructor)(struct CAuthManager* this, int unk);
-    void (__thiscall* Function1)(struct CAuthManager* this);
+    void (__thiscall* desctructor)(struct AuthManager* this, int unk);
+    void (__thiscall* Function1)(struct AuthManager* this);
 };
 
-struct CAuthManager
+struct AuthManager
 {
-    CAuthManager_vtables* vfptr;
+    struct AuthManager_vtables* vfptr;
     char unk1;
     int unk2;
     int unk3;
@@ -18,4 +18,5 @@ struct CAuthManager
     const char* unk6; // string?
     const char* unk7; // string
     int unk8; // CNMRealUserInfo
+    int unk9;
 };

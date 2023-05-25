@@ -246,7 +246,7 @@ typedef struct
 	void			(*pfnSpectatorThink)		( edict_t *pEntity );
 
 	// Notify game .dll that engine is going to shut down.  Allows mod authors to set a breakpoint.
-	void			(*pfnSys_Error)			( const char *error_string );
+	void			(__cdecl*pfnSys_Error)			( const char *error_string );
 
 	void			(*pfnPM_Move) ( struct playermove_s *ppmove, qboolean server );
 	void			(*pfnPM_Init) ( struct playermove_s *ppmove );
