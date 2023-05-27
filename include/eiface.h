@@ -386,11 +386,11 @@ typedef struct {
 } DLL_FUNCTIONS;
 
 typedef struct {
-	void (*pfnOnFreeEntPrivateData)(struct edict_t *pEnt);
-	void (*pfnGameShutdown)(void);
-	int  (*pfnShouldCollide)(struct edict_t *pentTouched, struct edict_t *pentOther);
-	void (*pfnCvarValue)(const struct edict_t *pEnt, const char *value);
-    void (*pfnCvarValue2)(const struct edict_t *pEnt, int requestID, const char *cvarName, const char *value);
+	void (__cdecl*pfnOnFreeEntPrivateData)(struct edict_t *pEnt);
+	void (__cdecl*pfnGameShutdown)(void);
+	int  (__cdecl*pfnShouldCollide)(struct edict_t *pentTouched, struct edict_t *pentOther);
+	void (__cdecl*pfnCvarValue)(const struct edict_t *pEnt, const char *value);
+    void (__cdecl*pfnCvarValue2)(const struct edict_t *pEnt, int requestID, const char *cvarName, const char *value);
 } NEW_DLL_FUNCTIONS;
 typedef int(__cdecl* NEW_DLL_FUNCTIONS_FN)(NEW_DLL_FUNCTIONS *pFunctionTable, int *interfaceVersion);
 

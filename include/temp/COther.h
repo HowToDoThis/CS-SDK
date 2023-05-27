@@ -49,7 +49,8 @@ struct StringTableWrapper_vtable
 struct StringTableWrapper
 {
     StringTableWrapper_vtable* vfptr;
-    StringTableBase base;
+    CSVLocalizedBase localized;
+    int unk1;
 };
 
 struct CCSVMapList : StringTable

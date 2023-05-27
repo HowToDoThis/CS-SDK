@@ -1,8 +1,12 @@
 #define BIT(n) (1<<(n))
 #define MAX_QPATH 64
 
+// NET_AllocMsg
+#define MSG_QUEUE_SIZE 1536
 #define MAX_MSGLEN 8186
-#define NET_MAX_MESSAGE 8250
+#define NET_MAX_MESSAGE 8234
+#define MAX_LOOPBACK 4
+#define NUM_MSG_QUEUES 40
 
 #define FRAGMENT_MAX_SIZE 1400
 #define MAX_PATH 260
@@ -15,7 +19,7 @@
 #define MAX_RESOURCE_LIST 4140
 #define MAX_CONSISTENCY_LIST 512
 #define MAX_MODELS 2048
-#define MAX_EVENTS 510
+#define MAX_EVENTS 320
 #define MAX_SOUNDS 1324
 #define MAX_GENERIC 2048
 #define MAX_SOUNDS_HASHLOOKUP_SIZE 2647
@@ -27,6 +31,8 @@
 #define CON_MAX_NOTIFY_STRING 80
 #define MAX_KNOWN_MODELS 4096
 #define NUM_AMBIENTS 4
+
+#define MAX_ALIAS_NAME 32
 
 typedef int BOOL;
 typedef int qboolean;
@@ -51,6 +57,7 @@ typedef unsigned int string_t;
 typedef unsigned int CRC32_t;
 
 typedef struct { byte r, g, b; } color24;
+typedef struct{	unsigned r, g, b, a;} colorVec;
 
 typedef enum netsrc_s {
     NS_CLIENT = 0,
@@ -196,6 +203,18 @@ typedef enum AUTH_IDTYPE {
     AUTH_IDTYPE_LOCAL	= 3
 };
 
+typedef enum DeltaType {
+    DT_BYTE				= BIT(0),	// A byte
+    DT_SHORT			= BIT(1),	// 2 byte field
+    DT_FLOAT			= BIT(2),	// A floating point field
+    DT_INTEGER			= BIT(3),	// 4 byte integer
+    DT_ANGLE			= BIT(4),	// A floating point angle
+    DT_TIMEWINDOW_8		= BIT(5),	// A floating point timestamp relative to server time
+    DT_TIMEWINDOW_BIG	= BIT(6),	// A floating point timestamp relative to server time (with more precision and custom multiplier)
+    DT_STRING			= BIT(7),	// A null terminated string, sent as 8 byte chars
+    DT_SIGNED			= BIT(31)	// sign modificator
+};
+
 const int MAX_EXTENSION_DLL = 50;
 
 typedef struct functiontable_s {
@@ -223,6 +242,21 @@ typedef struct sizebuf_s {
     int maxsize;
     int cursize;
 } sizebuf_t;
+
+typedef struct bf_write_s {
+    int nCurOutputBit;
+    unsigned char *pOutByte;
+    sizebuf_t *pbuf;
+} bf_write_t;
+
+typedef struct bf_read_s {
+    int nMsgReadCount;	// was msg_readcount
+    sizebuf_t *pbuf;
+    int nBitFieldReadStartByte;
+    int nBytesRead;
+    int nCurInputBit;
+    unsigned char *pInByte;
+} bf_read_t;
 
 typedef struct mplane_s {
     vec3_t			normal;			// surface normal
@@ -303,6 +337,9 @@ typedef struct entvars_s {
     float		takedamage;
     int			deadflag;
     vec3_t		view_ofs;	// eye position
+
+    int unk2[3];
+
     int			button;
     int			impulse;
     struct edict_t		*chain;			// Entity pointer when linked into a linked list
@@ -370,7 +407,7 @@ typedef struct entvars_s {
     struct edict_t		*euser3;
     struct edict_t		*euser4;
 
-    int unk[4];
+    int unk;
     int userID;
 } entvars_t;
 
@@ -632,10 +669,36 @@ typedef struct mdl_s {
 } mdl_t;
 
 typedef struct event_hook_s {
-	event_hook_s* next;
-	char* name;
-	void (*pfnEvent)(event_args_s*);
+    event_hook_s* next;
+    char* name;
+    void (*pfnEvent)(event_args_s*);
 } event_hook_t;
+
+typedef struct ipfilter_s {
+    unsigned int mask;
+    union {
+        uint32 u32;
+        uint8 octets[4];
+    } compare;
+    float banEndTime;
+    float banTime;
+} ipfilter_t;
+
+typedef struct userfilter_s {
+    USERID_t userid;
+    float banEndTime;
+    float banTime;
+} userfilter_t;
+
+typedef struct client_data_s {
+    vec3_t unk;
+    // fields that cannot be modified  (ie. have no effect if changed)
+    vec3_t origin;
+    // fields that can be changed by the cldll
+    vec3_t viewangles;
+    int		iWeaponBits;
+    float	fov;	// field of view
+} client_data_t;
 
 // dalias
 typedef enum aliasframetype_s {
@@ -827,16 +890,16 @@ typedef struct delta_info_s {
 } delta_info_t;
 
 typedef struct delta_definition_list_s {
-	delta_definition_list_s *next;
-	char *ptypename;
-	int numelements;
-	delta_definition_t *pdefinition;
+    delta_definition_list_s *next;
+    char *ptypename;
+    int numelements;
+    delta_definition_t *pdefinition;
 } delta_definition_list_t;
 
 typedef struct delta_registry_s {
-	delta_registry_s *next;
-	char *name;
-	delta_t *pdesc;
+    delta_registry_s *next;
+    char *name;
+    delta_t *pdesc;
 } delta_registry_t;
 
 // entity_state.h
@@ -885,6 +948,7 @@ typedef struct entity_state_s {
     // PLAYER SPECIFIC
     int			team;
     int			playerclass;
+    int         unk1;
     int			health;
     qboolean	spectator;
     int			weaponmodel;
@@ -920,8 +984,6 @@ typedef struct entity_state_s {
     vec3_t		vuser2;
     vec3_t		vuser3;
     vec3_t		vuser4;
-
-    int unk1;
 } entity_state_t;
 
 typedef enum sv_delta_s {
@@ -955,13 +1017,17 @@ typedef struct netadr_s {
     int unk5;
 } netadr_t;
 
+typedef struct challenge_s {
+    netadr_t adr;
+    int challenge;
+    int time;
+} challenge_t;
+
 typedef struct packetlag_s {
     unsigned char *pPacketData;	// Raw stream data is stored.
     int nSize;
     netadr_t net_from_;
     float receivedTime;
-    int unk5;
-    int unk6;
     struct packetlag_s *pNext;
     struct packetlag_s *pPrev;
 } packetlag_t;
@@ -1042,6 +1108,121 @@ typedef struct netchan_s {
     int tempbuffersize;
     flow_t flow[MAX_FLOWS];
 } netchan_t;
+
+typedef struct loopmsg_s
+{
+    unsigned char data[NET_MAX_MESSAGE];
+    int datalen;
+} loopmsg_t;
+typedef struct loopback_s
+{
+    loopmsg_t msgs[MAX_LOOPBACK];
+    int get;
+    int send;
+} loopback_t;
+
+typedef enum svc_commands_e {
+    svc_bad,
+    svc_nop,
+    svc_disconnect,
+    svc_event,
+    svc_version,
+    svc_setview,
+    svc_sound,
+    svc_time,
+    svc_print,
+    svc_stufftext,
+    svc_setangle,
+    svc_serverinfo,
+    svc_lightstyle,
+    svc_updateuserinfo,
+    svc_deltadescription,
+    svc_clientdata,
+    svc_stopsound,
+    svc_pings,
+    svc_particle,
+    svc_damage,
+    svc_spawnstatic,
+    svc_event_reliable,
+    svc_spawnbaseline,
+    svc_temp_entity,
+    svc_setpause,
+    svc_signonnum,
+    svc_centerprint,
+    svc_killedmonster,
+    svc_foundsecret,
+    svc_spawnstaticsound,
+    svc_intermission,
+    svc_finale,
+    svc_cdtrack,
+    svc_restore,
+    svc_cutscene,
+    svc_weaponanim,
+    svc_decalname,
+    svc_roomtype,
+    svc_addangle,
+    svc_newusermsg,
+    svc_packetentities,
+    svc_deltapacketentities,
+    svc_choke,
+    svc_resourcelist,
+    svc_newmovevars,
+    svc_resourcerequest,
+    svc_customization,
+    svc_crosshairangle,
+    svc_soundfade,
+    svc_filetxferfailed,
+    svc_hltv,
+    svc_director,
+    svc_voiceinit,
+    svc_voicedata,
+    svc_sendextrainfo,
+    svc_timescale,
+    svc_resourcelocation,
+    svc_sendcvarvalue,
+    svc_sendcvarvalue2,
+    svc_exec,
+    svc_reserve60,
+    svc_reserve61,
+    svc_reserve62,
+    svc_reserve63,
+    svc_startofusermessages = svc_exec,
+    svc_endoflist = 255,
+};
+
+struct svc_func_s {
+    svc_commands_e opcode;
+    char *pszname;
+    void (__cdecl* func)();
+};
+
+// 11 + 1 end
+typedef enum clc_commands {
+    clc_bad,
+    clc_nop,
+    clc_move,
+    clc_stringcmd,
+    clc_delta,
+    clc_resourcelist,
+    clc_tmove,
+    clc_fileconsistency,
+    clc_voicedata,
+    clc_hltv,
+    clc_cvarvalue,
+    clc_cvarvalue2,
+    clc_endoflist = 255,
+};
+struct clc_func_s {
+    clc_commands opcode;
+    char *pszname;
+    void (__cdecl* func)();
+};
+
+typedef struct cmdalias_s {
+    struct cmdalias_s	*next;
+    char	name[MAX_ALIAS_NAME];
+    char	*value;
+} cmdalias_t;
 
 // hashpak.h
 typedef enum {
@@ -1221,7 +1402,9 @@ typedef struct clientdata_s {
     vec3_t				view_ofs;
     float				health;
     int					bInDuck;
-    int                 cso_unk[6];
+    double              cso_unk1;
+    double              cso_unk2;
+    double              cso_unk3;
     int					weapons; // remove?
     int					flTimeStepSound;
     int					flDuckTime;
@@ -1559,9 +1742,12 @@ typedef struct client_s {
     char physinfo[MAX_INFO_STRING / 2];
     qboolean m_bLoopback;
     uint32 m_VoiceStreams[2];
-    double m_lastvoicetime;
-
-    int unk3[516];
+    char unk1[2048];
+    int unk2;
+    int unk3;
+    int unk4;
+    int unk5;
+    int unk6;
 } client_t;
 
 typedef struct server_s {
@@ -1692,3 +1878,230 @@ typedef struct server_static_s {
     server_stats_t stats;
     qboolean isSecure;
 } server_static_t;
+
+typedef struct sv_adjusted_positions_s {
+    int active;
+    int needrelink;
+    vec3_t neworg;
+    vec3_t oldorg;
+    vec3_t initial_correction_org;
+    vec3_t oldabsmin;
+    vec3_t oldabsmax;
+    int deadflag;
+    vec3_t temp_org;
+    int temp_org_setflag;
+} sv_adjusted_positions_t;
+
+// client.h
+typedef struct screenfade_s {
+    float		fadeSpeed;		// How fast to fade (tics / second) (+ fade in, - fade out)
+    float		fadeEnd;		// When the fading hits maximum
+    float		fadeTotalEnd;	// Total End Time of the fade (used for FFADE_OUT)
+    float		fadeReset;		// When to reset to not fading (for fadeout and hold)
+    byte		fader, fadeg, fadeb, fadealpha;	// Fade color
+    int			fadeFlags;		// Fading flags
+} screenfade_t;
+
+typedef struct {
+    double receivedtime;
+    double latency;
+    qboolean invalid;
+    qboolean choked;
+    entity_state_t playerstate[32];
+    double time;
+    clientdata_t clientdata;
+    weapon_data_t weapondata[352];
+    packet_entities_t packet_entities;
+    unsigned short clientbytes;
+    unsigned short playerinfobytes;
+    unsigned short packetentitybytes;
+    unsigned short tentitybytes;
+    unsigned short soundbytes;
+    unsigned short eventbytes;
+    unsigned short usrbytes;
+    unsigned short voicebytes;
+    unsigned short msgbytes;
+} frame_t;
+
+typedef struct efrag_s {
+    struct mleaf_s		*leaf;
+    struct efrag_s		*leafnext;
+    struct cl_entity_s	*entity;
+    struct efrag_s		*entnext;
+} efrag_t;
+
+typedef struct {
+    byte					mouthopen;		// 0 = mouth closed, 255 = mouth agape
+    byte					sndcount;		// counter for running average
+    int						sndavg;			// running average
+} mouth_t;
+
+typedef struct {
+    // Time stamp for this movement
+    float					animtime;
+    vec3_t					origin;
+    vec3_t					angles;
+} position_history_t;
+
+typedef struct {
+    float					prevanimtime;  
+    float					sequencetime;
+    byte					prevseqblending[2];
+    vec3_t					prevorigin;
+    vec3_t					prevangles;
+    int						prevsequence;
+    float					prevframe;
+    byte					prevcontroller[4];
+    byte					prevblending[2];
+} latchedvars_t;
+
+#define HISTORY_MAX 64
+typedef struct {
+    int						index;      // Index into cl_entities ( should match actual slot, but not necessarily )
+    qboolean				player;     // True if this entity is a "player"
+    entity_state_t			baseline;   // The original state from which to delta during an uncompressed message
+    entity_state_t			prevstate;  // The state information from the penultimate message received from the server
+    entity_state_t			curstate;   // The state information from the last message received from server
+    int						current_position;  // Last received history update index
+    position_history_t		ph[HISTORY_MAX];   // History of position and angle updates for this player
+    mouth_t					mouth;			// For synchronizing mouth movements.
+    latchedvars_t			latched;		// Variables used by studio model rendering routines
+    // Information based on interplocation, extrapolation, prediction, or just copied from last msg received.
+    float					lastmove;
+    // Actual render position and angles
+    vec3_t					origin;
+    vec3_t					angles;
+    // Attachment points
+    vec3_t					attachment[4];
+    // Other entity local information
+    int						trivial_accept;
+    struct model_s			*model;			// cl.model_precache[ curstate.modelindes ];  all visible entities have a model
+    struct efrag_s			*efrag;			// linked list of efrags
+    struct mnode_s			*topnode;		// for bmodels, first world node that splits bmodel, or NULL if not split
+    float					syncbase;		// for client-side animations -- used by obsolete alias animation system, remove?
+    int						visframe;		// last frame this entity was found in an active leaf
+    colorVec				cvFloorColor;
+} cl_entity_t;
+
+typedef struct dlight_s {
+    vec3_t	origin;
+    float	radius;
+    color24	color;
+    float	die;				// stop lighting after this time
+    float	decay;				// drop this each second
+    float	minlight;			// don't add when contributing less
+    int		key;
+    qboolean	dark;			// subtracts light instead of adding
+} dlight_t;
+
+typedef struct player_info_s
+{
+    // User id on server
+    int		userid;
+    // User info string
+    char	userinfo[ MAX_INFO_STRING ];
+    // Name
+    char	name[32];
+    // Spectator or not, unused
+    int		spectator;
+    int		ping;
+    int		packet_loss;
+    // skin information
+    char	model[MAX_QPATH];
+    int		topcolor;
+    int		bottomcolor;
+    // last frame rendered
+    int		renderframe;
+    // Gait frame estimation
+    int		gaitsequence;
+    float	gaitframe;
+    float	gaityaw;
+    vec3_t	prevgaitorigin;
+    customization_t customdata;
+    //TODO: determine if constant needed - Solokiller
+    char hashedcdkey[16];
+    uint64 m_nSteamID;
+} player_info_t;
+
+typedef struct {
+    int client; // ????
+    resource_t resourcesonhand;
+    resource_t resourcesneeded;
+    resource_t resourcelist[4140];
+    int num_resources;
+    qboolean need_force_consistency_response;
+    char serverinfo[512];
+    int servercount;
+    int validsequence;
+    int parsecount;
+    int parsecountmod;
+    int stats[32];
+
+    double cso_unk1;
+    double cso_unk2;
+    usercmd_t cmd;
+
+    vec3_t viewangles;
+    vec3_t punchangle;
+    vec3_t crosshairangle;
+    vec3_t simorg;
+    vec3_t simvel;
+    vec3_t simangles;
+    vec_t predicted_origins[64][3];
+    vec3_t prediction_error;
+    float idealpitch;
+    vec3_t viewheight;
+
+    screenfade_t sf;
+    bool paused;
+    int onground;
+    int moving;
+    int waterlevel;
+    int usehull;
+    float maxspeed;
+    int pushmsec;
+    int light_level;
+    int intermission;
+    double mtime[2];
+    double time;
+    double oldtime;
+    frame_t frames[64];
+
+    char cso_unk3[80][64]; // its something like buffer, idk
+    char cso_unk4[0x81CC][64]; // playerstate(0x158) + clientdata(0x1F4) + clientdata.vuser4[3](0x5C)
+    int  cso_unk5;
+    
+    int playernum;
+    event_t event_precache[MAX_EVENTS];
+    model_t* model_precache[MAX_MODELS];
+    int model_precache_count;
+    sfx_t* sound_precache[MAX_SOUNDS];
+
+    // CL_ParseConsistencyInfo
+    int  cso_unk6;
+    char cso_unk7[511 * 44]; // some stuff 44 size
+    int  cso_unk8; // count of above
+    
+    int highentity;
+    char levelname[40];
+    int maxclients;
+    model_t* worldmodel;
+    efrag_t* free_efrags;
+    int num_entities;
+    int num_statics;
+    cl_entity_t viewent;
+    int cdtrack;
+    int looptrack;
+    CRC32_t serverCRC;
+    byte clientdllmd5[16];
+    float weaponstarttime;
+    int weaponsequence;
+    int fPrecaching;
+    dlight_t* pLight;
+    player_info_t players[32];
+    entity_state_t instanced_baseline[64];
+    int instanced_baseline_number;
+    CRC32_t mapCRC;
+    event_state_t events;
+    char downloadUrl[128];
+} client_state_t;
