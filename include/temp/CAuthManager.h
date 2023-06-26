@@ -1,7 +1,7 @@
 struct AuthManager_vtables
 {
     void (__thiscall* desctructor)(struct AuthManager* this, int unk);
-    void (__thiscall* Function1)(struct AuthManager* this);
+    void (__thiscall* PacketFunction)(struct AuthManager* this);
 };
 
 struct AuthManager

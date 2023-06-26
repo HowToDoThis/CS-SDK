@@ -333,12 +333,15 @@ typedef struct entvars_s {
     int			renderfx;
     float		health;
     float		frags;
+
+    int cso_add1;
+    int cso_add2;
+    int cso_add3;
+
     int			weapons;  // bit mask for available weapons
     float		takedamage;
     int			deadflag;
     vec3_t		view_ofs;	// eye position
-
-    int unk2[3];
 
     int			button;
     int			impulse;
@@ -349,21 +352,24 @@ typedef struct entvars_s {
     struct edict_t		*owner;
     struct edict_t		*groundentity;
     int			spawnflags;
-    float		max_health;
+    int			flags;
+    int         cso_add4;
     int			colormap;		// lowbyte topcolor, highbyte bottomcolor
     int			team;
-    int			flags;
+    float		max_health;
     float		teleport_time;
     float		armortype;
     float		armorvalue;
+    int         cso_add5;
+    int         cso_add6;
     int			waterlevel;
     int			watertype;
     string_t	target;
     string_t	targetname;
-    float		dmg;
-    string_t	message;
     float		dmg_take;
     float		dmg_save;
+    float		dmg;
+    string_t	message;
     string_t	netname;
     float		dmgtime;
     string_t	noise;
@@ -406,9 +412,6 @@ typedef struct entvars_s {
     struct edict_t		*euser2;
     struct edict_t		*euser3;
     struct edict_t		*euser4;
-
-    int unk;
-    int userID;
 } entvars_t;
 
 typedef struct USERID_s {
@@ -1181,12 +1184,8 @@ typedef enum svc_commands_e {
     svc_resourcelocation,
     svc_sendcvarvalue,
     svc_sendcvarvalue2,
-    svc_exec,
-    svc_reserve60,
-    svc_reserve61,
-    svc_reserve62,
-    svc_reserve63,
-    svc_startofusermessages = svc_exec,
+    svc_startrestoredgame,
+    svc_updatemodel,
     svc_endoflist = 255,
 };
 

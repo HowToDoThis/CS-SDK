@@ -229,38 +229,97 @@ struct CEngine
     int undef3;
 };
 
-typedef enum LanguageCode {
-    kr0,
-    kr1,
-    chn,
-    tw,
-    jpn,
-    sgp,
-    idn,
-    th,
-    tur,
-    vn,
-};
-
-struct CLanguage
+struct CSOCoreSDM_vt : IBaseInterface
 {
-    char langName[16];
-    LanguageCode langCode;
+    void (__thiscall* Init)(struct CSOCoreSDM* this);
+    void (__thiscall* Shutdown)(struct CSOCoreSDM* this);
+    void (__thiscall* CallServerChannelMgr3)(struct CSOCoreSDM* this);
+    void (__thiscall* CallServerChannelMgr3_2)(struct CSOCoreSDM* this);
+    void (__thiscall* Function5)(struct CSOCoreSDM* this);
+    void (__thiscall* CallFriendMgr2)(struct CSOCoreSDM* this);
+    void (__thiscall* SetFriendMgr)(struct CSOCoreSDM* this);
+    void (__thiscall* DeleteFriend)(struct CSOCoreSDM* this);
+    void (__thiscall* CallFriendMgrUnk)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMGetNoteBox2)(struct CSOCoreSDM* this);
+    void (__thiscall* CallUnk1)(struct CSOCoreSDM* this);
+    void (__thiscall* CallUnk2)(struct CSOCoreSDM* this);
+    void (__thiscall* GetNMCO7)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMSendNoteMsgFunc)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMProcessNote)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMProcessNoteShit1)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMProcessNoteShit2)(struct CSOCoreSDM* this);
+    void (__thiscall* CallCNMProcessNoteShit3)(struct CSOCoreSDM* this);
+    void (__thiscall* SetServerChannelMgr5)(struct CSOCoreSDM* this, int);
+    void (__thiscall* SetServerChannelMgr6)(struct CSOCoreSDM* this, int serverID, int channelID);
+    void (__thiscall* SendJoinRoom)(struct CSOCoreSDM* this, int roomID,int);
+    void (__thiscall* SetServerChannelMgr7)(struct CSOCoreSDM* this, int);
+    void (__thiscall* SetServerChannelMgr8)(struct CSOCoreSDM* this, int);
+    void (__thiscall* SendCreateRoom)(struct CSOCoreSDM* this, void* keyValues, int unk);
+    void (__thiscall* CallGameRoomList)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoomStart)(struct CSOCoreSDM* this);
+    void (__thiscall* SendLeaveRoom)(struct CSOCoreSDM* this, int,int,int);
+    void (__thiscall* CallServerChannelMgr3_0)(struct CSOCoreSDM* this);
+    void (__thiscall* SendSearchRoom)(struct CSOCoreSDM* this);
+    void (__thiscall* SendCreateCharacter)(struct CSOCoreSDM* this);
+    void (__thiscall* CallFriendMgrShit2)(struct CSOCoreSDM* this);
+    void (__thiscall* Set8)(struct CSOCoreSDM* this);
+    void (__thiscall* SetGameUser20)(struct CSOCoreSDM* this);
+    void (__thiscall* SetGameUser7)(struct CSOCoreSDM* this, int);
+    void (__thiscall* SetGameRoomList32)(struct CSOCoreSDM* this);
+    void (__thiscall* SetAuthMgr36)(struct CSOCoreSDM* this);
+    void (__thiscall* GetUser1__668)(struct CSOCoreSDM* this);
+    void (__thiscall* SetUserOption)(struct CSOCoreSDM* this);
+    bool (__thiscall* GetAuthMgr20)(struct CSOCoreSDM* this, void* ptr);
+    class CGamePlayer* (__thiscall* GetCurrentUser)(struct CSOCoreSDM* this);
+    void (__thiscall* GetUser32)(struct CSOCoreSDM* this);
+    void (__thiscall* SetUserUnk1)(struct CSOCoreSDM* this);
+    void (__thiscall* GetUserCheck2)(struct CSOCoreSDM* this);
+    void (__thiscall* SendReport5orUnk)(struct CSOCoreSDM* this);
+    void (__thiscall* SendReport5or8orUnk)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoomInviteList)(struct CSOCoreSDM* this);
+    void (__thiscall* GetUserFromVector)(struct CSOCoreSDM* this);
+    void (__thiscall* SetUserUnk2)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoom16)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoomInvite)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoom18)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoomUnk1)(struct CSOCoreSDM* this);
+    void (__thiscall* SendRoomUnk2)(struct CSOCoreSDM* this);
+    void (__thiscall* SendUpdateInfoCafe)(struct CSOCoreSDM* this);
+    void (__thiscall* SendUpdateInfo1)(struct CSOCoreSDM* this);
+    void (__thiscall* UpdateRate)(struct CSOCoreSDM* this);
+    void (__thiscall* GetNetworkConfig)(struct CSOCoreSDM* this);
+    int  (__thiscall* GetLanguage)(struct CSOCoreSDM* this);
+    int  (__thiscall* GetServerCategory)(struct CSOCoreSDM* this);
+    int  (__thiscall* GetLanguageCode)(struct CSOCoreSDM* this);
+    void (__thiscall* Login)(struct CSOCoreSDM* this);
+    void (__thiscall* VerifyCaptcha)(struct CSOCoreSDM* this);
+    void (__thiscall* SetAuthManager4)(struct CSOCoreSDM* this);
+    void (__thiscall* CallUploadCheck)(struct CSOCoreSDM* this);
+    void (__thiscall* CallTopup)(struct CSOCoreSDM* this); // maybe call topup..
+    void (__thiscall* Function66)(struct CSOCoreSDM* this);
+    void (__thiscall* UpdateLocation)(struct CSOCoreSDM* this);
+    void (__thiscall* GetAuthManager22)(struct CSOCoreSDM* this);
+    void (__thiscall* GetTypeCode)(struct CSOCoreSDM* this);
+    void (__thiscall* GetAuthManager23)(struct CSOCoreSDM* this);
+    void (__thiscall* Function71)(struct CSOCoreSDM* this);
+    void (__thiscall* Function72)(struct CSOCoreSDM* this);
+    void (__thiscall* GetMapList)(struct CSOCoreSDM* this);
+    void (__thiscall* GetClientTable)(struct CSOCoreSDM* this);
+    void (__thiscall* Return01)(struct CSOCoreSDM* this);
+    void (__thiscall* Function76)(struct CSOCoreSDM* this);
+    void (__thiscall* Unknown20)(struct CSOCoreSDM* this);
+    void (__thiscall* Return02)(struct CSOCoreSDM* this);
+    void (__thiscall* Function79)(struct CSOCoreSDM* this);
+    void (__thiscall* UnkCallToLeaveRoom)(struct CSOCoreSDM* this);
+    void (__thiscall* Return03)(struct CSOCoreSDM* this);
+    void (__thiscall* SendCleanSystem)(struct CSOCoreSDM* this);
+    void (__thiscall* GetUser673)(struct CSOCoreSDM* this);
+    void (__thiscall* GetStatisticMgr)(struct CSOCoreSDM* this);
 };
 
 struct CSOCoreSDM
 {
-    int unk1; // vector
-    int unk2;
-    int unk3;
-
-    int unk4;
-
-    int unk5; // vector
-    int unk6;
-    int unk7;
-
-    int unk8;
+    CSOCoreSDM_vt* vfptr;
 };
 
 typedef int HKeySymbol;

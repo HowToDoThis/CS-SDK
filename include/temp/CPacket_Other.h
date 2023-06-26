@@ -27,6 +27,46 @@ struct Packet_Host : CPacket
     int unk1;
 };
 
+typedef enum ReplyCode_s {
+    S_REPLY_YES = 0,
+    InvalidName = 3,
+    Playing = 4,
+    WrongPassword = 7,
+    InvalidPassword = 8,
+    ServerDown = 9,
+    SysError = 10,
+    InvalidServer = 11,
+    InvalidSlot = 12,
+    ID_NOT_ALLOWD = 14,
+    NEXONCOMERROR = 15,
+    NEXONCOM_PASSPORTERROR = 16,
+    NEXONCOM_INVALID_SESSION = 17,
+
+    S_REPLY_CREATEOK = 1,
+    INVALID_USERINFO = 18,
+    TRANSFER_ERR = 19,
+    ID_TOO_SHORT = 20,
+    ID_TOO_LONG = 21,
+    INVALID_CHAR = 22,
+    ID_DIGIT_BEFORE_CHAR = 23,
+    ID_EXCEED_CHAR_COUNT = 24,
+    ALREADY_EXIST = 25,
+    ID_PROHIBITED = 26,
+    EXCEED_MAX_CONNECTION = 27,
+    NEXONCOM_UNDER_AGE = 28,
+    INVALID_CLIENT_VERSION = 38,
+    OTP_ERROR = 46,
+} ReplyCode_t;
+
+struct Packet_Reply : CPacket {
+    ReplyCode_t subType;
+    char* reply;
+};
+
+struct Packet_Version : CPacket {
+    int subType;
+};
+
 struct Packet_Transfer
 {
     void* vfptr;

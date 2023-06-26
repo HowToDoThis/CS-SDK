@@ -1,0 +1,38 @@
+typedef float vec_t;
+typedef vec_t vec3_t[3];
+typedef vec3_t Vector;
+typedef unsigned int string_t;
+
+typedef struct {
+    float time;
+    float frametime;
+    float force_retouch;
+    string_t mapname;
+    string_t startspot;
+    float deathmatch;
+    float coop;
+    float teamplay;
+    float serverflags;
+    float found_secrets;
+    Vector v_forward;
+    Vector v_up;
+    Vector v_right;
+    float trace_allsolid;
+    float trace_startsolid;
+    float trace_fraction;
+    Vector trace_endpos;
+    Vector trace_plane_normal;
+    float trace_plane_dist;
+    struct edict_t *trace_ent;
+    float trace_inopen;
+    float trace_inwater;
+    int trace_hitgroup;
+    int trace_flags;
+    int msg_entity;
+    int cdAudioTrack;
+    int maxClients;
+    int maxEntities;
+    const char *pStringBase;
+    void *pSaveData;
+    Vector vecLandmarkOffset;
+} globalvars_t;

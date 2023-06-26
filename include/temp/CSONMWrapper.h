@@ -96,8 +96,7 @@ struct CSONMWrapper
     int unk12;
 };
 
-// CLoginWrapper
-struct CLoginUnk
+struct CLoginWrapper
 {
     void* vguiPanel;
     void* vguiLogin;

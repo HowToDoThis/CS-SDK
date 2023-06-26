@@ -280,7 +280,7 @@ typedef struct enginefuncs_s
     void* (*GetGamePlayerManager)();
     void* (*GetCSOFacade)();
     void* (*GetGameRoomManager)();
-    void* (*GetSharedDataManager)();
+    class CSharedDataMgr* (*GetSharedDataManager)();
     void* (*GetInventory)();
     void* (*GetItemCSV)();
     void* (*GetGiftBox)();
@@ -379,10 +379,13 @@ typedef struct {
     int (__cdecl* CSOFunc11)();
     int (__cdecl* CSOFunc12)();
     void (__cdecl* CSOFunc13)(int userID);
+    // TODO Confirm
     int (__cdecl* CSOFunc14)();
     int (__cdecl* CSOFunc15)();
     int (__cdecl* CSOFunc16)();
     int (__cdecl* CSOFunc17)();
+    int (__cdecl* CSOFunc18)();
+    int (__cdecl* CSOFunc19)();
 } DLL_FUNCTIONS;
 
 typedef struct {
@@ -558,7 +561,7 @@ typedef struct cl_enginefuncs_s
     void* (*GetCFavoriteWeaponsManager)();
     void* (*GetMenuQueueMgr)           ();
     void* (*GetCrossHairMgr)           ();
-    void* (*GetSharedDataMgr)          ();
+    class CSharedDataMgr* (*GetSharedDataMgr)          ();
     void* (*GetGameRoomManager)        ();
     void* (*GetClanMgr)                ();
     void* (*GetItemShop)               ();
@@ -592,7 +595,7 @@ typedef struct cl_enginefuncs_s
     void* (*CComradeManager)           ();
     void* (*C2ndPassword)              ();
     void  (*Unknown53)                 (); // Rendering Something
-    void* (*ClanMatchMgr)              ();
+    class CClanMatchManager* (*ClanMatchMgr) ();
     void  (*Unknown54)                 (); // return 0
     int   (*CMileageBingoMgr)          ();
     void* (*Unknown55)                 (); // return ptr(unknown)
