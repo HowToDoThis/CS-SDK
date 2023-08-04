@@ -1,25 +1,25 @@
 struct CSVLocalized_vtable
 {
-    void (__thiscall* Function1)(struct CSVLocalized* this);
+    void (__thiscall* CreateArray)(struct CSVLocalized* this, int size, int count);
     void (__thiscall* Function2)(struct CSVLocalized* this);
     void (__thiscall* DeleteArray)(struct CSVLocalized* this);
-    void (__thiscall* destructor)(struct CSVLocalized* this);
-    void (__thiscall* Function5)(struct CSVLocalized* this);
-    void (__thiscall* Function6)(struct CSVLocalized* this);
-    void (__thiscall* Function7)(struct CSVLocalized* this);
-    void (__thiscall* Function8)(struct CSVLocalized* this);
+    void (__thiscall* destructor)(struct CSVLocalized* this); // delete
+    void (__thiscall* Function5)(struct CSVLocalized* this, int a2, int a3, char* str);
+    void (__thiscall* LoadFile)(struct CSVLocalized* this);
+    void (__thiscall* Function7)(struct CSVLocalized* this); // null here
+    void (__thiscall* Function8)(struct CSVLocalized* this, const char* szFileName, int unk);
     void (__thiscall* Function9)(struct CSVLocalized* this);
 };
 
 struct CSVLocalized
 {
     CSVLocalized_vtable* vfptr;
-    int probBuffer; // 256
+    int iBufferSize; // 256
     int unk2;
     int unk3;
     char unk4;
     void* unk5; // array
-    int unk6;
+    int* unk6; // 
 };
 
 struct StringTable : CSVLocalized

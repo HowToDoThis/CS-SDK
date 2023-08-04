@@ -20,10 +20,10 @@ typedef void (*WarningFunc_t)(const char *fmt, ...);
 
 struct CFileSystem_Nar_Vtables
 {
-    void (__thiscall* descructor)(struct CFileSystem_Nar* ptr, struct CFileSystem_Nar* ptr);
-	void (* Mount)(void);
-	void (* Unmount)(void);
-	void (* RemoveAllSearchPaths)(void);
+    void (__thiscall* destcructor)(struct CFileSystem_Nar* ptr, struct CFileSystem_Nar* ptr);
+	void (__thiscall* Mount)(void);
+	void (__thiscall* Unmount)(void);
+	void (__thiscall* RemoveAllSearchPaths)(void);
 	void (__thiscall* AddSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath, const char *pathID);
 	bool (__thiscall* RemoveSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath);
 	void (__thiscall* RemoveFile)(struct CFileSystem_Nar* ptr, const char *pRelativePath, const char *pathID);
@@ -219,7 +219,7 @@ struct FindData_t
 
 struct CNarUnknown_vtables
 {
-    void (__thiscall* descructor)(struct CNarUnknown* ptr);
+    void (__thiscall* destcructor)(struct CNarUnknown* ptr);
     void (__thiscall* Function1)(struct CNarUnknown* ptr);
     void (__thiscall* Function2)(struct CNarUnknown* ptr);
     void (__thiscall* Function3)(struct CNarUnknown* ptr);
@@ -228,7 +228,7 @@ struct CNarUnknown_vtables
 };
 struct CNarUnknown2_vtables
 {
-    void (__thiscall* descructor)(struct CNarUnknown* ptr);
+    void (__thiscall* destcructor)(struct CNarUnknown* ptr);
     void (__thiscall* Function1)(struct CNarUnknown* ptr);
 };
 
@@ -310,7 +310,7 @@ struct CNarUnknown3Unk3
 
 struct CNarUnknown3_vtables
 {
-    void (__thiscall* descructor)(struct CNarUnknown3* ptr);
+    void (__thiscall* destcructor)(struct CNarUnknown3* ptr);
     void (__thiscall* Function1)(struct CNarUnknown3* ptr);
 };
 struct CNarUnknown3

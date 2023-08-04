@@ -284,7 +284,7 @@ typedef struct enginefuncs_s
     void* (*GetInventory)();
     void* (*GetItemCSV)();
     void* (*GetGiftBox)();
-    void* (*GetStrGen)();
+    struct StrGen* (*GetStrGen)();
     void* (*GetServerChannelCategory)();
     void* (*IsServerChannelCategory287)();
     void* (*GetWeaponManager)();
@@ -553,7 +553,7 @@ typedef struct cl_enginefuncs_s
     void* (*GetInventory)              ();
     void* (*GetIGClassMenuMgr)         ();
     void* (*GetIGBuyMenuMgr)           ();
-    class CChattingManager* (*GetChatManager)      ();
+    class ChattingManager*   (*GetChatManager)      ();
     class GamePlayerManager* (*GetGamePlayerManager)();
     class GameOptionManager* (*GetGameOptionManager)();
     void* (*GetBuyMenuManager)         ();
@@ -568,7 +568,7 @@ typedef struct cl_enginefuncs_s
     void  (*Unknown25)                 (unsigned char* a1);
     void* (*LoadLocationCSV)           ();
     void* (*GetRankingManager)         ();
-    void  (*GetStrGen)                 ();
+    struct StrGen  (*GetStrGen)        ();
     void* (*GetVideoMode)              ();
     void* (*GetUserFacade)             ();
     void* (*GetCSOFacade)              ();
@@ -591,7 +591,7 @@ typedef struct cl_enginefuncs_s
     void* (*CEventMgr)                 ();
     void* (*WeaponMgr)                 ();
     int   (*Unknown52)                 (); // return 0
-    void* (*CFriendManager)            ();
+    struct CFriendManager* (*CFriendManager) ();
     void* (*CComradeManager)           ();
     void* (*C2ndPassword)              ();
     void  (*Unknown53)                 (); // Rendering Something

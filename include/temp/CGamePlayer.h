@@ -277,7 +277,7 @@ struct CGamePlayerManager_vtables
     void (__thiscall* Function25)(struct CGamePlayerManager* this);
     void (__thiscall* Function26)(struct CGamePlayerManager* this);
     void (__thiscall* Function27)(struct CGamePlayerManager* this);
-    void (__thiscall* Function28)(struct CGamePlayerManager* this);
+    void (__thiscall* CallAddFriend)(struct CGamePlayerManager* this);
     void (__thiscall* Function29)(struct CGamePlayerManager* this);
     void (__thiscall* Function30)(struct CGamePlayerManager* this);
     void (__thiscall* Function31)(struct CGamePlayerManager* this);

@@ -1,4 +1,4 @@
-struct Packet_MileageBingo : CPacket
+struct Packet_MileageBingo : Packet
 {
     int unk3;
     int unk4;

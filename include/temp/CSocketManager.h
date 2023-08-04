@@ -44,124 +44,124 @@ struct LogFile
 
 struct CSocketManager_vtable
 {
-    void (__thiscall* descructor)(struct CSocketManager* ptr, int);
+    void (__thiscall* destcructor)(struct CSocketManager* ptr, int);
 };
 
 struct CSocketManagerPacket
 {
-    struct CPacket* gVersion; // 0
-    struct CPacket* gReply;
-    struct CPacket* gTransfer;
-    struct CPacket* gLogin;
-    struct CPacket* unk4;
-    struct CPacket* gServerList; // 5
-    struct CPacket* gCreateCharacter;
-    struct CPacket* gCrypt;
-    struct CPacket* gUnk8;
-    struct CPacket* gUnk9;
-    struct CPacket* gChannelList; // 10
-    struct CPacket* gUnk11;
-    struct CPacket* gRecvCrypt;
-    struct CPacket* gUnk13;
-    struct CPacket* gUnk14;
-    struct CPacket* gMileageBingo; // 15
-    struct CPacket* gStatistics;
-    struct CPacket* gSessionID;
-    struct CPacket* gMobile; // 18
-    struct CPacket* unka[46];
-    struct CPacket* gRoom; // 65
-    struct CPacket* gClientCheck;
-    struct CPacket* gUMSG;
-    struct CPacket* gHost;
-    struct CPacket* gUpdateInfo; // 69
-    struct CPacket* gUDP; // 70
-    struct CPacket* gClan;
-    struct CPacket* gShop;
-    struct CPacket* gRank;
-    struct CPacket* gBan;
-    struct CPacket* gUnk75; // 75
-    struct CPacket* gOption;
-    struct CPacket* gFavourite;
-    struct CPacket* gItem; // 78
-    struct CPacket* gGameGuard;
-    struct CPacket* gSearchRoom; // 80
-    struct CPacket* gHostServer;
-    struct CPacket* gHackShield;
-    struct CPacket* gReport;
-    struct CPacket* gTitle;
-    struct CPacket* gBuff;       // 85
-    struct CPacket* gQuickStart; // 86
-    struct CPacket* gUserSurvey;
-    struct CPacket* gQuest;
-    struct CPacket* gMinigame;
-    struct CPacket* gHack; // 90
-    struct CPacket* gMetadata;
-    struct CPacket* gSNS;
-    struct CPacket* gMessenger;
-    struct CPacket* gComrade;
-    struct CPacket* gWeeklyClanLeague; // 95
-    struct CPacket* gGiftItem;
-    struct CPacket* g2ndPassword;
-    struct CPacket* g2ndPassword2;
-    struct CPacket* gGameMatch;
-    struct CPacket* gZBEnhance; // 100
-    struct CPacket* gCleanSystem;
-    struct CPacket* gRibbonSystem; // 102
-    struct CPacket* gVoxel; // Packet_VoxelGameSave & Packet_VoxelOutUI
-    struct CPacket* gWeaponAuctionEvent;
-    struct CPacket* gAnalysis; // 105
-    struct CPacket* gLiveStream;
-    struct CPacket* gCoDissamble;
+    struct Packet* gVersion; // 0
+    struct Packet* gReply;
+    struct Packet* gTransfer;
+    struct Packet* gLogin;
+    struct Packet* unk4;
+    struct Packet* gServerList; // 5
+    struct Packet* gCreateCharacter;
+    struct Packet* gCrypt;
+    struct Packet* gUnk8;
+    struct Packet* gUnk9;
+    struct Packet* gChannelList; // 10
+    struct Packet* gUnk11;
+    struct Packet* gRecvCrypt;
+    struct Packet* gUnk13;
+    struct Packet* gUnk14;
+    struct Packet* gMileageBingo; // 15
+    struct Packet* gStatistics;
+    struct Packet* gSessionID;
+    struct Packet* gMobile; // 18
+    struct Packet* unka[46];
+    struct Packet* gRoom; // 65
+    struct Packet* gClientCheck;
+    struct Packet* gUMSG;
+    struct Packet* gHost;
+    struct Packet* gUpdateInfo; // 69
+    struct Packet* gUDP; // 70
+    struct Packet* gClan;
+    struct Packet* gShop;
+    struct Packet* gRank;
+    struct Packet* gBan;
+    struct Packet* gUnk75; // 75
+    struct Packet* gOption;
+    struct Packet* gFavourite;
+    struct Packet* gItem; // 78
+    struct Packet* gGameGuard;
+    struct Packet* gSearchRoom; // 80
+    struct Packet* gHostServer;
+    struct Packet* gHackShield;
+    struct Packet* gReport;
+    struct Packet* gTitle;
+    struct Packet* gBuff;       // 85
+    struct Packet* gQuickStart; // 86
+    struct Packet* gUserSurvey;
+    struct Packet* gQuest;
+    struct Packet* gMinigame;
+    struct Packet* gHack; // 90
+    struct Packet* gMetadata;
+    struct Packet* gSNS;
+    struct Packet* gMessenger;
+    struct Packet* gComrade;
+    struct Packet* gWeeklyClanLeague; // 95
+    struct Packet* gGiftItem;
+    struct Packet* g2ndPassword;
+    struct Packet* g2ndPassword2;
+    struct Packet* gGameMatch;
+    struct Packet* gZBEnhance; // 100
+    struct Packet* gCleanSystem;
+    struct Packet* gRibbonSystem; // 102
+    struct Packet* gVoxel; // Packet_VoxelGameSave & Packet_VoxelOutUI
+    struct Packet* gWeaponAuctionEvent;
+    struct Packet* gAnalysis; // 105
+    struct Packet* gLiveStream;
+    struct Packet* gCoDissamble;
     struct CPakcet* gMileageShop; // 108
     struct CPakcet* gHelp;
-    struct CPacket* gPopularInfo; // 110
-    struct CPacket* undefc;
-    struct CPacket* gKick;
-    struct CPacket* gHonorShop;
-    struct CPacket* gEpicPieceShop; // 114
-    struct CPacket* gAddon; // 115
-    struct CPacket* gQuestBadgeShop; // 116
-    struct CPacket* gundefi;
-    struct CPacket* gSeasonSystem;
-    struct CPacket* gundefj;
-    struct CPacket* gGuideQuest; // 120
-    struct CPacket* iunk2[29];
-    struct CPacket* gUserStart; // 150
-    struct CPacket* gRoomList;
-    struct CPacket* gInventory_Default;
-    struct CPacket* gLobby;
-    struct CPacket* gInventory;
-    struct CPacket* gInventory_ClanStock; // 155
-    struct CPacket* gInventory_CafeItems;
-    struct CPacket* gUserUpdateInfo;
-    struct CPacket* gInventory_FabItems;
-    struct CPacket* gEvent;
-    struct CPacket* gInventory_Costume; // 160
-    struct CPacket* gZombieScenarioMaps;
-    struct CPacket* gInventory_RotationWeapon;
-    struct CPacket* gSaleCoupon;
-    struct CPacket* gAlarm; // 164
-    struct CPacket* gInventory_MonthlyWeapon; // 165
-    struct CPacket* gInventory_LiveWeapon;
-    struct CPacket* gVIP;
-    struct CPacket* gInventory_FreePassWeapon;
-    struct CPacket* gServerLog;
-    struct CPacket* undefg; // 170
-    struct CPacket* gNxLog;
-    struct CPacket* gDictionary; // encyclopedia
-    struct CPacket* testpacket; // ???
-    struct CPacket* gZBSGoldenZB;
-    struct CPacket* gFriend; // 175
-    struct CPacket* gInventory_EventItem;
-    struct CPacket* gExpedition;
-    struct CPacket* gScenarioTX;
-    struct CPacket* gUserRestrict;
-    struct CPacket* gLeague; // 180
-    struct CPacket* gInventory_Class;
-    struct CPacket* gInventory_Parts;
-    struct CPacket* gInventory_Item;
-    struct CPacket* gSwitchConfig;
-    struct CPacket* iunk3[71];
+    struct Packet* gPopularInfo; // 110
+    struct Packet* undefc;
+    struct Packet* gKick;
+    struct Packet* gHonorShop;
+    struct Packet* gEpicPieceShop; // 114
+    struct Packet* gAddon; // 115
+    struct Packet* gQuestBadgeShop; // 116
+    struct Packet* gundefi;
+    struct Packet* gSeasonSystem;
+    struct Packet* gundefj;
+    struct Packet* gGuideQuest; // 120
+    struct Packet* iunk2[29];
+    struct Packet* gUserStart; // 150
+    struct Packet* gRoomList;
+    struct Packet* gInventory_Default;
+    struct Packet* gLobby;
+    struct Packet* gInventory;
+    struct Packet* gInventory_ClanStock; // 155
+    struct Packet* gInventory_CafeItems;
+    struct Packet* gUserUpdateInfo;
+    struct Packet* gInventory_FabItems;
+    struct Packet* gEvent;
+    struct Packet* gInventory_Costume; // 160
+    struct Packet* gZombieScenarioMaps;
+    struct Packet* gInventory_RotationWeapon;
+    struct Packet* gSaleCoupon;
+    struct Packet* gAlarm; // 164
+    struct Packet* gInventory_MonthlyWeapon; // 165
+    struct Packet* gInventory_LiveWeapon;
+    struct Packet* gVIP;
+    struct Packet* gInventory_FreePassWeapon;
+    struct Packet* gServerLog;
+    struct Packet* undefg; // 170
+    struct Packet* gNxLog;
+    struct Packet* gDictionary; // encyclopedia
+    struct Packet* testpacket; // ???
+    struct Packet* gZBSGoldenZB;
+    struct Packet* gFriend; // 175
+    struct Packet* gInventory_EventItem;
+    struct Packet* gExpedition;
+    struct Packet* gScenarioTX;
+    struct Packet* gUserRestrict;
+    struct Packet* gLeague; // 180
+    struct Packet* gInventory_Class;
+    struct Packet* gInventory_Parts;
+    struct Packet* gInventory_Item;
+    struct Packet* gSwitchConfig;
+    struct Packet* iunk3[71];
 };
 
 struct TestStuff
@@ -178,7 +178,7 @@ struct CSocketManager
     int unk2;
     HWND windowHandle;
     //CSocketManagerPacket packets; // just a easier way to know packetID
-    struct CPacket* packetFunction[0x100];
+    struct Packet* packetFunction[0x100];
     //int unk10;
     char encrypt;
     char unk6;
@@ -195,7 +195,7 @@ struct CSocketManagerOld
     int unk2;
     int unk3;
     int unk4;
-    struct CPacket* packet[0x100];
+    struct Packet* packet[0x100];
     char encrypt;
     char unk6;
     int unk7;

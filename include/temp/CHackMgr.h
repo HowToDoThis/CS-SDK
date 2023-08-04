@@ -1,4 +1,4 @@
-struct Packet_Hack : CPacket
+struct Packet_Hack : Packet
 {
     int type;
     string szUnknownString;

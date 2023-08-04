@@ -1,4 +1,4 @@
-struct Packet_MiniGame : CPacket {
+struct Packet_MiniGame : Packet {
     int type;
     int unk1;
 };

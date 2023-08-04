@@ -1,7 +1,5 @@
-struct CPacket_ZBEnhance
+struct CPacket_ZBEnhance : Packet
 {
-    void* vfptr;
-    struct CPacketBase base;
     int type;
     int unk2; // some initialization
     int unk3;
@@ -9,7 +7,7 @@ struct CPacket_ZBEnhance
     int unk5;
 };
 
-struct Packet_Host : CPacket
+struct Packet_Host : Packet
 {
     int hostID;
     int type;
@@ -58,19 +56,54 @@ typedef enum ReplyCode_s {
     OTP_ERROR = 46,
 } ReplyCode_t;
 
-struct Packet_Reply : CPacket {
+struct Packet_Reply : Packet {
     ReplyCode_t subType;
     char* reply;
 };
 
-struct Packet_Version : CPacket {
+struct Packet_Version : Packet {
     int subType;
 };
 
-struct Packet_Transfer
+struct Packet_SearchRoom : Packet {
+    char subType;
+    int unk1; // 1
+    int unk2; // 2
+    int unk3; // 3 (2)
+
+    // if unk7 == 1
+    char* unk4;
+    char* unk5;
+
+    char* unk6;
+    int unk7; // 0
+    int unk8;
+    int unk9;
+    int unk10; // 5 (2)
+
+    // room related
+    int gameMode;
+    int mapID;
+    int playerCount;
+    int maxPlayerCount;
+    int friendly;
+    int arms;
+    int random;
+
+    int unk11; // size (read 1b 1b, randomMap related)
+    int unk12[10];
+
+    int unk13;
+    char* unk14;
+};
+
+struct Packet_QuickStart : Packet {
+    int unk1;
+    int unk2;
+};
+
+struct Packet_Transfer : Packet
 {
-    void* vfptr;
-    struct CPacketBase base;
     uint serverIP;
     ushort port;
     int unk3;
@@ -79,10 +112,8 @@ struct Packet_Transfer
     char unk6;
 };
 
-struct Packet_Room
+struct Packet_Room : Packet
 {
-    void* vfptr;
-    struct CPacketBase base;
     int unk1;
     int type;
     int roomID;
@@ -92,23 +123,19 @@ struct Packet_Room
     int unk7;
 };
 
-struct Packet_UserStart
+struct Packet_UserStart : Packet
 {
-    void* vfptr;
-    struct CPacketBase base;
-    int type;
+    int userID;
     const char* userName;
     const char* gameName;
-    char unk4;
-    int unk5;
-    int unk6;
-    int unk7;
+    char bFirstTime;
+    int iCountryCode;
+    int iRegionCode;
+    int iNexonOID;
 };
 
-struct Packet_ClientCheck
+struct Packet_ClientCheck : Packet
 {
-    void* vfptr;
-    struct CPacketBase base;
     char* szCPUName;
     char* szGPUName;
     int iCPUHertz;

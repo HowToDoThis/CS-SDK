@@ -60,7 +60,7 @@ struct InventoryItem
 struct Packet_Inventory_vtables
 {
     void (__thiscall* Function1)(struct Packet_Inventory* this);
-    void (__thiscall* descructor)(struct Packet_Inventory* this);
+    void (__thiscall* destcructor)(struct Packet_Inventory* this);
     void (__thiscall* Parse)(struct Packet_Inventory* this);
     void (__thiscall* nullfunc)(struct Packet_Inventory* this);
     void (__thiscall* SetInventoryItemUnk)(struct Packet_Inventory* this, InventoryItem* item);

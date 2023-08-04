@@ -1,4 +1,4 @@
-struct Packet_Match : CPacket
+struct Packet_Match : Packet
 {
     int unk1; // a2
     struct KeyValues* kv;

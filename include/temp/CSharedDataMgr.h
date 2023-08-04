@@ -1,4 +1,4 @@
-// must based on CPacket.h
+// must based on Packet.h
 // 1 + 233 (CHN160531)
 struct CSharedDataMgr_vtables
 {
@@ -24,11 +24,11 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function19)(struct CSharedDataMgr* this); // DLL FUNC
     void (__thiscall* SetUnk9)(struct CSharedDataMgr* this);
     void (__thiscall* GetUnk9)(struct CSharedDataMgr* this);
-    void (__thiscall* GetRegistry2)(struct CSharedDataMgr* this);
-    void (__thiscall* GetRegistry3)(struct CSharedDataMgr* this);
-    void (__thiscall* GetRegistry4)(struct CSharedDataMgr* this);
-    void (__thiscall* GetRegistry5)(struct CSharedDataMgr* this);
-    int (__thiscall* GetCSOFacade1)(struct CSharedDataMgr* this, int, int);
+    void (__thiscall* RegistryReadInt)(struct CSharedDataMgr* this, const char *key, int defaultValue);
+    void (__thiscall* RegistryWriteInt)(struct CSharedDataMgr* this, const char *key, int defaultValue);
+    void (__thiscall* RegistryReadString)(struct CSharedDataMgr* this, const char *key, const char *defaultValue);
+    void (__thiscall* RegistryWriteString)(struct CSharedDataMgr* this, const char *key, const char *defaultValue);
+    int  (__thiscall* GetCSOFacade1)(struct CSharedDataMgr* this, int, int);
     void (__thiscall* Function27)(struct CSharedDataMgr* this);
     void (__thiscall* Function28)(struct CSharedDataMgr* this);
     void (__thiscall* Function29)(struct CSharedDataMgr* this);

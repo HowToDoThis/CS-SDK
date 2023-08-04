@@ -1,6 +1,6 @@
 struct CBaseUI_vt
 {
-    void (__thiscall* descructor)(struct CBaseUI* this);
+    void (__thiscall* destcructor)(struct CBaseUI* this);
     void (__thiscall* Initialize)(struct CBaseUI* this, CreateInterfaceFn* factories, int count);
     void (__thiscall* Start)(struct CBaseUI* this, cl_enginefunc_t* engineFuncs, int interfaceVersion);
     void (__thiscall* Shutdown)(struct CBaseUI* this);

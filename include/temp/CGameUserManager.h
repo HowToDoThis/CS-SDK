@@ -45,7 +45,7 @@ struct Packet_UserUpdateInfo
     int unk4;
 };
 
-struct Packet_Lobby : CPacket
+struct Packet_Lobby : Packet
 {
     int subType;
     CGameUser user;

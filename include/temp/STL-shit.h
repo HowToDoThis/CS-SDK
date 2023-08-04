@@ -38,3 +38,15 @@ struct string {
     unsigned int size;
     unsigned int res;
 };
+
+union _Bxty_wstring {
+    wchar_t buf[8];
+    wchar_t* ptr;
+    wchar_t alias[8];
+};
+
+struct wstring {
+    _Bxty_wstring bx;
+    unsigned int size;
+    unsigned int res;
+};

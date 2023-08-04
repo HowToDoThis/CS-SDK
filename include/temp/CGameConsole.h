@@ -1,6 +1,6 @@
 struct CGameConsole_vt
 {
-    void (__thiscall* descructor)(struct CGameConsole* this);
+    void (__thiscall* destcructor)(struct CGameConsole* this);
     void (* Activate)();
     void (__thiscall* Initialize)(struct CGameConsole* this);
     void (__thiscall* Hide)(struct CGameConsole* this);

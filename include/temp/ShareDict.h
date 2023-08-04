@@ -15,7 +15,7 @@ struct ShareDictSys
     int iSize;
     HANDLE hMap;
     int unk4;
-    int unk5; // a4
+    int dwFileOffsetLow;
     int dwFileOffsetHigh;
     int dwDesiredAccess;
     int unk6;

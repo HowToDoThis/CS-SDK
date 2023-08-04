@@ -1,15 +1,16 @@
 struct CPacket_vtables
 {
-    void (__thiscall* descructor)(struct CPacket* ptr);
-    void (__thiscall* Function1)(struct CPacket* ptr);
-    char (__thiscall* Parse)(struct CPacket* ptr, unsigned char* packet, int size);
-    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION1)(struct CPacket* ptr);
-    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION2)(struct CPacket* ptr);
-    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION3)(struct CPacket* ptr);
-    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION4)(struct CPacket* ptr);
+    void (__thiscall* Function1)(struct Packet* ptr); // unk
+    void (__thiscall* destcructor)(struct Packet* ptr); // delete
+    char (__thiscall* Parse)(struct Packet* ptr, unsigned char* packet, int size);
+    void (__thiscall* Function2)(struct Packet* ptr); // mostly null
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION1)(struct Packet* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION2)(struct Packet* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION3)(struct Packet* ptr);
+    void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION4)(struct Packet* ptr);
 };
 
-struct CPacket
+struct Packet
 {
     CPacket_vtables* vfptr;
     int unk1;
@@ -17,22 +18,23 @@ struct CPacket
     int unk5;
 };
 
-struct CPacketReader
+struct PacketReader
 {
-    void* vfptr;
+    void* vfptr; // 0 = destructor
     char* data; // a2
     int curLen;
     int pakLen; // a3
 };
 
-struct CPacketListener_vtable
+struct PacketListener_vtable
 {
+    void (__thiscall* destcructor)(struct PacketListener* ptr); // delete
+    char (__thiscall* Parse)(struct PacketListener* ptr, struct Packet* packet);
 };
 
-struct CPacketListener
+struct PacketListener
 {
-    CPacketListener_vtable* vfptr;
-    // idk there is PacketListener stuffs or not
+    PacketListener_vtable* vfptr;
 };
 
 struct CPacketSendInternal
@@ -47,7 +49,7 @@ struct CPacketSend
     struct CPacketSendInternal* base;
 };
 
-struct Packet_HostServer : CPacket
+struct Packet_HostServer : Packet
 {
     int serverIP;
     int serverPort;

@@ -30,3 +30,8 @@ struct Dummy10
     int unk9;
     int unk10;
 };
+
+struct UserStartUnk {
+    int unk1;
+    string str;
+};

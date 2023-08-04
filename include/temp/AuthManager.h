@@ -7,16 +7,16 @@ struct AuthManager_vtables
 struct AuthManager
 {
     struct AuthManager_vtables* vfptr;
-    char unk1;
+    char unk1; // captcha
     int unk2;
     int unk3;
     int unk4;
-    char unk5A; // CNMRealUserInfo ret
+    char bIsAge18;
     char unk5B;
     char unk6A;
     char unk6B;
-    const char* unk6; // string?
-    const char* unk7; // string
-    int unk8; // CNMRealUserInfo
+    const char* Username;
+    const char* Password;
+    struct CNMRealUserInfo* ruiUserInfo; // CNMRealUserInfo
     int unk9;
 };

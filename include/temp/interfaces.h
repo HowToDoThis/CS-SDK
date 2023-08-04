@@ -10,6 +10,113 @@ struct __cppobj IBaseInterface
 
 typedef IBaseInterface *(*CreateInterfaceFn)(const char *pName, int *pReturnCode);
 
+struct PacketListener_vtbl
+{
+    void (__thiscall* ~PacketListener)(struct PacketListener* ptr);
+};
+
+struct __cppobj PacketListener
+{
+    PacketListener_vtbl* __vftable;
+};
+
+typedef void *FileHandle_t;
+typedef int FileFindHandle_t;
+typedef int WaitForResourcesHandle_t;
+
+typedef enum
+{
+	FILESYSTEM_SEEK_HEAD,
+	FILESYSTEM_SEEK_CURRENT,
+	FILESYSTEM_SEEK_TAIL,
+} FileSystemSeek_t;
+typedef enum
+{
+	FILESYSTEM_WARNING = -1,					// A problem!
+	FILESYSTEM_WARNING_QUIET,				// Don't print anything
+	FILESYSTEM_WARNING_REPORTUNCLOSED,			// On shutdown, report names of files left unclosed
+	FILESYSTEM_WARNING_REPORTUSAGE,				// Report number of times a file was opened, closed
+	FILESYSTEM_WARNING_REPORTALLACCESSES		// Report all open/close events to console (!slow!)
+} FileWarningLevel_t;
+typedef void (*WarningFunc_t)(const char *fmt, ...);
+
+struct IFileSystem : IBaseInterface
+{
+	void (* Mount)(void);
+	void (* Unmount)(void);
+	void (* RemoveAllSearchPaths)(void);
+	void (__thiscall* AddSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath, const char *pathID);
+	bool (__thiscall* RemoveSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath);
+	void (__thiscall* RemoveFile)(struct CFileSystem_Nar* ptr, const char *pRelativePath, const char *pathID);
+	void (__thiscall* CreateDirHierarchy)(struct CFileSystem_Nar* ptr, const char *path, const char *pathID);
+	bool (__thiscall* FileExists)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	bool (__thiscall* IsDirectory)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	FileHandle_t (__thiscall* Open)(struct CFileSystem_Nar* ptr, const char *pFileName, const char *pOptions, const char *pathID);
+	void (__thiscall* Close)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	void (__thiscall* Seek)(struct CFileSystem_Nar* ptr, FileHandle_t file, int pos, FileSystemSeek_t seekType);
+	unsigned (__thiscall* Tell)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	unsigned (__thiscall* Size)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	unsigned (__thiscall* Size2)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	long (__thiscall* GetFileTime)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	void (__thiscall* FileTimeToString)(struct CFileSystem_Nar* ptr, char *pStrip, int maxCharsIncludingTerminator, long fileTime);
+	bool (__thiscall* IsOk)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	void (__thiscall* Flush)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	bool (__thiscall* EndOfFile)(struct CFileSystem_Nar* ptr, FileHandle_t file);
+	int (__thiscall* Read)(struct CFileSystem_Nar* ptr, void *pOutput, int size, FileHandle_t file);
+	int (__thiscall* Write)(struct CFileSystem_Nar* ptr, void const *pInput, int size, FileHandle_t file);
+	char *(__thiscall* ReadLine)(struct CFileSystem_Nar* ptr, char *pOutput, int maxChars, FileHandle_t file);
+	int (__thiscall* FPrintf)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pFormat, ...);
+	char *(__thiscall* GetReadBuffer)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pBuffer);
+	void (__thiscall* ReleaseReadBuffer)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pBuffer);
+	const char *(__thiscall* FindFirst)(struct CFileSystem_Nar* ptr, const char *pWildCard, FileFindHandle_t *pHandle, const char *pathID);
+	const char *(__thiscall* FindNext)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
+	bool (__thiscall* FindIsDirectory)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
+	void (__thiscall* FindClose)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
+	void (__thiscall* GetLocalCopy)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	const char *(__thiscall* GetLocalPath)(struct CFileSystem_Nar* ptr, const char *pFileName, char *pLocalPath, int maxlen);
+	char *(__thiscall* ParseFile)(struct CFileSystem_Nar* ptr, char *data, char *token, bool *wasquoted);
+	bool (__thiscall* FullPathToRelativePath)(struct CFileSystem_Nar* ptr, const char *pFullpath, char *pRelative);
+	bool (__thiscall* GetCurrentDirectory)(struct CFileSystem_Nar* ptr, char *pDirectory, int maxlen);
+	void (* PrintOpenedFiles)(void);
+	void (__thiscall* SetWarningFunc)(struct CFileSystem_Nar* ptr, void (*pfnWarning)(const char *fmt, ...));
+	void (__thiscall* SetWarningLevel)(struct CFileSystem_Nar* ptr, FileWarningLevel_t level);
+	void (__thiscall* LogLevelLoadStarted)(struct CFileSystem_Nar* ptr, const char *name);
+	void (__thiscall* LogLevelLoadFinished)(struct CFileSystem_Nar* ptr, const char *name);
+	int (__thiscall* HintResourceNeed)(struct CFileSystem_Nar* ptr, const char *hintlist, int forgetEverything);
+	int (* PauseResourcePreloading)(void);
+	int (* ResumeResourcePreloading)(void);
+	int (__thiscall* SetVBuf)(struct CFileSystem_Nar* ptr, FileHandle_t stream, char *buffer, int mode, long size);
+	void (__thiscall* GetInterfaceVersion)(struct CFileSystem_Nar* ptr, char *p, int maxlen);
+	bool (__thiscall* IsFileImmediatelyAvailable)(struct CFileSystem_Nar* ptr, const char *path);
+	void *(__thiscall* WaitForResources)(struct CFileSystem_Nar* ptr, const char *pFileName);
+	bool (__thiscall* GetWaitForResourcesProgress)(struct CFileSystem_Nar* ptr, WaitForResourcesHandle_t handle, float *progress, bool *complete);
+	void (__thiscall* CancelWaitForResources)(struct CFileSystem_Nar* ptr, WaitForResourcesHandle_t handle);
+	bool (* IsAppReadyForOfflinePlay)(void);
+	void (__thiscall* AddPackFile)(struct CFileSystem_Nar* ptr, const char *pPath, const char *pathID);
+	void *(__thiscall* OpenFromCacheForRead)(struct CFileSystem_Nar* ptr, const char *pFileName, const char *pOptions, const char *pathID);
+	// CSO Functions
+	void  (__thiscall* LoadNar)(struct CFileSystem_Nar* ptr, const char* pFileName, const char* pathID);
+	void  (__thiscall* SetNarFilePath)(struct CFileSystem_Nar* ptr, const char* dataPath);
+	void  (__thiscall* Unknown03)(struct CFileSystem_Nar* ptr, const char* pFileName, char* a1);
+	int   (__thiscall* GetChecksum)(struct CFileSystem_Nar* ptr);
+	void  (__thiscall* NarOpen)(struct CFileSystem_Nar* ptr, const char* filePath, const char* mode, const char* pathID);
+	int   (__thiscall* Unknown05)(struct CFileSystem_Nar* ptr, int(__thiscall*** a1)(void*, int));
+	void  (__thiscall* NarSeek)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, int a4);
+	void  (__thiscall* NarTell)(struct CFileSystem_Nar* ptr, int a1);
+	void  (__thiscall* Unknown08)(struct CFileSystem_Nar* ptr, int a1);
+	void  (__thiscall* Unknown09)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, int a4);
+	void  (__thiscall* Unknown10)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, void* a4);
+	void  (* Unknown11)();
+	void  (* Unknown12)();
+	void  (* Unknown13)();
+	char* (__thiscall* NarReadLine)(struct CFileSystem_Nar* ptr, char* a1, int a2, int a3);
+	void  (__thiscall* NarStat)(struct CFileSystem_Nar* ptr, char* FileName, struct _stat32* Stat);
+	void  (__thiscall* FindFirstFile2)(struct CFileSystem_Nar* ptr, LPCSTR lpFileName, void* lpFindFileData);
+	void  (__thiscall* FindNextFile2)(struct CFileSystem_Nar* ptr, HANDLE hFindFile, void* lpFindFileData);
+	void  (__thiscall* FindClose2)(struct CFileSystem_Nar* ptr, HANDLE hFile);
+	void  (__thiscall* Unknown15)(struct CFileSystem_Nar* ptr, void* a1);
+};
+
 struct CGame_vfunc : IBaseInterface
 {
     bool  (__thiscall* CGame::Init)(struct CGame* this, void *pvInstance);
@@ -157,6 +264,21 @@ struct CGameUI
     char unk28;
 };
 
+struct CGameUIFunc_vfunc : IBaseInterface {
+    bool (__thiscall* IsKeyDown)(struct CGameUIFunc* this, const char* keyname, bool& isdown);
+    const char* (__thiscall* Key_NameForKey)(struct CGameUIFunc* this, int keynum);
+    const char* (__thiscall* Key_BindingForKey)(struct CGameUIFunc* this, int keynum);
+    void (__thiscall* GetVGUI2KeyCodeForBind)(struct CGameUIFunc* this, const char* bind);
+    void (__thiscall* GetVideoModes)(struct CGameUIFunc* this, struct vmode_s** liststart, int* count);
+    void (__thiscall* GetCurrentVideoMode)(struct CGameUIFunc* this, int* wide, int* tall, int* bpp);
+    void (__thiscall* GetCurrentRenderer)(struct CGameUIFunc* this, char* name, int namelen, int* windowed);
+    void (__thiscall* IsConnectedToVACSecureServer)(struct CGameUIFunc* this);
+};
+
+struct CGameUIFunc {
+    CGameUIFunc_vfunc* vfptr;
+};
+
 struct CGameConsole_vt : IBaseInterface
 {
     void (__thiscall* Activate)(struct CGameConsole* this);
@@ -194,7 +316,7 @@ struct CThread
 
 struct CEngine_vt : IBaseInterface
 {
-    void (__thiscall* Load)(struct CEngine* this, bool dedicated, char* basedir, char* cmdline);
+    BOOL (__thiscall* Load)(struct CEngine* this, BOOL dedicated, char* basedir, char* cmdline);
     void (__thiscall* Unload)(struct CEngine* this);
     void (__thiscall* SetState)(struct CEngine* this, int state);
     void (__thiscall* GetState)(struct CEngine* this);
@@ -237,18 +359,18 @@ struct CSOCoreSDM_vt : IBaseInterface
     void (__thiscall* CallServerChannelMgr3_2)(struct CSOCoreSDM* this);
     void (__thiscall* Function5)(struct CSOCoreSDM* this);
     void (__thiscall* CallFriendMgr2)(struct CSOCoreSDM* this);
-    void (__thiscall* SetFriendMgr)(struct CSOCoreSDM* this);
+    void (__thiscall* AddFriend)(struct CSOCoreSDM* this);
     void (__thiscall* DeleteFriend)(struct CSOCoreSDM* this);
     void (__thiscall* CallFriendMgrUnk)(struct CSOCoreSDM* this);
     void (__thiscall* CallCNMGetNoteBox2)(struct CSOCoreSDM* this);
     void (__thiscall* CallUnk1)(struct CSOCoreSDM* this);
     void (__thiscall* CallUnk2)(struct CSOCoreSDM* this);
     void (__thiscall* GetNMCO7)(struct CSOCoreSDM* this);
-    void (__thiscall* CallCNMSendNoteMsgFunc)(struct CSOCoreSDM* this);
-    void (__thiscall* CallCNMProcessNote)(struct CSOCoreSDM* this);
-    void (__thiscall* CallCNMProcessNoteShit1)(struct CSOCoreSDM* this);
-    void (__thiscall* CallCNMProcessNoteShit2)(struct CSOCoreSDM* this);
-    void (__thiscall* CallCNMProcessNoteShit3)(struct CSOCoreSDM* this);
+    void (__thiscall* SendNoteMsg)(struct CSOCoreSDM* this);
+    void (__thiscall* SetNoteReadFlag)(struct CSOCoreSDM* this);
+    void (__thiscall* DeleteNote)(struct CSOCoreSDM* this);
+    void (__thiscall* DeleteNoteAll)(struct CSOCoreSDM* this);
+    void (__thiscall* DeleteNoteAndReload)(struct CSOCoreSDM* this);
     void (__thiscall* SetServerChannelMgr5)(struct CSOCoreSDM* this, int);
     void (__thiscall* SetServerChannelMgr6)(struct CSOCoreSDM* this, int serverID, int channelID);
     void (__thiscall* SendJoinRoom)(struct CSOCoreSDM* this, int roomID,int);
@@ -292,7 +414,7 @@ struct CSOCoreSDM_vt : IBaseInterface
     int  (__thiscall* GetServerCategory)(struct CSOCoreSDM* this);
     int  (__thiscall* GetLanguageCode)(struct CSOCoreSDM* this);
     void (__thiscall* Login)(struct CSOCoreSDM* this);
-    void (__thiscall* VerifyCaptcha)(struct CSOCoreSDM* this);
+    void (__thiscall* VerifyCaptcha)(struct CSOCoreSDM* this, const char* userName);
     void (__thiscall* SetAuthManager4)(struct CSOCoreSDM* this);
     void (__thiscall* CallUploadCheck)(struct CSOCoreSDM* this);
     void (__thiscall* CallTopup)(struct CSOCoreSDM* this); // maybe call topup..
@@ -320,6 +442,13 @@ struct CSOCoreSDM_vt : IBaseInterface
 struct CSOCoreSDM
 {
     CSOCoreSDM_vt* vfptr;
+    int unk1;
+    int unk2;
+    int unk3;
+    int unk4;
+    int unk5;
+    char unk6;
+    int unk7;
 };
 
 typedef int HKeySymbol;
@@ -358,8 +487,8 @@ struct KeyValues_vt
 {
     void (__thiscall* GetName)(struct KeyValues* this);
     int  (__thiscall* GetNameSymbol)(struct KeyValues* this);
-    void (__thiscall* Function3)(struct KeyValues* this);
-    void (__thiscall* SaveToFile)(struct KeyValues* this);
+    bool (__thiscall* LoadFromFile)(struct KeyValues* this, CFileSystem_Nar* filesystem, const char* resourceName, const char* pathID = NULL);
+    bool (__thiscall* SaveToFile)(struct KeyValues* this);
     struct KeyValues* (__thiscall* FindKey1)(struct KeyValues* this, int keySymbol);
     struct KeyValues* (__thiscall* FindKey2)(struct KeyValues* this, const char *keyName, bool bCreate);
     struct KeyValues* (__thiscall* CreateNewKey)(struct KeyValues* this);
@@ -368,8 +497,8 @@ struct KeyValues_vt
     struct KeyValues* (__thiscall* GetNextKey)(struct KeyValues* this);
     int (__thiscall* GetInt)(struct KeyValues* this, const char *keyName, int defaultValue);
     float (__thiscall* GetFloat)(struct KeyValues* this, const char *keyName, float defaultValue);
-    const char* (__thiscall* GetString)(struct KeyValues* this, const char *keyName, const char defaultValue);
-    const wchar_t* (__thiscall* GetWString)(struct KeyValues* this, const char *keyName, const wchar_t defaultValue);
+    char*    (__thiscall* GetString) (struct KeyValues* this, const char *keyName, const char* defaultValue);
+    wchar_t* (__thiscall* GetWString)(struct KeyValues* this, const char *keyName, const wchar_t* defaultValue);
     void* (__thiscall* GetPtr)(struct KeyValues* this, const char *keyName, void* defaultValue);
     bool (__thiscall* IsEmpty)(struct KeyValues* this, int keySymbol);
     void (__thiscall* SetWString)(struct KeyValues* this, const char *keyName, const wchar_t *value);
@@ -430,4 +559,133 @@ struct CServerChannelManager
     int unk16;
     int unk17;
     int unk18;
+};
+
+// direct references to localized strings
+typedef unsigned long StringIndex_t;
+struct ILocalize : IBaseInterface {
+    bool (__thiscall* AddFile)(struct ILocalize* ptr, IFileSystem *fileSystem, const char *fileName);
+    void (__thiscall* RemoveAll)(struct ILocalize* this);
+    wchar_t* (__thiscall* Find)(struct ILocalize* this, const char* tokenName);
+    int (__thiscall* ConvertANSIToUnicode)(struct ILocalize* this, const char *ansi, wchar_t *unicode, int unicodeBufferSizeInBytes);
+    int (__thiscall* ConvertUnicodeToANSI)(struct ILocalize* this, const wchar_t *unicode, char *ansi, int ansiBufferSize);
+    StringIndex_t (__thiscall* FindIndex)(struct ILocalize* this, const char *tokenName);
+    void (__thiscall* ConstructString)(struct ILocalize* this);
+    void (__thiscall* GetNameByIndex)(struct ILocalize* this);
+    void (__thiscall* GetValueByIndex)(struct ILocalize* this);
+    void (__thiscall* GetFirstStringIndex)(struct ILocalize* this);
+    void (__thiscall* GetNextStringIndex)(struct ILocalize* this);
+    void (__thiscall* AddString)(struct ILocalize* this);
+    void (__thiscall* SetValueByIndex)(struct ILocalize* this);
+    void (__thiscall* SaveToFile)(struct ILocalize* this);
+    void (__thiscall* GetLocalizationFileCount)(struct ILocalize* this);
+    void (__thiscall* GetLocalizationFileName)(struct ILocalize* this);
+    void (__thiscall* GetFileNameByIndex)(struct ILocalize* this);
+    void (__thiscall* ReloadLocalizationFiles)(struct ILocalize* this);
+    void (__thiscall* ConstructString1)(struct ILocalize* this);
+    void (__thiscall* ConstructString2)(struct ILocalize* this);
+};
+
+struct CLocalizedStringTable
+{
+    ILocalize* vfptr;
+};
+
+struct ISystem : IBaseInterface {
+    void (__thiscall* Shutdown)(struct ISystem* this);
+    void (__thiscall* RunFrame)(struct ISystem* this);
+    void (__thiscall* ShellExecute)(struct ISystem* this, const char *command, const char *file);
+    double (__thiscall* GetFrameTime)(struct ISystem* this);
+    double (__thiscall* GetCurrentTime)(struct ISystem* this);
+    void (__thiscall* GetTimeMillis)(struct ISystem* this);
+    void (__thiscall* Function7)(struct ISystem* this);
+    void (__thiscall* Function8)(struct ISystem* this);
+    void (__thiscall* Function9)(struct ISystem* this);
+    void (__thiscall* Function10)(struct ISystem* this);
+    void (__thiscall* Function11)(struct ISystem* this);
+    void (__thiscall* Function12)(struct ISystem* this);
+    void (__thiscall* Function13)(struct ISystem* this);
+    void (__thiscall* Function14)(struct ISystem* this);
+    void (__thiscall* Function15)(struct ISystem* this);
+    void (__thiscall* Function16)(struct ISystem* this);
+    void (__thiscall* Function17)(struct ISystem* this);
+    void (__thiscall* Function18)(struct ISystem* this);
+    void (__thiscall* Function19)(struct ISystem* this);
+    void (__thiscall* Function20)(struct ISystem* this);
+    void (__thiscall* Function21)(struct ISystem* this);
+    void (__thiscall* Function22)(struct ISystem* this);
+    void (__thiscall* Function23)(struct ISystem* this);
+    void (__thiscall* Function24)(struct ISystem* this);
+    void (__thiscall* Function25)(struct ISystem* this);
+    void (__thiscall* Function26)(struct ISystem* this);
+    void (__thiscall* Function27)(struct ISystem* this);
+    void (__thiscall* Function28)(struct ISystem* this);
+    void (__thiscall* Function29)(struct ISystem* this);
+    void (__thiscall* Function30)(struct ISystem* this);
+    void (__thiscall* Function31)(struct ISystem* this);
+    void (__thiscall* Function32)(struct ISystem* this);
+    void (__thiscall* Function33)(struct ISystem* this);
+    void (__thiscall* Function34)(struct ISystem* this);
+    void (__thiscall* Function35)(struct ISystem* this);
+    void (__thiscall* Function36)(struct ISystem* this);
+};
+
+struct CSystem {
+    ISystem* vfptr;
+};
+
+struct ChattingManager_vt
+{
+    void (__thiscall* FormatClanMsg)(struct ChattingManager* this, wchar_t* msg, int a3); // CSONMEventListener::Func11, etc
+    void (__thiscall* InitUnk5)(struct ChattingManager* this);
+    void (__thiscall* ChatFilter)(struct ChattingManager* this);
+    void (__thiscall* Function4)(struct ChattingManager* this);
+    void (__thiscall* Function5)(struct ChattingManager* this);
+    void (__thiscall* Function6)(struct ChattingManager* this);
+    void (__thiscall* RegisterFunction)(struct ChattingManager* this);
+    void (__thiscall* Function8)(struct ChattingManager* this);
+    void (__thiscall* Function9)(struct ChattingManager* this);
+    void (__thiscall* FormatMsg)(struct ChattingManager* this, const char* gameName, const char* message, char a4, int type);
+    void (__thiscall* Function11)(struct ChattingManager* this);
+    void (__thiscall* Function12)(struct ChattingManager* this);
+    void (__thiscall* ReturnThis296)(struct ChattingManager* this);
+    void (__thiscall* Function14)(struct ChattingManager* this);
+    void (__thiscall* IsInventoryHasChannelChat)(struct ChattingManager* this, int *type);
+    void (__thiscall* IsInventoryHasServerYell)(struct ChattingManager* this, int *type);
+    void (__thiscall* Function17)(struct ChattingManager* this);
+    void (__thiscall* UseServerYell)(struct ChattingManager* this, int a2);
+    void (__thiscall* Function19)(struct ChattingManager* this);
+    void (__thiscall* SendSomethingAsServerYell)(struct ChattingManager* this);
+    void (__thiscall* ReturnUnkShits)(struct ChattingManager* this);
+    void (__thiscall* ShowMessageBox)(struct ChattingManager* this, wchar_t* msg, int a3 = 0);
+    void (__thiscall* CheckWords)(struct ChattingManager* this);
+    void (__thiscall* CNMRequestChatSessionEx)(struct ChattingManager* this);
+    int  (__thiscall* Function25)(struct ChattingManager* this); // CSONMEventListener::Func13
+    void (__thiscall* CNMCSSendChatMessage)(struct ChattingManager* this);
+    int  (__thiscall* Function27)(struct ChattingManager* this);
+    int  (__thiscall* Function28)(struct ChattingManager* this);
+    void (__thiscall* CNMGSWantClose)(struct ChattingManager* this);
+    void (__thiscall* FriendRelated1)(struct ChattingManager* this);
+    void (__thiscall* FriendRelated2)(struct ChattingManager* this);
+};
+
+struct ChattingManager_PacketListener_vtbl : PacketListener
+{
+
+};
+
+struct ChattingManager
+{
+    ChattingManager_vt* vfptr;
+    ChattingManager_PacketListener_vtbl* vfptr_listener;
+
+    vector unk1;
+
+    int unk2;
+    struct BadWordsManager* gBadWordsManager;
+    struct AbuseMessageBlocker* gAbuseMessageBlocker;
+    int unk5;
+    int unk6; // something uses 16524 size...????
+    wchar_t msg[0x80];    
+    short unk7;
 };
