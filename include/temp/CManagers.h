@@ -4,8 +4,7 @@ struct Packet_MileageBingo : Packet
     int unk4;
 };
 
-struct CMileageBingoMgr_vtables
-{
+struct CMileageBingoMgr_vtables {
     void (__thiscall* Init)(struct CMileageBingoMgr* this);
     void (__thiscall* Func1)(struct CMileageBingoMgr* this);
     void (__thiscall* Func2)(struct CMileageBingoMgr* this);
@@ -69,4 +68,32 @@ struct CMileageBingoMgr
     int unk34;
     int unk35;
     int unk36;
+};
+
+struct CGameRoomListManager_vtables : PacketListener_vtable {
+
+};
+
+struct CGameRoomListManager {
+    CGameRoomListManager_vtables* vfptr;
+
+    int u1; // some shit
+    int u2;
+
+    int u3; // some shit also
+    int u4;
+
+    int u5;
+    int u6;
+    int u7;
+    int u8;
+    CRITICAL_SECTION u9;
+    int u15;
+    int u16;
+    int u17;
+    int u18;
+    int u19;
+    int u20;
+    int u21;
+    char u22;
 };

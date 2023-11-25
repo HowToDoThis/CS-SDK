@@ -1,7 +1,7 @@
 struct CSOFacade_vt
 {
-    void (__thiscall* Function1)(struct CSOFacade* this);
-    void (__thiscall* Function2)(struct CSOFacade* this);
+    bool (__thiscall* Function1)(struct CSOFacade* this); // call func2
+    class CGamePlayer* (__thiscall* GetGamePlayer)(struct CSOFacade* this);
     void (__thiscall* Function3)(struct CSOFacade* this);
     void (__thiscall* Function4)(struct CSOFacade* this);
     void (__thiscall* Function5)(struct CSOFacade* this);
@@ -78,11 +78,11 @@ struct CSOFacadeTemp
 
 struct CSOFacade
 {
-    CSOFacade_vt* ptr;
+    CSOFacade_vt* vfptr;
     int unk1;
     int unk2;
     int unk3;
-    struct CGameRoom unkGameRoom;
+    struct CGameRoom pGameRoom;
     int unk4;
     int unk5;
     int unk6;

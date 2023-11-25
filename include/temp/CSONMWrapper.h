@@ -66,9 +66,9 @@ struct CSONMEventListener_vtables
     void (__thiscall* InitFriendList)(struct CSONMEventListener* ptr, int a2); // a2 > 2 execute FriendMgr stuffs
     void (__thiscall* NullFunc)(struct CSONMEventListener* ptr); // null
     void (__thiscall* Function4)(struct CSONMEventListener* ptr, int a2, const char* message); // #CSO_ServerMessage_Title
-    void (__thiscall* Function5)(struct CSONMEventListener* ptr, int a2, const char* message); // 1 = #CSO_Request_Friend, 2 = #CSO_Send_Memo, default = #CSO_Message_RequestFriend_Success
-    void (__thiscall* InitFriendList2)(struct CSONMEventListener* ptr);
-    void (__thiscall* Function7)(struct CSONMEventListener* ptr, int* a2); // #CSO_FriendLogout | #CSO_FriendLogin
+    void (__thiscall* FriendFunction)(struct CSONMEventListener* ptr, int a2, const char* message); // 1 = #CSO_Request_Friend, 2 = #CSO_Send_Memo, default = #CSO_Message_RequestFriend_Success
+    void (__thiscall* GetFriendList)(struct CSONMEventListener* ptr);
+    void (__thiscall* ParseFriendList)(struct CSONMEventListener* ptr, int* a2); // #CSO_FriendLogout | #CSO_FriendLogin
     void (__thiscall* Function8)(struct CSONMEventListener* ptr, int a2, int a3); // unk
     void (__thiscall* GetNoteBox2)(struct CSONMEventListener* ptr);
     void (__thiscall* GetGuildOnlineInfoEx)(struct CSONMEventListener* ptr);
@@ -132,56 +132,59 @@ struct CFriendManager_vtables
     void (__thiscall* Function8)(struct CFriendManager* ptr);
 };
 
-struct CFriendManager
-{
+struct CFriend_vec1_data {
+    int u1;
+    int u2;
+    int u3;
+    int u7;
+    string u5;
+    wstring u6;
+    int u8;
+};
+
+struct vector_CFriend_vec1 {
+    CFriend_vec1_data* first;
+    CFriend_vec1_data* last;
+    CFriend_vec1_data* end;
+};
+
+struct CFriendManager {
     struct CFriendManager_vtables* vfptr;
-    vector vec1;
+    vector_CFriend_vec1 vec1;
     unsigned int uFriendSerialNo;
     vector vec2;
 };
 
-struct StreamCrypto
+struct CStreamCryptorFactory
 {
-    struct map map;
-    int unk3;
+    struct map m_mapCryptor;
+    char m_uLatestVersion;
 };
 
-struct CStreamCryptor_v0_vt
-{
-    void (__thiscall* destructor)(struct CStreamCryptor_v0* ptr);
-    void (__thiscall* Function2)(struct CStreamCryptor_v0* ptr, int a, int b, int c);
-    void (__thiscall* Function3)(struct CStreamCryptor_v0* ptr, int a, int b, int c);
-    void (__thiscall* return0)(struct CStreamCryptor_v0* ptr);
-    void (__thiscall* return0x1FCA34)(struct CStreamCryptor_v0* ptr);
-    void (__thiscall* return0x8A119E)(struct CStreamCryptor_v0* ptr);
-    void (__thiscall* returnA)(struct CStreamCryptor_v0* ptr, int a);
+struct CStreamCryptor_vtbl {
+    void (__thiscall* dtor)(struct CStreamCryptor* ptr);
+    uint (__thiscall* Encrypt)(struct CStreamCryptor* ptr, unsigned char* pBuf, unsigned int uBufMaxLen, unsigned int *uBufLen);
+    uint (__thiscall* Decrypt)(struct CStreamCryptor* ptr, unsigned char* pBuf, unsigned int uBufMaxLen, unsigned int *uBufLen);
+    char (__thiscall* GetVersion)(struct CStreamCryptor* ptr);
+    uint (__thiscall* GetStartMarker)(struct CStreamCryptor* ptr);
+    uint (__thiscall* GetEndMarker)(struct CStreamCryptor* ptr);
+    uint (__thiscall* GetEncSize)(struct CStreamCryptor* ptr, unsigned int uBufLen);
 };
 
-struct CStreamCryptor_v0
-{
-    CStreamCryptor_v0_vt* vfptr;
+struct CStreamCryptor {
+    CStreamCryptor_vtbl* vfptr;
 };
 
-struct CStreamCryptor_v1_vt
-{
-    void (__thiscall* destructor)(struct CStreamCryptor_v1* ptr);
-    void (__thiscall* Function2)(struct CStreamCryptor_v1* ptr, int a, int b, int c);
-    void (__thiscall* Function3)(struct CStreamCryptor_v1* ptr, int a, int b, int c);
-    void (__thiscall* return1)(struct CStreamCryptor_v1* ptr);
-    void (__thiscall* return0xA98C32A)(struct CStreamCryptor_v1* ptr);
-    void (__thiscall* return0x820A9E12)(struct CStreamCryptor_v1* ptr);
-    void (__thiscall* returnAadd10)(struct CStreamCryptor_v1* ptr, int a);
+struct CStreamCryptor_v0 : CStreamCryptor {
 };
 
-struct CStreamCryptor_v1
-{
-    CStreamCryptor_v1_vt* vfptr;
+struct CStreamCryptor_v1 : CStreamCryptor {
 };
 
 struct CNMManager
 {
     void* vfptr;
-    unsigned char* pRetData;
+    unsigned char* m_pRetData;
     CRITICAL_SECTION cs;
-    int unk1;
+    int m_codePage;
 };

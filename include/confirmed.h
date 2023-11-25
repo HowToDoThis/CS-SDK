@@ -1,38 +1,37 @@
-#define BIT(n) (1<<(n))
-#define MAX_QPATH 64
+#define BIT(n)          (1 << (n))
 
-// NET_AllocMsg
-#define MSG_QUEUE_SIZE 1536
-#define MAX_MSGLEN 8186
+#define MAX_QPATH       64
+#define MSG_QUEUE_SIZE  1536
+#define MAX_MSGLEN      8186
 #define NET_MAX_MESSAGE 8234
-#define MAX_LOOPBACK 4
-#define NUM_MSG_QUEUES 40
+#define MAX_LOOPBACK    4
+#define NUM_MSG_QUEUES  40
 
-#define FRAGMENT_MAX_SIZE 1400
-#define MAX_PATH 260
-#define MAX_LATENT 32
-#define MAX_DATAGRAM 8000
-#define MAX_PHYSINFO_STRING 256
-#define MAX_EVENT_QUEUE 64
-#define	MAX_ENT_LEAFS 48
-#define MAX_INFO_STRING 512
-#define MAX_RESOURCE_LIST 4140
-#define MAX_CONSISTENCY_LIST 512
-#define MAX_MODELS 2048
-#define MAX_EVENTS 320
-#define MAX_SOUNDS 1324
-#define MAX_GENERIC 2048
+#define FRAGMENT_MAX_SIZE          1400
+#define MAX_PATH                    260
+#define MAX_LATENT                   32
+#define MAX_DATAGRAM               8000
+#define MAX_PHYSINFO_STRING         256
+#define MAX_EVENT_QUEUE              64
+#define	MAX_ENT_LEAFS                48
+#define MAX_INFO_STRING             512
+#define MAX_RESOURCE_LIST          4140
+#define MAX_CONSISTENCY_LIST        512
+#define MAX_MODELS                 2048
+#define MAX_EVENTS                  512
+#define MAX_SOUNDS                 1324
+#define MAX_GENERIC                2048
 #define MAX_SOUNDS_HASHLOOKUP_SIZE 2647
-#define MAX_LIGHTSTYLES 64
-#define MIPLEVELS	4
-#define MAX_MODEL_NAME		64
-#define MAX_MAP_HULLS		4
-#define MAXLIGHTMAPS		4
-#define CON_MAX_NOTIFY_STRING 80
-#define MAX_KNOWN_MODELS 4096
-#define NUM_AMBIENTS 4
-
-#define MAX_ALIAS_NAME 32
+#define MAX_LIGHTSTYLES              64
+#define MIPLEVELS	                  4
+#define MAX_MODEL_NAME	             64
+#define MAX_MAP_HULLS	              4
+#define MAXLIGHTMAPS	              4
+#define CON_MAX_NOTIFY_STRING        80
+#define MAX_KNOWN_MODELS           4096
+#define NUM_AMBIENTS                  4
+#define MAX_DEMOS                    32
+#define MAX_ALIAS_NAME               32
 
 typedef int BOOL;
 typedef int qboolean;
@@ -56,8 +55,8 @@ typedef unsigned int string_t;
 
 typedef unsigned int CRC32_t;
 
-typedef struct { byte r, g, b; } color24;
-typedef struct{	unsigned r, g, b, a;} colorVec;
+typedef struct { byte r, g, b; }        color24;
+typedef struct { unsigned r, g, b, a; } colorVec;
 
 typedef enum netsrc_s {
     NS_CLIENT = 0,
@@ -334,14 +333,14 @@ typedef struct entvars_s {
     float		health;
     float		frags;
 
-    int cso_add1;
-    int cso_add2;
-    int cso_add3;
-
     int			weapons;  // bit mask for available weapons
     float		takedamage;
     int			deadflag;
     vec3_t		view_ofs;	// eye position
+
+    int cso_add1;
+    int cso_add2;
+    int cso_add3;
 
     int			button;
     int			impulse;
@@ -360,8 +359,6 @@ typedef struct entvars_s {
     float		teleport_time;
     float		armortype;
     float		armorvalue;
-    int         cso_add5;
-    int         cso_add6;
     int			waterlevel;
     int			watertype;
     string_t	target;
@@ -395,6 +392,7 @@ typedef struct entvars_s {
     int			gamestate;
     int			oldbuttons;
     int			groupinfo;
+
     // For mods
     int			iuser1;
     int			iuser2;
@@ -412,6 +410,8 @@ typedef struct entvars_s {
     struct edict_t		*euser2;
     struct edict_t		*euser3;
     struct edict_t		*euser4;
+
+    int cso_add5;
 } entvars_t;
 
 typedef struct USERID_s {
@@ -1401,9 +1401,6 @@ typedef struct clientdata_s {
     vec3_t				view_ofs;
     float				health;
     int					bInDuck;
-    double              cso_unk1;
-    double              cso_unk2;
-    double              cso_unk3;
     int					weapons; // remove?
     int					flTimeStepSound;
     int					flDuckTime;
@@ -1421,6 +1418,7 @@ typedef struct clientdata_s {
     int					tfstate;
     int					pushmsec;
     int					deadflag;
+    double              cso_unk1;
     char				physinfo[ MAX_PHYSINFO_STRING ];
     // For mods
     int					iuser1;
@@ -1435,6 +1433,11 @@ typedef struct clientdata_s {
     vec3_t				vuser2;
     vec3_t				vuser3;
     vec3_t				vuser4;
+
+    float              cso_unk2;
+    float              cso_unk3;
+    float              cso_unk4;
+    float              cso_unk5;
 } clientdata_t;
 
 // weaponinfo.h
@@ -1795,6 +1798,8 @@ typedef struct server_s {
     unsigned char spectator_buf[1024];
     sizebuf_t signon;
     unsigned char signon_data[32768];
+    sizebuf_t sigon_wpnlist;
+    unsigned char sigon_wpnlist_data[0x8000];
 } server_t;
 
 // eiface.h
@@ -1838,6 +1843,24 @@ typedef struct saverestore_s {
     char		szCurrentMapName[32];	// To check global entities
 
 } SAVERESTOREDATA;
+
+typedef struct SAVE_HEADER_s {
+    int saveId;
+    int version;
+    int skillLevel;
+    int entityCount;
+    int connectionCount;
+    int lightStyleCount;
+    float time;
+    char mapName[32];
+    char skyName[32];
+    int skyColor_r;
+    int skyColor_g;
+    int skyColor_b;
+    float skyVec_x;
+    float skyVec_y;
+    float skyVec_z;
+} SAVE_HEADER;
 
 // server_static.h
 typedef struct server_log_s {
@@ -2104,3 +2127,88 @@ typedef struct {
     event_state_t events;
     char downloadUrl[128];
 } client_state_t;
+
+typedef struct downloadtime_s
+{
+    qboolean bUsed;
+    float fTime;
+    int nBytesRemaining;
+} downloadtime_t;
+
+typedef struct incomingtransfer_s
+{
+    qboolean doneregistering;
+    int percent;
+    qboolean downloadrequested;
+    downloadtime_t rgStats[8];
+    int nCurStat;
+    int nTotalSize;
+    int nTotalToTransfer;
+    int nRemainingToTransfer;
+    float fLastStatusUpdate;
+    qboolean custom;
+} incomingtransfer_t;
+
+typedef struct soundfade_s
+{
+    int nStartPercent;
+    int nClientSoundFadePercent;
+    double soundFadeStartTime;
+    int soundFadeOutTime;
+    int soundFadeHoldTime;
+    int soundFadeInTime;
+} soundfade_t;
+
+typedef struct client_static_s {
+    cactive_t state;
+    netchan_t netchan;
+    sizebuf_t datagram;
+    byte datagram_buf[MAX_DATAGRAM];
+    double connect_time;
+    int connect_retry;
+    int challenge;
+    byte authprotocol;
+    int userid;
+    char trueaddress[32];
+    float slist_time;
+    int signon;
+    char servername[MAX_PATH];
+    char mapstring[64];
+    char spawnparms[2048];
+    char userinfo[MAX_INFO_STRING];
+    float nextcmdtime;
+    int lastoutgoingcommand;
+    int demonum;
+    char demos[MAX_DEMOS][16];
+    qboolean demorecording;
+    qboolean demoplayback;
+    qboolean timedemo;
+    float demostarttime;
+    int demostartframe;
+    int forcetrack;
+    FileHandle_t demofile;
+    FileHandle_t demoheader;
+    qboolean demowaiting;
+    qboolean demoappending;
+    char demofilename[MAX_PATH];
+    int demoframecount;
+    int td_lastframe;
+    int td_startframe;
+    float td_starttime;
+    incomingtransfer_t dl;
+    float packet_loss;
+    double packet_loss_recalc_time;
+    int playerbits;
+    soundfade_t soundfade;
+    char physinfo[MAX_PHYSINFO_STRING];
+    unsigned char md5_clientdll[16];
+    netadr_t game_stream;
+    netadr_t connect_stream;
+    qboolean passive;
+    qboolean spectator;
+    qboolean director;
+    qboolean fSecureClient;
+    qboolean isVAC2Secure;
+    uint64 GameServerSteamID;
+    int build_num;
+} client_static_t;

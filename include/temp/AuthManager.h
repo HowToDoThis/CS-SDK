@@ -4,13 +4,13 @@ struct AuthManager_vtables
     void (__thiscall* PacketFunction)(struct AuthManager* this);
 };
 
+typedef void(__thiscall*** pfnAuthManager9)(void*, int, int, const wchar_t*, int, int);
+
 struct AuthManager
 {
     struct AuthManager_vtables* vfptr;
     char unk1; // captcha
-    int unk2;
-    int unk3;
-    int unk4;
+    vector serverinfo;
     char bIsAge18;
     char unk5B;
     char unk6A;
@@ -18,5 +18,5 @@ struct AuthManager
     const char* Username;
     const char* Password;
     struct CNMRealUserInfo* ruiUserInfo; // CNMRealUserInfo
-    int unk9;
+    pfnAuthManager9 unk9;
 };

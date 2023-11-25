@@ -1,18 +1,15 @@
-struct vector
-{
+struct vector {
     int* first;
     int* last;
     int* end;
 };
 
-struct pair
-{
+struct pair {
     int first;
     int second;
 };
 
-struct mapNode
-{
+struct mapNode {
     pair* left;
     pair* parent;
     pair* right;
@@ -21,8 +18,7 @@ struct mapNode
     pair myval;
 };
 
-struct map
-{
+struct map {
     mapNode* head;
     int size;
 };
@@ -49,4 +45,17 @@ struct wstring {
     _Bxty_wstring bx;
     unsigned int size;
     unsigned int res;
+};
+
+struct vector_string {
+    string* first;
+    string* last;
+    string* end;
+};
+
+struct list {
+    list* _next;
+    list* _prev;
+    int _val;
+    unsigned int _size;
 };

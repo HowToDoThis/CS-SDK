@@ -1,7 +1,7 @@
-struct CPacket_vtables
+struct Packet_vtables
 {
     void (__thiscall* Function1)(struct Packet* ptr); // unk
-    void (__thiscall* destcructor)(struct Packet* ptr); // delete
+    void (__thiscall* dtor)(struct Packet* ptr); // delete
     char (__thiscall* Parse)(struct Packet* ptr, unsigned char* packet, int size);
     void (__thiscall* Function2)(struct Packet* ptr); // mostly null
     void (__thiscall* FIND_FROM_YOUR_OWN_PACKET_FUNCTION1)(struct Packet* ptr);
@@ -12,10 +12,10 @@ struct CPacket_vtables
 
 struct Packet
 {
-    CPacket_vtables* vfptr;
-    int unk1;
+    Packet_vtables* vfptr;
     struct vector idk;
-    int unk5;
+    int unk1;
+    int unk2;
 };
 
 struct PacketReader
@@ -28,7 +28,7 @@ struct PacketReader
 
 struct PacketListener_vtable
 {
-    void (__thiscall* destcructor)(struct PacketListener* ptr); // delete
+    void (__thiscall* dtor)(struct PacketListener* ptr); // delete
     char (__thiscall* Parse)(struct PacketListener* ptr, struct Packet* packet);
 };
 

@@ -218,7 +218,7 @@ struct CGameUI_vt : IBaseInterface
     void (__thiscall* Func14)(struct CGameUI* this);
     void (__thiscall* Func15)(struct CGameUI* this);
     void (__thiscall* Func16)(struct CGameUI* this);
-    void (__thiscall* Func17)(struct CGameUI* this);
+    void (__thiscall* Func17)(struct CGameUI* this, int);
     void (__thiscall* Func18)(struct CGameUI* this);
     void (__thiscall* Func19)(struct CGameUI* this);
     void (__thiscall* Func20)(struct CGameUI* this);
@@ -388,7 +388,7 @@ struct CSOCoreSDM_vt : IBaseInterface
     void (__thiscall* SetGameUser20)(struct CSOCoreSDM* this);
     void (__thiscall* SetGameUser7)(struct CSOCoreSDM* this, int);
     void (__thiscall* SetGameRoomList32)(struct CSOCoreSDM* this);
-    void (__thiscall* SetAuthMgr36)(struct CSOCoreSDM* this);
+    void (__thiscall* SetAuthMgr9)(struct CSOCoreSDM* this, void ***);
     void (__thiscall* GetUser1__668)(struct CSOCoreSDM* this);
     void (__thiscall* SetUserOption)(struct CSOCoreSDM* this);
     bool (__thiscall* GetAuthMgr20)(struct CSOCoreSDM* this, void* ptr);
@@ -487,7 +487,7 @@ struct KeyValues_vt
 {
     void (__thiscall* GetName)(struct KeyValues* this);
     int  (__thiscall* GetNameSymbol)(struct KeyValues* this);
-    bool (__thiscall* LoadFromFile)(struct KeyValues* this, CFileSystem_Nar* filesystem, const char* resourceName, const char* pathID = NULL);
+    bool (__thiscall* LoadFromFile)(struct KeyValues* this, struct CFileSystem_Nar* filesystem, const char* resourceName, const char* pathID = NULL);
     bool (__thiscall* SaveToFile)(struct KeyValues* this);
     struct KeyValues* (__thiscall* FindKey1)(struct KeyValues* this, int keySymbol);
     struct KeyValues* (__thiscall* FindKey2)(struct KeyValues* this, const char *keyName, bool bCreate);
@@ -670,9 +670,7 @@ struct ChattingManager_vt
 };
 
 struct ChattingManager_PacketListener_vtbl : PacketListener
-{
-
-};
+{};
 
 struct ChattingManager
 {

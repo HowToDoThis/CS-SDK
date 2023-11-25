@@ -217,10 +217,10 @@ struct CGameRoom
 {
     void* vfptr;
     int unk01;
-    char* roomName;
+    char* password;
     int maxLevel;
     int unk04;
-    char* password;
+    char* roomName;
     int unk06;
     int unk07;
     int maxPlayers;
@@ -254,7 +254,7 @@ struct CGameRoom
     int unk31;
     int unk32;
     int unk33;
-    int unk34;
+    char unk34;
     int unk35;
     int unk36;
     int unk37; // 128?? or longlong
@@ -274,8 +274,7 @@ struct CGameRoom
     int unk51;
     int unk52;
     int unk53;
-    int unk54; // QWORD
-    int unk55;
+    long long unk54; // QWORD
     int unk56;
-    int unk57;
+    char unk57;
 };

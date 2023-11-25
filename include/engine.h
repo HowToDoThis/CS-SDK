@@ -197,89 +197,89 @@ typedef struct {
 typedef struct 
 {
 	// Initialize/shutdown the game (one-time call after loading of game .dll )
-	void			(*pfnGameInit)			( void );				
-	int				(*pfnSpawn)				( edict_t *pent );
-	void			(*pfnThink)				( edict_t *pent );
-	void			(*pfnUse)				( edict_t *pentUsed, edict_t *pentOther );
-	void			(*pfnTouch)				( edict_t *pentTouched, edict_t *pentOther );
-	void			(*pfnBlocked)			( edict_t *pentBlocked, edict_t *pentOther );
-	void			(*pfnKeyValue)			( edict_t *pentKeyvalue, KeyValueData *pkvd );
-	void			(*pfnSave)				( edict_t *pent, SAVERESTOREDATA *pSaveData );
-	int 			(*pfnRestore)			( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity );
-	void			(*pfnSetAbsBox)			( edict_t *pent );
+	void			(__cdecl*pfnGameInit)			( void );				
+	int				(__cdecl*pfnSpawn)				( edict_t *pent );
+	void			(__cdecl*pfnThink)				( edict_t *pent );
+	void			(__cdecl*pfnUse)				( edict_t *pentUsed, edict_t *pentOther );
+	void			(__cdecl*pfnTouch)				( edict_t *pentTouched, edict_t *pentOther );
+	void			(__cdecl*pfnBlocked)			( edict_t *pentBlocked, edict_t *pentOther );
+	void			(__cdecl*pfnKeyValue)			( edict_t *pentKeyvalue, KeyValueData *pkvd );
+	void			(__cdecl*pfnSave)				( edict_t *pent, SAVERESTOREDATA *pSaveData );
+	int 			(__cdecl*pfnRestore)			( edict_t *pent, SAVERESTOREDATA *pSaveData, int globalEntity );
+	void			(__cdecl*pfnSetAbsBox)			( edict_t *pent );
 
-	void			(*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
+	void			(__cdecl*pfnSaveWriteFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
 	void			(*pfnSaveReadFields)	( SAVERESTOREDATA *, const char *, void *, TYPEDESCRIPTION *, int );
 
-	void			(*pfnSaveGlobalState)		( SAVERESTOREDATA * );
-	void			(*pfnRestoreGlobalState)	( SAVERESTOREDATA * );
-	void			(*pfnResetGlobalState)		( void );
+	void			(__cdecl*pfnSaveGlobalState)		( SAVERESTOREDATA * );
+	void			(__cdecl*pfnRestoreGlobalState)	( SAVERESTOREDATA * );
+	void			(__cdecl*pfnResetGlobalState)		( void );
 
-	qboolean		(*pfnClientConnect)		( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] );
+	qboolean		(__cdecl*pfnClientConnect)		( edict_t *pEntity, const char *pszName, const char *pszAddress, char szRejectReason[ 128 ] );
 	
-	void			(*pfnClientDisconnect)	( edict_t *pEntity );
-	void			(*pfnClientKill)		( edict_t *pEntity );
-    void            (*pfnClientUnknown1)    ( edict_t* pEntity );
-	void			(*pfnClientPutInServer)	( edict_t *pEntity );
-	void			(*pfnClientCommand)		( edict_t *pEntity );
-	void			(*pfnClientUserInfoChanged)( edict_t *pEntity, char *infobuffer );
+	void			(__cdecl*pfnClientDisconnect)	( edict_t *pEntity );
+	void			(__cdecl*pfnClientKill)		( edict_t *pEntity );
+    void            (__cdecl*pfnClientUnknown1)    ( edict_t* pEntity );
+	void			(__cdecl*pfnClientPutInServer)	( edict_t *pEntity );
+	void			(__cdecl*pfnClientCommand)		( edict_t *pEntity );
+	void			(__cdecl*pfnClientUserInfoChanged)( edict_t *pEntity, char *infobuffer );
 
-	void			(*pfnServerActivate)	( edict_t *pEdictList, int edictCount, int clientMax );
-	void			(*pfnServerDeactivate)	( void );
+	void			(__cdecl*pfnServerActivate)	( edict_t *pEdictList, int edictCount, int clientMax );
+	void			(__cdecl*pfnServerDeactivate)	( void );
 
-	void			(*pfnPlayerPreThink)	( edict_t *pEntity );
-	void			(*pfnPlayerPostThink)	( edict_t *pEntity );
+	void			(__cdecl*pfnPlayerPreThink)	( edict_t *pEntity );
+	void			(__cdecl*pfnPlayerPostThink)	( edict_t *pEntity );
 
-	void			(*pfnStartFrame)		( void );
-	void			(*pfnParmsNewLevel)		( void );
-	void			(*pfnParmsChangeLevel)	( void );
+	void			(__cdecl*pfnStartFrame)		( void );
+	void			(__cdecl*pfnParmsNewLevel)		( void );
+	void			(__cdecl*pfnParmsChangeLevel)	( void );
 
 	 // Returns string describing current .dll.  E.g., TeamFotrress 2, Half-Life
-	const char     *(*pfnGetGameDescription)( void );     
+	const char     *(__cdecl*pfnGetGameDescription)( void );     
 
 	// Notify dll about a player customization.
-	void            (*pfnPlayerCustomization) ( edict_t *pEntity, customization_t *pCustom );  
+	void            (__cdecl*pfnPlayerCustomization) ( edict_t *pEntity, customization_t *pCustom );  
 
 	// Spectator funcs
-	void			(*pfnSpectatorConnect)		( edict_t *pEntity );
-	void			(*pfnSpectatorDisconnect)	( edict_t *pEntity );
-	void			(*pfnSpectatorThink)		( edict_t *pEntity );
+	void			(__cdecl*pfnSpectatorConnect)		( edict_t *pEntity );
+	void			(__cdecl*pfnSpectatorDisconnect)	( edict_t *pEntity );
+	void			(__cdecl*pfnSpectatorThink)		( edict_t *pEntity );
 
 	// Notify game .dll that engine is going to shut down.  Allows mod authors to set a breakpoint.
 	void			(__cdecl*pfnSys_Error)			( const char *error_string );
 
-	void			(*pfnPM_Move) ( struct playermove_s *ppmove, qboolean server );
-	void			(*pfnPM_Init) ( struct playermove_s *ppmove );
-	char			(*pfnPM_FindTextureType)( char *name );
-	void			(*pfnSetupVisibility)( struct edict_s *pViewEntity, struct edict_s *pClient, unsigned char **pvs, unsigned char **pas );
-	void			(*pfnUpdateClientData) ( const struct edict_s *ent, int sendweapons, struct clientdata_s *cd );
-	int				(*pfnAddToFullPack)( struct entity_state_s *state, int e, edict_t *ent, edict_t *host, int hostflags, int player, unsigned char *pSet );
-	void			(*pfnCreateBaseline) ( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, vec3_t player_mins, vec3_t player_maxs );
-	void			(*pfnRegisterEncoders)	( void );
-	int				(*pfnGetWeaponData)		( struct edict_s *player, struct weapon_data_s *info );
+	void			(__cdecl*pfnPM_Move) ( struct playermove_s *ppmove, qboolean server );
+	void			(__cdecl*pfnPM_Init) ( struct playermove_s *ppmove );
+	char			(__cdecl*pfnPM_FindTextureType)( char *name );
+	void			(__cdecl*pfnSetupVisibility)( struct edict_s *pViewEntity, struct edict_s *pClient, unsigned char **pvs, unsigned char **pas );
+	void			(__cdecl*pfnUpdateClientData) ( const struct edict_s *ent, int sendweapons, struct clientdata_s *cd );
+	int				(__cdecl*pfnAddToFullPack)( struct entity_state_s *state, int e, edict_t *ent, edict_t *host, int hostflags, int player, unsigned char *pSet );
+	void			(__cdecl*pfnCreateBaseline) ( int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, vec3_t player_mins, vec3_t player_maxs );
+	void			(__cdecl*pfnRegisterEncoders)	( void );
+	int				(__cdecl*pfnGetWeaponData)		( struct edict_s *player, struct weapon_data_s *info );
 
-	void			(*pfnCmdStart)			( const edict_t *player, const struct usercmd_s *cmd, unsigned int random_seed );
-	void			(*pfnCmdEnd)			( const edict_t *player );
+	void			(__cdecl*pfnCmdStart)			( const edict_t *player, const struct usercmd_s *cmd, unsigned int random_seed );
+	void			(__cdecl*pfnCmdEnd)			( const edict_t *player );
 
 	// Return 1 if the packet is valid.  Set response_buffer_size if you want to send a response packet.  Incoming, it holds the max
 	//  size of the response_buffer, so you must zero it out if you choose not to respond.
-	int				(*pfnConnectionlessPacket )	( const struct netadr_s *net_from_, const char *args, char *response_buffer, int *response_buffer_size );
+	int				(__cdecl*pfnConnectionlessPacket )	( const struct netadr_s *net_from_, const char *args, char *response_buffer, int *response_buffer_size );
 
 	// Enumerates player hulls.  Returns 0 if the hull number doesn't exist, 1 otherwise
-	int				(*pfnGetHullBounds)	( int hullnumber, float *mins, float *maxs );
+	int				(__cdecl*pfnGetHullBounds)	( int hullnumber, float *mins, float *maxs );
 
 	// Create baselines for certain "unplaced" items.
-	void			(*pfnCreateInstancedBaselines) ( void );
+	void			(__cdecl*pfnCreateInstancedBaselines) ( void );
 
 	// One of the pfnForceUnmodified files failed the consistency check for the specified player
 	// Return 0 to allow the client to continue, 1 to force immediate disconnection ( with an optional disconnect message of up to 256 characters )
-	int				(*pfnInconsistentFile)( const struct edict_s *player, const char *filename, char *disconnect_message );
+	int				(__cdecl*pfnInconsistentFile)( const struct edict_s *player, const char *filename, char *disconnect_message );
 
 	// The game .dll should return 1 if lag compensation should be allowed ( could also just set
 	//  the sv_unlag cvar.
 	// Most games right now should return 0, until client-side weapon prediction code is written
 	//  and tested for them.
-	int				(*pfnAllowLagCompensation)( void );
+	int				(__cdecl*pfnAllowLagCompensation)( void );
 } DLL_FUNCTIONS;
 
 typedef struct {
@@ -384,7 +384,7 @@ typedef struct server_s {
 	const char *model_precache[2048];
 	struct model_s *models[2048];
 	unsigned char model_precache_flags[2048];
-	struct event_s event_precache[510];
+	struct event_s event_precache[512];
 	const char *sound_precache[1324];
 	short int sound_precache_hashedlookup[2647];
 	qboolean sound_precache_hashedlookup_built;
@@ -407,7 +407,9 @@ typedef struct server_s {
 	sizebuf_t spectator;
 	unsigned char spectator_buf[1024];
 	sizebuf_t signon;
-	unsigned char signon_data[32768];
+	unsigned char signon_data[0x8000];
+	sizebuf_t sigon_wpnlist;
+	unsigned char sigon_wpnlist_data[0x8000];
 } server_t;
 
 // NET_WS.h
@@ -456,7 +458,7 @@ typedef struct LONGPACKET_t {
 	int splitCount;
 	int totalSize;
 	// TODO: It should be NET_MAX_MESSAGE, but value differs
-	char buffer[MAX_UDP_PACKET];	// This has to be big enough to hold the largest message
+	char buffer[8250];	// This has to be big enough to hold the largest message
 } LONGPACKET;
 
 typedef struct SPLITPACKET_t {

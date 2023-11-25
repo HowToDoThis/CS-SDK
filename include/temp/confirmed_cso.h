@@ -32,3 +32,24 @@ struct CRegistry {
     bool bValid;
     HKEY hKey;
 };
+
+typedef struct parms_s {
+    char *basedir;
+    char *cachedir;
+    int argc;
+    char **argv;
+    void *membase;
+    int memsize;
+} parms_t;
+
+typedef enum CareerStateType_e {
+    CAREER_NONE = 0,
+    CAREER_LOADING = 1,
+    CAREER_PLAYING = 2,
+} CareerStateType;
+
+typedef struct GAME_HEADER_s {
+    char mapName[32];
+    char comment[80];
+    int mapCount;
+} GAME_HEADER;

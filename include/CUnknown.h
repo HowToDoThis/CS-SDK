@@ -1,36 +1,39 @@
 struct UnkBuffer2Hack
 {
-    void* data;
-    int unk2;
+    char* data;
+    int size;
     int unk3;
     int unk4;
     int unk5;
 };
 
-struct UnkBuffer2WithCritical
+struct UnkBuffer2WithCritical : UnkBuffer2Hack
 {
-    UnkBuffer2Hack hack;
     CRITICAL_SECTION critical;
 };
 
 struct UnkBuffer
 {
-    UnkBuffer2Hack hack1;
-    CRITICAL_SECTION critical1;
-
-    UnkBuffer2Hack hack2;
-    CRITICAL_SECTION critical2;
-
-    UnkBuffer2WithCritical hack3;
-
-    UnkBuffer2WithCritical hack4;
-
-    UnkBuffer2WithCritical hack5;
+    UnkBuffer2WithCritical buf64;
+    UnkBuffer2WithCritical buf128;
+    UnkBuffer2WithCritical buf256;
+    UnkBuffer2WithCritical buf512;
+    UnkBuffer2WithCritical buf1024;
 };
 
 struct UnkBuffer2
 {
-    UnkBuffer2Hack hack[11];
+    UnkBuffer2Hack buf16;
+    UnkBuffer2Hack buf32;
+    UnkBuffer2Hack buf64;
+    UnkBuffer2Hack buf128;
+    UnkBuffer2Hack buf256;
+    UnkBuffer2Hack buf512;
+    UnkBuffer2Hack buf1024;
+    UnkBuffer2Hack buf2048;
+    UnkBuffer2Hack buf4096;
+    UnkBuffer2Hack buf8192;
+    UnkBuffer2Hack buf16384;
 };
 
 struct FuckBuffer

@@ -3,17 +3,17 @@
 struct CSharedDataMgr_vtables
 {
     void (__thiscall* Function0)(struct CSharedDataMgr* this);
-    void (__thiscall* ShutdownRibbonSystem)(struct CSharedDataMgr* this);
-    void (__thiscall* ReturnUnk1)(struct CSharedDataMgr* this);
+    void (__thiscall* dtorRibbonSystem)(struct CSharedDataMgr* this);
+    void (__thiscall* GetUnk1)(struct CSharedDataMgr* this);
     void (__thiscall* SetUnk1)(struct CSharedDataMgr* this);
-    void (__thiscall* GetGameUI28)(struct CSharedDataMgr* this);
+    void (__thiscall* GetGameUI_Func7)(struct CSharedDataMgr* this);
     void (__thiscall* SetUnk234)(struct CSharedDataMgr* this, int* a2); // 3 array
     void (__thiscall* GetUnk2)(struct CSharedDataMgr* this);
     void (__thiscall* TestCSOLight)(struct CSharedDataMgr* this, char a2); // set Unk5A
     void (__thiscall* GetUnk5A)(struct CSharedDataMgr* this);
-    void (__thiscall* Function9)(struct CSharedDataMgr* this);
-    void (__thiscall* SetUnk5B)(struct CSharedDataMgr* this, char a2);
-    void (__thiscall* GetUnk5B)(struct CSharedDataMgr* this);
+    void (__thiscall* Function9)(struct CSharedDataMgr* this); // set something float, 37652CB0
+    void (__thiscall* SetIsAge18)(struct CSharedDataMgr* this, char a2);
+    char (__thiscall* GetIsAge18)(struct CSharedDataMgr* this);
     void (__thiscall* SomethingException1)(struct CSharedDataMgr* this);
     void (__thiscall* SomethingException2)(struct CSharedDataMgr* this);
     void (__thiscall* SetUnk6A)(struct CSharedDataMgr* this, char a2);
@@ -22,16 +22,16 @@ struct CSharedDataMgr_vtables
     void (__thiscall* Function17)(struct CSharedDataMgr* this);
     int  (__thiscall* Function18)(struct CSharedDataMgr* this,int,int,int,int,int,int,int); // DLL FUNC
     void (__thiscall* Function19)(struct CSharedDataMgr* this); // DLL FUNC
-    void (__thiscall* SetUnk9)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk9)(struct CSharedDataMgr* this); // 20
     void (__thiscall* GetUnk9)(struct CSharedDataMgr* this);
     void (__thiscall* RegistryReadInt)(struct CSharedDataMgr* this, const char *key, int defaultValue);
     void (__thiscall* RegistryWriteInt)(struct CSharedDataMgr* this, const char *key, int defaultValue);
     void (__thiscall* RegistryReadString)(struct CSharedDataMgr* this, const char *key, const char *defaultValue);
     void (__thiscall* RegistryWriteString)(struct CSharedDataMgr* this, const char *key, const char *defaultValue);
-    int  (__thiscall* GetCSOFacade1)(struct CSharedDataMgr* this, int, int);
-    void (__thiscall* Function27)(struct CSharedDataMgr* this);
-    void (__thiscall* Function28)(struct CSharedDataMgr* this);
-    void (__thiscall* Function29)(struct CSharedDataMgr* this);
+    int  (__thiscall* GetCSOFacade1)(struct CSharedDataMgr* this, int, int); // set shit3
+    void (__thiscall* GetShit3)(struct CSharedDataMgr* this);
+    void (__thiscall* SetUnk11Values)(struct CSharedDataMgr* this, int,int);
+    void (__thiscall* GetUnk11Values)(struct CSharedDataMgr* this, int);
     void (__thiscall* Function30)(struct CSharedDataMgr* this);
     void (__thiscall* Function31)(struct CSharedDataMgr* this);
     void (__thiscall* Function32)(struct CSharedDataMgr* this);
@@ -238,8 +238,7 @@ struct CSharedDataMgr_vtables
     void (__thiscall* desctructor)(struct CSharedDataMgr* this);
 };
 
-struct CSharedDataMgrWeird
-{
+struct CSharedDataMgrWeird {
     int unk1;
     int unk2;
     int unk3;
@@ -247,19 +246,70 @@ struct CSharedDataMgrWeird
     int unk5;
     int unk6;
     int unk7;
-    int unk8;
+    float unk8;
 };
 
-struct CSharedDataMgrWeird2
-{
-    int unk1;
-    int unk2;
-    int unk3;
-    int unk4;
-    int unk5;
-    int unk6;
-    int unk7;
-    int unk8;
+struct BoomerDeathTable_data {
+    int u1;
+    int u2;
+    int u3;
+    int u4;
+    int u5;
+};
+
+struct vector_BoomerDeathTable {
+    BoomerDeathTable_data* first;
+    BoomerDeathTable_data* last;
+    BoomerDeathTable_data* end;
+};
+
+struct BoomerDeathTable {
+    void* vfptr;
+    vector_BoomerDeathTable vec;
+    int data[120];
+};
+
+struct FabItemTable {
+    void* vfptr;
+    vector vec1;
+    vector vec2;
+    vector vec3;
+    vector vec4;
+};
+
+struct WeaponRecommandTable {
+    void* vfptr;
+};
+
+// 540 bytes, 135 int
+struct Unk108 {
+    int u1;
+    int u2;
+    int u3;
+    int u4;
+    int u5;
+    int u6;
+    int u7;
+    int u8;
+    int u9;
+    int u10;
+    int u11;
+    int u12;
+    int u13;
+    int u14;
+    int u15;
+    int u16;
+    int u17;
+    int u18;
+    int u19;
+    int u20;
+    int u21;
+    int u22;
+    int u23;
+    int u24;
+    int u25;
+    int u26;
+    int u27;
 };
 
 struct CSharedDataMgr
@@ -271,7 +321,7 @@ struct CSharedDataMgr
     int unk3; // func5 set a2[1]
     int unk4; // func5 set a2[2]
     char unk5A; // func7 set a2 func8 get
-    char unk5B; // func10 set a2 func11 get
+    char bIsAge18; // func10 set a2 func11 get
     char unk6A; // func14 set a2 func15 get
     char unk6B; // func16-17
 
@@ -285,35 +335,25 @@ struct CSharedDataMgr
     char unk9; // func20 set a2
     char shit3; // func26 a3 func27 get
     short iUnk1;
-    char szUnk[700]; // func30 56*a2
 
-    int szUnk1[273];
-    char unk11[16]; // func28-29 4*a2
-    char unk12[16];
-    char unk13[8];
+    int szUnk[32][14]; // func30 a2
+    int unk11[12]; // func28-29 a2
+    short u1;
+    short u2;
 
-    int wtf2[63]; // option, maplist? func31-35
+    int wtf2[60]; // option, maplist? func31-35
     char unk14; // func43-44
     char unk15; // func7 c:\\cso_light_test.txt func40 get
 
     // precacheSwap func89
-    int wtf3[8];
-    char unk16;
-    int szUnk3[3];
-    int unk17;
-    int unk18;
+    CSharedDataMgrWeird a1;
+    string a1a;
 
-    int wtf4[8];
-    char unk19;
-    int szUnk4[3];
-    int unk20;
-    int unk21;
+    CSharedDataMgrWeird a2;
+    string a2a;
 
-    int wtf5[8];
-    char unk22;
-    int szUnk5[3];
-    int unk23;
-    int unk24;
+    CSharedDataMgrWeird a3;
+    string a3a;
 
     int unkA[3];
     // spray func77-86
@@ -345,31 +385,27 @@ struct CSharedDataMgr
     int unk42;
     int unk43;
     
-    struct ZombieSkillTable* gZombieSkillTable; // func111
-
-    int unkF[123];
-
-    int* gBoomerDeathTable; // func112
-
-    int unkG[123];
-
-    int* gFabItemTable; // func113
-
-    int unkH[12];
-
-    int* gWeaponRecommandTable; // func114
+    ZombieSkillTable     gZombieSkillTable; // func111
+    BoomerDeathTable     gBoomerDeathTable; // func112
+    FabItemTable         gFabItemTable; // func113
+    WeaponRecommandTable gWeaponRecommandTable; // func114
 
     int unkI[56];
-    void* unk44; // 540 / 108
-    int unk45;
-    int unk46;
+
+    //Unk108 zb4data; 
+
+    Unk108* vZB4_first; // 540b / 5(5 items) = 108b (27 int)
+    Unk108* vZB4_last;
+    Unk108* vZB4_end;
+
     int unk47;
     int unk48;
     int unk49;
     int unk50;
     int unk51;
     int unk52;
-    void* unk53; // 240
+
+    int* unk53; // 240, ZB4 shits
     int unk54;
     int unk55;
     int unk56;
@@ -380,17 +416,12 @@ struct CSharedDataMgr
     int unkJ[210];
 
     // RibbonSystem Func1
-    int unk59;
-    int unk60;
-    int unk61;
-    int DNAStuff; // DNA used
-    int unk63;
-    int unk64;
+    vector unk59; // vector, for ribbon system
+    vector vDNA; // DNA used, size 16 structs, no more than 18
 
     int unkK[129]; // func55-60
-    int unk65; // zbsbreak & zbstarget
-    int unk66;
-    int unk67;
+    
+    vector_string v_ZBS_Shit; // zbsbreak & zbstarget
 
     char i1;
     char szUnk6[255];
@@ -411,15 +442,16 @@ struct CSharedDataMgr
     int unk76;
 
     int unkN[4]; // related item
+
     int unk77;
-
     int unkO[7]; // costumezombie
+
     int unk78;
-
     int unkP[7];
-    int unk79; // resfileindex?
 
+    int unk79; // resfileindex?
     int unkQ[7];
+
     int unk80; // zsht_Building
     int unk81;
     int unk82;

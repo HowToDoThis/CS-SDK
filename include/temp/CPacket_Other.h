@@ -145,3 +145,33 @@ struct Packet_ClientCheck : Packet
     int iNetworkConfig;
     int unk8;
 };
+
+struct Packet_UMsg : Packet {
+    int u1;
+    unsigned int iSubType;
+    int szSender;
+    int szMessage;
+
+    int szUnkString;
+    bool bIsReceiver;
+
+    int iSubType2;
+
+    wstring szRewardTitle;
+    wstring szRewardDescription;
+
+    vector vReward1;
+    int u5;
+    int u6;
+    int u7;
+    int u8;
+    int u9;
+    int u10;
+    int u11;
+};
+
+struct Packet_RoomList : Packet {
+    int subType;
+    struct CGameRoom pGameRoom;
+    int u2;
+};
