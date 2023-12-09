@@ -2,17 +2,17 @@ struct CGameUser_vtables
 {
     int  (__thiscall* GetUserID)(struct CGameUser* this);
     void (__thiscall* Function2)(struct CGameUser* this);
-    void (__thiscall* GetName)(struct CGameUser* this);
-    void (__thiscall* GetLevel)(struct CGameUser* this);
+    const char* (__thiscall* GetName)(struct CGameUser* this);
+    int (__thiscall* GetLevel)(struct CGameUser* this);
     void (__thiscall* Function5)(struct CGameUser* this);
-    void (__thiscall* Function6)(struct CGameUser* this);
+    BOOL (__thiscall* IsReady)(struct CGameUser* this);
     void (__thiscall* Function7)(struct CGameUser* this);
-    void (__thiscall* Function8)(struct CGameUser* this);
+    void (__thiscall* Set_a1a)(struct CGameUser* this, int);
     void (__thiscall* Function9)(struct CGameUser* this);
     void (__thiscall* Function10)(struct CGameUser* this);
-    void (__thiscall* Function11)(struct CGameUser* this);
-    void (__thiscall* Function12)(struct CGameUser* this);
-    void (__thiscall* Function13)(struct CGameUser* this);
+    int (__thiscall* GetIP)(struct CGameUser* this, bool isExternal);
+    int (__thiscall* GetServerPort)(struct CGameUser* this);
+    int (__thiscall* GetClientPort)(struct CGameUser* this);
     void (__thiscall* Function14)(struct CGameUser* this);
     void (__thiscall* Function15)(struct CGameUser* this);
     void (__thiscall* Function16)(struct CGameUser* this);
@@ -126,79 +126,83 @@ struct CGameUser
     vector achievement;
 
     // honor
-    int titleID;
+    int titleID; // Func76
     int honorPoints;
 
     // titles
     vector titles;
 
-    int unk9;
-    int unk10;
-    int unk11;
+    vector vUnk;
+
     int userID;
-    int unk13;
-    const char* unk14;
+    int unk13; // Func10
+    const char* unk14; // Func2
     const char* gameName;
     const char* camoflagName;
     const char* unk17;
     int level;
-    int unk19;
+    int unk19; // Func55, FIND OUT
 
-    short a1;
+    char a1a; // Func8 Set, Func9 Get
+    char a1b; // Func7 Set
     
     NetworkConfig external;
     NetworkConfig internal;
 
-    int a6; // 4
-    int a7; // 4
-    int a8; // 4
-    int a9;
+    int a6; // Func14, FIND OUT
+    int a7; // Func15, FIND OUT
+    int a8; // Func16, FIND OUT
+
+    int a9; // Func17, FIND OUT
+    
     int a10;
 
-    long long exp;
-    long long cash;
-    long long points;
+    long long exp;    // Func18
+    long long cash;   // Func19, FIND OUT
+    long long points; // Func20
 
     // stats
-    int battles;
-    int win;
-    int kills;
-    int deaths;
-    int a21;
-    int a22;
-    int a23;
-    int a24;
-    int a25;
-    int a26;
-    int a27;
-    int a28;
-    int a29;
-    int a30;
-    int a31;
-    int a32;
-    int a33;
-    int a34;
-    int a35;
-    int a36;
+    int iBattles; // Func21
+    int iWin; // Func22
+    int iKills; // Func23
+    int iDeaths;
+    int iZombieKills;
+    int iSurvived;
 
-    int unk20[3];
+    int iTotalZombieKill;
+    int iTotalInfect;
+    int iAvgRoundDmg;
+    int iAvgInfect;
+    int iTotalKill;
+    int iTotalDeath;
+    int iCTWinRound;
+    int iTRWinRound; // Func34
+    int iZombieTendencyTypeA;
+    int iZombieWeaponID;
+    int iZombieTendencyTypeC;
+    int iOriginalTendencyTypeA;
+    int iOriginalWeaponID;
+    int iOriginalTendencyTypeC;
+
+    int unk20[3]; // Func37-38 unk20[7 * a2]
     int unk20B[3]; // first userID
     int unkB[64];
 
+    int cash2; // Func39
+    int b2; // Func40, FIND OUT
+
     // Clan section
-    int cash2;
-    int b2;
     int clanID;
     int clanMarkID;
     const char* szClanName;
-    char unk21;
-    char unk22;
-    char unk23;
+    char unk21; //, FIND OUT
+    char unk22; // Func45
+    char unk23; //, FIND OUT
 
     const char* unk24; // unk
     int nation;
     int city;
-    int town;
+    int town; // Func50
     const char* szPCBangName;
     int unk29;
 
@@ -206,46 +210,46 @@ struct CGameUser
     char iTournamentA;
     char iTournamentB; // & 1
     char iTournamentC; // & 2
-    char iTournamentD; // & 8
-    char unk31;  // & 4 SharedDataMgrFunc26
+    char iTournamentD; // & 8, Func60
+    char unk31; // & 4 GetCSOFacade1
 
     // Ranking
     int ranking[4]; // 4 rank stuff
     int currentLeague; // rank stuff
+    byte unk34[4];
 
-    int unk34;
     int roomStatus; // ready
     char roomTeam;
     
     // 0x8000 Campaign related
-    char unk36b;
-    int unk37;
-    char unk38a;
+    char unk36b; //, FIND OUT
+    int unk37;   //, FIND OUT
+    char unk38a; //, FIND OUT
 
     // 0x200000
-    char limitChatCount;
-    int unk39;
+    char limitChatCount; //, FIND OUT
+    int unk39; //, FIND OUT
 
     int codeBox;
-    int unk41; // 0x20000
+    int unk41; // 0x20000, FIND OUT
     string unk42; // std::string
 
-    int unk43;    // 0x800000
-    int unk44;    // 0x1000000
-    int unk45;    // 0x4000000
-    vector unk46; // 0x20000000
+    int unk43;    // 0x800000, FIND OUT
+    int unk44;    // 0x1000000, FIND OUT
+    int unk45;    // 0x4000000, FIND OUT
+    vector vBuffItem; // 0x20000000, FIND OUT
 };
 
 // CHN160531
 // size 688 (2B0)
 struct CGamePlayer : CGameUser
 {
-    int unk1;
+    struct PacketListener_vtable* vfptr2;
     int unk2;
-    int unk3;
+    short unk3;
     int unk4;
     int unk5;
-    int unk6;
+    short unk6;
 };
 
 struct CGamePlayerManager_vtables
@@ -272,7 +276,7 @@ struct CGamePlayerManager_vtables
     void (__thiscall* Function20)(struct CGamePlayerManager* this);
     void (__thiscall* Function21)(struct CGamePlayerManager* this);
     void (__thiscall* Function22)(struct CGamePlayerManager* this);
-    int  (__thiscall* GetUserByID)(struct CGamePlayerManager* this, int);
+    CGamePlayer* (__thiscall* GetUserByID)(struct CGamePlayerManager* this, int);
     void (__thiscall* Function24)(struct CGamePlayerManager* this);
     void (__thiscall* Function25)(struct CGamePlayerManager* this);
     void (__thiscall* Function26)(struct CGamePlayerManager* this);
@@ -317,12 +321,10 @@ struct CGamePlayerManager_vtables
 struct CGamePlayerManager
 {
     CGamePlayerManager_vtables* vfptr;
-    int unk01;
-    int unk02;
-    int unk03;
-    int unk04;
-    int unk05;
-    int unk06;
+
+    vector vUnk1;
+    vector vUnk2;
+
     int unk07; // userID related
     int unk08;
     int unk09;
@@ -330,9 +332,9 @@ struct CGamePlayerManager
     char unk11[16];
     long unk12;
     int unk13;
-    int unk14;
-    int unk15;
-    int unk16;
+
+    vector vUnk3;
+
     char unk17;
     int unk18; // unk
 };

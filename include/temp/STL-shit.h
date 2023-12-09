@@ -53,9 +53,13 @@ struct vector_string {
     string* end;
 };
 
-struct list {
-    list* _next;
-    list* _prev;
+struct list_node_base {
+    list_node_base* _next;
+    list_node_base* _prev;
     int _val;
+};
+
+struct list {
+    list_node_base* _head;
     unsigned int _size;
 };

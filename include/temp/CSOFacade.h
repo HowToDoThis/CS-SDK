@@ -13,7 +13,7 @@ struct CSOFacade_vt
     void (__thiscall* Function11)(struct CSOFacade* this);
     void (__thiscall* Function12)(struct CSOFacade* this);
     void (__thiscall* Function13)(struct CSOFacade* this);
-    void (__thiscall* Function14)(struct CSOFacade* this);
+    void (__thiscall* Function14)(struct CSOFacade* this); // Related Cash
     void (__thiscall* Function15)(struct CSOFacade* this);
     void (__thiscall* Function16)(struct CSOFacade* this);
     void (__thiscall* Function17)(struct CSOFacade* this);

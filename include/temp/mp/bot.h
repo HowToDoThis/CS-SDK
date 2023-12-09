@@ -212,3 +212,65 @@ struct CCSBotManager : CBotManager {
     bool m_canRespawn;
     bool m_bServerActive;
 };
+
+typedef unsigned int Place;
+struct IntervalTimer {
+    float m_timestamp;
+};
+struct PlaceTimeInfo
+{
+	Place placeID;
+	IntervalTimer timer;
+};
+#define MAX_PLACES_PER_MAP 63
+
+typedef unsigned int PlaceCriteria;
+typedef unsigned int CountCriteria;
+
+struct BotPhrase {
+    char *m_name;
+    Place m_id;
+    bool m_isPlace; // true if this is a Place phrase
+    GameEventType m_radioEvent;
+    bool m_isImportant; // mission-critical statement
+    vector m_voiceBank;
+    vector m_count;
+    vector m_index;
+    int m_numVoiceBanks;
+    PlaceCriteria m_placeCriteria;
+	CountCriteria m_countCriteria;
+};
+
+struct BotSpeakable {
+	char *m_phrase;
+	float m_duration;
+	PlaceCriteria m_place;
+	CountCriteria m_count;
+};
+
+struct BotPhraseManager {
+    list m_list;
+    list m_placeList;
+
+    PlaceTimeInfo m_placeStatementHistory[MAX_PLACES_PER_MAP];
+
+    int unk2;
+    int unk3;
+    
+    int m_placeCount;
+};
+
+enum{ FirstCustomSkin = 100, NumCustomSkins = 100, LastCustomSkin = FirstCustomSkin + NumCustomSkins - 1, };
+
+struct BotProfileManager {
+    list m_profileList;
+    int u1;
+    //int u2;
+    //vector m_voiceBanks;
+
+    char *m_skins[NumCustomSkins];
+	char *m_skinModelnames[NumCustomSkins];
+	char *m_skinFilenames[NumCustomSkins];
+
+	int m_nextSkin;
+};

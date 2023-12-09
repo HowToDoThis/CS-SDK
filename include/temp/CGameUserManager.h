@@ -1,7 +1,7 @@
 struct CGameUserManager_vtables
 {
-    void (__thiscall* desctuctor)(struct CGameUserManager* this);
-    void (__thiscall* PacketIn)(struct CGameUserManager* this);
+    void (__thiscall* dtor)(struct CGameUserManager* this);
+    void (__thiscall* OnPacket)(struct CGameUserManager* this);
 };
 
 struct CGameUserManager
@@ -12,12 +12,26 @@ struct CGameUserManager
     //int* iNewUnk1; // vector/string
     //int* iNewUnk2; // vector/string
 
-    vector unk2;
-
+    int unk1;
+    int unk2;
+    int unk3;
+    
     int unk5;
     int unk6;
     int unk7;
-    int unk8[12];
+
+    long long lExp;
+    long long lPoints;
+
+    int iBattles;
+    int iWin;
+    int iKills;
+    int iDeaths;
+    int iZombieKills;
+    int iSurvived;
+
+    int iLevel;
+    int unk8;
 
     vector unk9;
 

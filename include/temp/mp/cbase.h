@@ -868,9 +868,7 @@ struct CBasePlayer : CBaseMonster {
     float m_tSneaking;
     int m_iUpdateTime;
     int m_iClientHealth;
-    int m_iClientMaxHealth;
     int m_iClientBattery;
-    int m_iClientMaxBattery;
     int m_iHideHUD;
     int m_iClientHideHUD;
     int m_iFOV;
@@ -883,6 +881,9 @@ struct CBasePlayer : CBaseMonster {
     CBasePlayerItem *m_pLastItem;
     int m_rgAmmo[MAX_AMMO_SLOTS];
     int m_rgAmmoLast[MAX_AMMO_SLOTS];
+
+    int cso_add_b[551];
+
     vec3_t m_vecAutoAim;
     BOOL m_fOnTarget;
     int m_iDeaths;
