@@ -169,11 +169,11 @@ typedef struct enginefuncs_s {
     void        (__cdecl*pfnCVarSetString)        (const char *szVarName, const char *szValue);
     void        (__cdecl*pfnAlertMessage)        (ALERT_TYPE atype, const char *szFmt, ...);
     void        (__cdecl*pfnEngineFprintf)        (void *pfile, const char *szFmt, ...);
-    void*           (*pfnPvAllocEntPrivateData)    (struct edict_t *pEdict, int cb);
-    void*           (*pfnPvEntPrivateData)        (struct edict_t *pEdict);
-    void        (*pfnFreeEntPrivateData)    (struct edict_t *pEdict);
-    const char*     (*pfnSzFromIndex)        (int iString);
-    int         (*pfnAllocString)        (const char *szValue);
+    void*           (__cdecl*pfnPvAllocEntPrivateData)    (struct edict_t *pEdict, int cb);
+    void*           (__cdecl*pfnPvEntPrivateData)        (struct edict_t *pEdict);
+    void        (__cdecl*pfnFreeEntPrivateData)    (struct edict_t *pEdict);
+    const char*     (__cdecl*pfnSzFromIndex)        (int iString);
+    int         (__cdecl*pfnAllocString)        (const char *szValue);
     struct entvars_s* (__cdecl*pfnGetVarsOfEnt)        (struct edict_t *pEdict);
     struct edict_t*   (__cdecl*pfnPEntityOfEntOffset)    (int iEntOffset);
     int         (__cdecl*pfnEntOffsetOfPEntity)    (const struct edict_t *pEdict);

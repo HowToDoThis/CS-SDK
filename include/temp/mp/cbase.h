@@ -315,8 +315,8 @@ struct CBaseEntity_vt {
     BOOL (__thiscall* IsPlayer)(struct CBaseEntity* this);
     BOOL (__thiscall* IsNetClient)(struct CBaseEntity* this);
     void (__thiscall* TeamID)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_0)(struct CBaseEntity* this);
     void (__thiscall* GetKnockbackData)(struct CBaseEntity* this);
+    void (__thiscall* GetArmorData)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_1)(struct CBaseEntity* this);
     struct CBaseEntity* (__thiscall* GetNextTarget)(struct CBaseEntity* this);
     void (__thiscall* Think)(struct CBaseEntity* this);
@@ -325,9 +325,9 @@ struct CBaseEntity_vt {
     void (__thiscall* Blocked)(struct CBaseEntity* this, CBaseEntity *pOther);
     void (__thiscall* UpdateOnRemove)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_2)(struct CBaseEntity* this);
+    struct CBaseEntity* (__thiscall* Respawn)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_3)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_4)(struct CBaseEntity* this);
-    struct CBaseEntity* (__thiscall* Respawn)(struct CBaseEntity* this);
     vec_t* (__thiscall* Center)(struct CBaseEntity* this, vec_t*);
     vec_t* (__thiscall* EyePosition)(struct CBaseEntity* this, vec_t*);
     vec_t* (__thiscall* EarPosition)(struct CBaseEntity* this, vec_t*);
@@ -350,8 +350,8 @@ struct CBaseEntity_vt {
 
     // Start from here, splited with CBaseMonster and CBasePlayerItem
 
-//#define GoPlayerItem
-#define GoMonster
+#define GoPlayerItem
+//#define GoMonster
 
 #ifdef GoPlayerItem
     // CBasePlayerItem
@@ -377,7 +377,62 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::GetWeaponPtr)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetMaxSpeed)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown2)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::iItemSlot)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::GetWeaponType)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::GetUnk12)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x400)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x800)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x8000)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x10000)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x1000)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x40000)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown3)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown4)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown5)(struct CBaseEntity* this, float* a, float* b);
+    double (__thiscall* CBasePlayerItem::Unknown6)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown7)(struct CBaseEntity* this, float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
+    void (__thiscall* CBasePlayerItem::Unknown8)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown9)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown10)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown11)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown12)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown13)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown14)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown15)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown16)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Unknown17)(struct CBaseEntity* this);
+
+    // CBasePlayerWeapon
+    void (__thiscall* CBasePlayerWeapon::Unknown1)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown2)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown3)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown4)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::PlayEmptySound)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::ResetEmptySound)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::SendWeaponAnim)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::IsUseable)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown5)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown6)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown7)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown8)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::RetireWeapon)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown9)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown10)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown11)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown12)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown13)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown14)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x2000)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x4000)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::GetAmmoClip)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::GetAmmoClip2)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown15)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown16)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::FireRemaining)(struct CBaseEntity* this,int *shotsFired, float *shootTime, int bIsGlock);
+    void (__thiscall* CBasePlayerWeapon::ItemPostFrame)(struct CBaseEntity* this);
+
+    // Weapon Own
+    void (__thiscall* CWeapon::FireEvent)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
+    void (__thiscall* CWeapon::GetDamage)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
 #elif defined GoMonster
     // CBaseMonster
     void (__thiscall* CBaseMonster::ChangeYaw)(struct CBaseEntity* this, int speed);
@@ -400,7 +455,9 @@ struct CBaseEntity_vt {
     int (__thiscall* CBaseMonster::CSO_ADD_15)(struct CBaseEntity* this);
 
     // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
-
+    // ret 0
+    void Pain(int iLastHitGroup, bool bHasArmour);
+    
 #endif
 };
 
@@ -994,18 +1051,13 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     int m_iShotsFired;
     vec3_t m_vVecAiming;
     string_t model_name;
-    float m_flGlock18Shoot;			// time to shoot the remaining bullets of the glock18 burst fire
-    int m_iGlock18ShotsFired;		// used to keep track of the shots fired during the Glock18 burst fire mode.
     float m_flFamasShoot;
     int m_iFamasShotsFired;
     float m_fBurstSpread;
     int m_iWeaponState;
     float m_flNextReload;
-    float m_flDecreaseShotsFired;
-    unsigned short m_usFireGlock18;
-    unsigned short m_usFireFamas;
 
-    // hle time creep vars
-    float m_flPrevPrimaryAttack;
-    float m_flLastFireTime;
+    int m_iShell;
+    int iShellOn;
+    unsigned short m_usFireAK47;
 };
