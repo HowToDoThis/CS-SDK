@@ -91,7 +91,7 @@ struct GameOptionManager_vtables
     void (__thiscall* Function89)(struct GameOptionManager* this);
     void (__thiscall* Function90)(struct GameOptionManager* this);
     void (__thiscall* Function91)(struct GameOptionManager* this);
-    void (__thiscall* Function92)(struct GameOptionManager* this);
+    int  (__thiscall* GetGameMode)(struct GameOptionManager* this);
     void (__thiscall* Function93)(struct GameOptionManager* this);
     void (__thiscall* Function94)(struct GameOptionManager* this);
     void (__thiscall* Function95)(struct GameOptionManager* this);
@@ -290,40 +290,31 @@ struct GameOptionManager
     int unk5;
     int unk6;
     int unk7;
-    struct CRoomUnk unk8;
+    struct CRoomSettingPart settings;
     int unk9;
     int unk10;
     int unk11;
     int unk12;
     int unk13;
-    char unk14;
+    int unk14;
     int unk15;
     int unk16;
     int unk17;
     int unk18;
     int unk19;
-
-    short unk20;
+    int unk20;
     int unk21;
-    int unk22;
-    int unk23;
-    int unk24;
-    int unk25;
-    int unk26;
-    int unk27;
-    int unk28;
-    int unk29;
+};
 
-    char unk30;
-    int unk31;
-    char unk32;
-    int unk33;
-    int unk34; // shit loop
-    int unk35;
-    int unk36;
-    int unk37;
-    int unk38;
-    int unk39;
+struct MainGameOptionManager {
+    void* vfptr;
+    int nf1;
+    int* nf2; // a4
+    int* nf3; // a2
+    int* nf4; // a3
+    int nf5;
+    int nf6;
+    int nf7;
 };
 
 struct Packet_Option

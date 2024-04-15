@@ -1,163 +1,169 @@
-struct CRoomSetting
-{
-    int status;
-	const char* roomName;
-	char unka3;
-	int unka4;
-	char unka5;
-	int unka6;
-	int unka7;
-    char unk00;
-    char unk01;
-    char unk02;
-    char unk03;
-	int unk04;
-    char maxPlayer;
-    char unka01;
-    char unka02;
-    char unka03;
-
-	const char* password;
-	int unkb2;
-	short unkb3;
-    char unkb3a;
-    char unkb3b;
-	short unkb4;
-    char unkb4a;
-    char unkb4b;
-	short unkb5;
-    char unkb5a;
-    char unkb5b;
-	int unkb6;
-    char killDeathRules;
-    char unkb7b;
-    char unkb7c;
-    char unkb7d;
-	int unkb8;
-    char levelLimit;
-    char unk07;
-    char gameMode;
-    char mapID;
-	int unkb10;
-
-    char winLimit;
-    char unkc01;
-    char unkc02;
-    char unkc03;
-	int killsToWin;
-	char gameTime;
-	float roundTime;
-	char unk57;
-	int bannedZB; // bannedZB
-	int unkc7;
-    short unkc8;
-    char unkc8a; // why ??? 256?
-    char unkc8b;
-
-	char wpnRestricts;
-    char hostageKillLimit;
-    char freezeTime;
-    float buyTime;
-    char displayName;
-    char teamBalance;
-    char unk21;
-    char friendlyFire;
-    char flashlight;
-    char footsteps;
-    char unk25;
-    char unk26;
-    char unk27;
-    char unk28;
-    char unk29;
-    char unk30;
-    char voiceChat;
-    char unkB0;
-    short startMoney;
-    char movingShot;
-    char unk46;
-    
-    char randomMap;
-    char mapPoolCount;
-    int* mapPool;
-
-    int unkB3;
+struct RoomMatchSettingsUnk {
     int unk1;
-    short unk2;
-    short unk3;
-    int unkC[3];
-    int unk4;
-    int unk5;
-    short unk5A;
-    char unkd1;
-    char unkd2;
-    char unk50;
-    char roomStatus;
-    char wpnEnhanceLimit;
-    char isSoySD;
-    // 0x2000
-    char zbsDifficulty;
-    int unkd01;
-    int unkd02;
-
-    char unkb27;
-    char leagueRule;
-    char mannerLimit;
-    char unkb30;
-
+    int unk2;
+    char unk3;
+    char unk4;
+    char unk5;
+    char unk6;
     int unk7;
-    short unk7A;
-    int unkE[3];
-    int unk8;
-    int unk9;
-    short unk9A;
-    int unkF[3];
-    int unk10;
-    int unk11;
-    int unk12;
-    int unk13;
-    int unk14;
+    char unk8;
+    char unk9;
+};
 
-    int fuck[13];
+struct MapPool {
+    char randomType;
+    int mapID;
+};
+
+struct CRoomSettingPart {
+    // 0x10
+    char levelLimit;
+    // 0x20
+    char unk10;
+    // 0x40
+    char gameMode;
+    // 0x80, High 0x10000
+    char mapID;
+
+    //CRoomSetting setting; // some stuff
+    int unk16; // ??
+
+    // 0x200
+    char winLimit;
+    // 0x400
+    int needKills;
+    // 0x800
+    char gameTime;
+    // 0x1000
+    float roundTime;
+    // High 0x20000
+    char zombieLimit;
+    int bannedZombie[3];
+    // 0x2000
+    char weaponRestriction;
+    // 0x4000
+    char hostagePenalty;
+    // 0x8000
+    char freezeTime;
+    // 0x10000
+    float buyTime;
+    // 0x20000
+    char displayName;
+    // 0x40000
+    char teamBalance;
+    // 0x80000
+    char unk21;
+    // 0x100000
+    char friendlyFire;
+    // 0x200000
+    char flashlight;
+    // 0x400000
+    char footsteps;
+    // 0x800000
+    char unk25;
+    // 0x1000000
+    char unk26;
+    // 0x2000000
+    char unk27;
+    // 0x4000000
+    char unk28;
+    // 0x8000000
+    char unk29;
+    // 0x10000000
+    char unk30;
+    // 0x20000000
+    char voiceChat;
+    // High 0x2
+    char bombTimer;
+    // High 0x10
+    short startCash;
+    // High 0x20
+    char movingShot;
+    // High 0x40
+    char unk46;
+    // High 0x100
+    char randomMap;
+    // High 0x200
+    char mapPoolCount;
+    MapPool mapPools[5];
+    // High 0x400
+    char unk50;
+
+    char unk51;
+
+    // High 0x800
+    char wpnRestriction;
+    // High 0x1000
+    char isSoySD;
+    // High 0x2000
+    char zsDiff;
+    float zsExps;
+    float zsPoints;
+    // High 0 < 0
+    char unk52;
+
+    // High 0x4000
+    char leagueRule;
+    // High 0x8000
+    char mannerLimit;
+
+    // idk what the fuck
+    int undef3[34]; // startCash = 50, MapPools = 39
+
+    // flag < 0
+    char unk31;
+    int unk32[12];
 };
 
 struct CRoom
 {
-    int unk;
-    short unk1;
-    int unk2;
-    int unk3;
-    int unk4;
+    // 0x40000000
+    int roomState;
+
+    // 0x1
+    struct wstring roomName;
+    // 0x2
+    char unk2;
+    // 0x4
+    char unk3;
+    char unk4;
     int unk5;
-    int unk6;
-    short unk7;
-    char unk7B;
-    int unk8;
-    int unk9;
-    short unk10;
-    int unk11;
-    int unk12;
-    int unk13;
-    int unk14;
-    int unk15; // 7
+    // 0x100
+    char maxPlayers;
+    char unk6b;
+    char unk6c;
+    char unk6d;
 
-    int unkA1;
-    int unkA2;
+    // 0x8
+    struct wstring password;
 
-    CRoomSetting setting; // some stuff
+    // High 0x8
+    char killDeathRules;
 
-    int unk16;
-    short unk17;
+    //int unk7; // ?
+    int unk8; // ?
 
-    int unkC[3];
-    int unkC1;
-    int unkC2;
-    short unk18;
-    char unk19;
+    CRoomSettingPart settings;
 
-    int unk20;
-    int unk21;
-    int unk22;
-    int unk23;
+    // High Flags
+    // 0x1
+    int unk33;
+    struct wstring unk34;
+    char unk35;
+    char unk36;
+    char unk37;
+    // 0x4
+    int botDiff;
+    int botCT;
+    int botTR;
+    int botBalance;
+
+    // Unknown
+    int nf0;
+    char flags;
+    int usersCount;
+    int vUserID[32];
+    // CGameUser????
 };
 
 struct CGameRoomManagerVfptr

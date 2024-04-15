@@ -62,21 +62,21 @@ struct CSONMWrapper_vtables
 
 struct CSONMEventListener_vtables
 {
-    void (__thiscall* LoginAuthReply)(struct CSONMEventListener* ptr, struct NMLoginAuthReplyCode loginCode, int socketError);
-    void (__thiscall* InitFriendList)(struct CSONMEventListener* ptr, int a2); // a2 > 2 execute FriendMgr stuffs
-    void (__thiscall* NullFunc)(struct CSONMEventListener* ptr); // null
-    void (__thiscall* Function4)(struct CSONMEventListener* ptr, int a2, const char* message); // #CSO_ServerMessage_Title
-    void (__thiscall* FriendFunction)(struct CSONMEventListener* ptr, int a2, const char* message); // 1 = #CSO_Request_Friend, 2 = #CSO_Send_Memo, default = #CSO_Message_RequestFriend_Success
+    void (__thiscall* LoginAuthReply)(struct CSONMEventListener* ptr, struct NMLoginAuthReplyCode* loginCode, int socketError);
+    void (__thiscall* OnMessengerReplyEvent)(struct CSONMEventListener* ptr, int b); // a2 > 2 execute FriendMgr stuffs
+    void (__thiscall* OnMsgConnectionClosedEvent)(struct CSONMEventListener* ptr); // null
+    void (__thiscall* OnServerMessageEvent)(struct CSONMEventListener* ptr, int type, const char* message); // #CSO_ServerMessage_Title
+    void (__thiscall* OnCustomMessageEvent)(struct CSONMEventListener* ptr, int a2, const char* message); // 1 = #CSO_Request_Friend, 2 = #CSO_Send_Memo, default = #CSO_Message_RequestFriend_Success
     void (__thiscall* GetFriendList)(struct CSONMEventListener* ptr);
-    void (__thiscall* ParseFriendList)(struct CSONMEventListener* ptr, int* a2); // #CSO_FriendLogout | #CSO_FriendLogin
-    void (__thiscall* Function8)(struct CSONMEventListener* ptr, int a2, int a3); // unk
+    void (__thiscall* OnFriendInfoChangedEvent)(struct CSONMEventListener* ptr, struct CNMFriendInfoChangedEvent* pEvent); // #CSO_FriendLogout | #CSO_FriendLogin
+    void (__thiscall* OnRequestNewFriendEvent)(struct CSONMEventListener* ptr, char* nickname, char* msg, int serialNo);
     void (__thiscall* GetNoteBox2)(struct CSONMEventListener* ptr);
     void (__thiscall* GetGuildOnlineInfoEx)(struct CSONMEventListener* ptr);
-    void (__thiscall* SendClanChat)(struct CSONMEventListener* ptr);
-    void (__thiscall* SendClanChatError)(struct CSONMEventListener* ptr); // #CSO_Clan_ChatRoomError
-    void (__thiscall* CallChattingManager_Func27)(struct CSONMEventListener* ptr);
-    void (__thiscall* CallChattingManager_Func25)(struct CSONMEventListener* ptr);
-    void (__thiscall* CallChattingManager_Func28)(struct CSONMEventListener* ptr);
+    void (__thiscall* OnCRChatRoomMessageReceivedEvent)(struct CSONMEventListener* ptr, const char* senderName, const char* msg);
+    void (__thiscall* OnCRChatRoomErrorEvent)(struct CSONMEventListener* ptr, const char* msg); // #CSO_Clan_ChatRoomError
+    void (__thiscall* WriteToChatSession)(struct CSONMEventListener* ptr, int sessionID, char* senderName, char* msg);
+    void (__thiscall* FindChatSession)(struct CSONMEventListener* ptr, int sessionID, int);
+    void (__thiscall* ShowChatSession)(struct CSONMEventListener* ptr, int sessionID, char*, int, void*);
 };
 
 struct CSONMEventListener
@@ -140,6 +140,7 @@ struct CFriend_vec1_data {
     string u5;
     wstring u6;
     int u8;
+    int u9;
 };
 
 struct vector_CFriend_vec1 {

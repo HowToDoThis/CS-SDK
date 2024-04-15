@@ -49,6 +49,12 @@ struct CPacketSend
     struct CPacketSendInternal* base;
 };
 
+struct PacketFinder {
+    PacketFinder* next;
+    PacketFinder* prev;
+    void* parser;
+};
+
 struct Packet_HostServer : Packet
 {
     int serverIP;

@@ -282,8 +282,8 @@ struct CBaseEntity_vt {
     void (__thiscall* SetObjectCollisionBox)(struct CBaseEntity* this);
     void (__thiscall* Classify)(struct CBaseEntity* this);
     void (__thiscall* DeathNotice)(struct CBaseEntity* this, struct entvars_t*);
-    void (__thiscall* TraceAttack)(struct CBaseEntity* this);
-    void (__thiscall* TraceAttack_Proxy)(struct CBaseEntity* this);
+    void (__thiscall* TraceAttack)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir01, float vecDir2, TraceResult *ptra, int bitsDamageType);
+    void (__thiscall* TraceAttack_Proxy)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir1, float vecDir2, TraceResult *ptra, int bitsDamageType, int);
     bool (__thiscall* TakeDamage)(struct CBaseEntity* this, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
     bool (__thiscall* TakeHealth)(struct CBaseEntity* this);
     void (__thiscall* Killed)(struct CBaseEntity* this, entvars_t *pevAttacker, int iGib);
@@ -387,7 +387,7 @@ struct CBaseEntity_vt {
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x40000)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown3)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown4)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown5)(struct CBaseEntity* this, float* a, float* b);
+    void (__thiscall* CBasePlayerItem::GetAutoaimVector)(struct CBaseEntity* this, float* a, float b);
     double (__thiscall* CBasePlayerItem::Unknown6)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown7)(struct CBaseEntity* this, float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
     void (__thiscall* CBasePlayerItem::Unknown8)(struct CBaseEntity* this);
@@ -408,16 +408,16 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerWeapon::Unknown4)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::PlayEmptySound)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::ResetEmptySound)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::SendWeaponAnim)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::SendWeaponAnim)(struct CBaseEntity* this, int, bool);
     void (__thiscall* CBasePlayerWeapon::IsUseable)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown5)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown6)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown7)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown8)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::PrimaryAttack)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::SecondaryAttack)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Reload)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::WeaponIdle)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::RetireWeapon)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown9)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::Unknown9)(struct CBaseEntity* this); // MPToCL
     void (__thiscall* CBasePlayerWeapon::Unknown10)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown11)(struct CBaseEntity* this);
+    int  (__thiscall* CBasePlayerWeapon::UseDecrement)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown12)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown13)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown14)(struct CBaseEntity* this);
@@ -432,6 +432,8 @@ struct CBaseEntity_vt {
 
     // Weapon Own
     void (__thiscall* CWeapon::FireEvent)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
+    // Fun fact
+    // SIG: 56 FF 15 ? ? ? ? 8B C8 8B 10 FF 92 ? ? ? ? 8B F0 FF 15 ? ? ? ? 6A FE 6A 24 6A 23 6A 20 6A 1D 6A 18 6A 14 6A 0D 8B C8 6A 0B 6A 0E 6A 09 8B 01 6A 08 FF 90 ? ? ? ? 50 E8 ? ? ? ? 83 C4 34 84 C0 75 38 83 FE 1E 74
     void (__thiscall* CWeapon::GetDamage)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
 #elif defined GoMonster
     // CBaseMonster
@@ -927,7 +929,6 @@ struct CBasePlayer : CBaseMonster {
     int m_iClientHealth;
     int m_iClientBattery;
     int m_iHideHUD;
-    int m_iClientHideHUD;
     int m_iFOV;
     int m_iClientFOV;
     int m_iNumSpawns;

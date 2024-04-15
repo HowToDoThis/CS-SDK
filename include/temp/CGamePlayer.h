@@ -117,7 +117,7 @@ struct NetworkConfig
 };
 
 // CHN160531
-// size 668 (29C)
+// size 0x298
 struct CGameUser
 {
     struct CGameUser_vtables* vfptr;
@@ -232,7 +232,7 @@ struct CGameUser
 
     int codeBox;
     int unk41; // 0x20000, FIND OUT
-    string unk42; // std::string
+    wstring unk42; // std::string
 
     int unk43;    // 0x800000, FIND OUT
     int unk44;    // 0x1000000, FIND OUT
@@ -244,7 +244,7 @@ struct CGameUser
 // size 688 (2B0)
 struct CGamePlayer : CGameUser
 {
-    struct PacketListener_vtable* vfptr2;
+    struct PacketListener* vfptr2;
     int unk2;
     short unk3;
     int unk4;

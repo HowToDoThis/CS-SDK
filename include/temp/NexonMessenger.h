@@ -861,6 +861,23 @@ typedef enum NMUSERSTATUS {
     kStatus_Authenticated	= 17,		//	인증 OK, 메신저 --
 };
 
+typedef enum NMSYSTEMMSGCODE
+{
+    kSystemMsgCode_NULL					= 0,
+
+    kSystemMsgCode_AdminNotice			= 1,
+    kSystemMsgCode_Advertisement		= 2,
+    kSystemMsgCode_ErrorMessage			= 3,
+    kSystemMsgCode_GeneralMessage		= 4,
+    kSystemMsgCode_WebNotice			= 5,
+    kSystemMsgCode_Notify				= 6,
+    kSystemMsgCode_ConnectionClose		= 7,
+
+    kCustomMsgCode_RequestFriendOK		= 1,
+    kCustomMsgCode_RequestFriendFailed	= 2,
+    kCustomMsgCode_NoteReply			= 3,
+};
+
 struct NMGuildID {
     int nGameCode;
     int nServerCode;
@@ -1383,6 +1400,36 @@ struct CNMChannelCreatedEvent : CNMEvent {
     CNMChannelMemberInfo channelMemberInfo;
 };
 
+struct CNMCRChatRoomCreatedExEvent : CNMEvent {
+    unsigned int uSerialKey;
+    CNMChatRoomInfoEx criInfo;
+    CNMChatRoomMemberInfo crmiMyInfo;
+};
+
+struct CNMCRChatRoomErrorEvent : CNMEvent {
+    unsigned int uSerialKey;
+    unsigned int uType;
+};
+
+struct CNMGSSessionEstablishedEvent : CNMEvent {
+	// event data
+	unsigned int uSerialKey;
+	CNMSessionInfo siInfo;
+	vector_NMSessionMemberList aMembers;
+	bool bWndCreated;
+};
+
+struct CNMGSSessionFailedEvent : CNMEvent {
+	// event data
+	unsigned int uSerialKey;
+	CNMSessionInfo siInfo;
+};
+struct CNMGSSessionClosedEvent : CNMEvent {
+	// event data
+	unsigned int uSerialKey;
+	CNMSessionInfo siInfo;
+};
+
 // ============== FUNC ==============
 struct CNMSetLocaleFunc : CNMFunc {
     NMLOCALEID uLocaleID;
@@ -1562,6 +1609,15 @@ struct CNMRequestChatSessionExFunc : CNMFunc {
 
 struct CNMGSGetMemberListFunc : CNMFunc {
     struct vector_NMSessionMemberList aMembers; // std::vector<CNMSessionMemberInfo>
+};
+
+struct CNMLogoutMessengerFunc : CNMFunc {
+    
+};
+
+struct CNMCRRegisterCallbackFunc : CNMFunc {
+    HWND hWnd;
+    unsigned int uMsg;
 };
 
 // ============== Others ==============

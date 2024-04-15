@@ -267,7 +267,7 @@ typedef struct enginefuncs_s {
     // CSO
     void* (*GetClassMenuManager)();
     void* (*GetBuyMenuManager)();
-    void* (*GetOption)();
+    struct GameOptionManager* (*GetOption)();
     void* (*GetGamePlayerManager)();
     void* (*GetCSOFacade)();
     void* (*GetGameRoomManager)();
