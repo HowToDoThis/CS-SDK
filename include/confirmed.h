@@ -51,6 +51,8 @@ typedef unsigned __int64 uint64;
 
 typedef float vec_t;
 typedef vec_t vec3_t[3];
+struct fVector { float x; float y; float z; };
+
 typedef unsigned int string_t;
 
 typedef unsigned int CRC32_t;
@@ -334,10 +336,11 @@ typedef struct entvars_s {
     float		frags;
 
     int			weapons;  // bit mask for available weapons
-    float		takedamage;
     int			deadflag;
-    vec3_t		view_ofs;	// eye position
-
+    float view_ofs[2];
+    float		takedamage; // ok
+    
+    int cso_add0;
     int cso_add1;
     int cso_add2;
     int cso_add3;
@@ -365,16 +368,16 @@ typedef struct entvars_s {
     string_t	targetname;
     float		dmg_take;
     float		dmg_save;
-    float		dmg;
     string_t	message;
     string_t	netname;
+    float		dmg; // ok
     float		dmgtime;
     string_t	noise;
     string_t	noise1;
     string_t	noise2;
     string_t	noise3;
     float		speed;
-    float		air_finished;
+    float		air_finished; // ok
     float		pain_finished;
     float		radsuit_finished;
     struct edict_t		*pContainingEntity;
@@ -394,7 +397,7 @@ typedef struct entvars_s {
     int			groupinfo;
 
     // For mods
-    int			iuser1;
+    int			iuser1; // ok
     int			iuser2;
     int			iuser3;
     int			iuser4;

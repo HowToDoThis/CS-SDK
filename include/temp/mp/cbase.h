@@ -280,7 +280,7 @@ struct CBaseEntity_vt {
     void (__thiscall* ObjectCaps)(struct CBaseEntity* this);
     void (__thiscall* Activate)(struct CBaseEntity* this);
     void (__thiscall* SetObjectCollisionBox)(struct CBaseEntity* this);
-    void (__thiscall* Classify)(struct CBaseEntity* this);
+    int  (__thiscall* Classify)(struct CBaseEntity* this);
     void (__thiscall* DeathNotice)(struct CBaseEntity* this, struct entvars_t*);
     void (__thiscall* TraceAttack)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir01, float vecDir2, TraceResult *ptra, int bitsDamageType);
     void (__thiscall* TraceAttack_Proxy)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir1, float vecDir2, TraceResult *ptra, int bitsDamageType, int);
@@ -485,23 +485,23 @@ struct CBaseEntity {
 
     int u1[65];
 
-    int cso_add1;
-    int cso_add2;
-    int cso_add3;
-    int cso_add4;
+    int entity_nf1;
+    int entity_nf2;
+    int entity_nf3;
+    int entity_nf4;
+    int entity_nf5;
+    bool has_disconnected; // ok
 
-    int m_LastHitGroup;
-
-    // client has left the game
-    bool has_disconnected;
-
-    TeamName m_iTeam;
-    int u2[4];
+    TeamName m_iTeam; // ok
+    int m_LastHitGroup; // ok
+    int entity_nf6;
+    int entity_nf7;
+    int entity_nf8;
 };
 
 struct CBaseDelay : CBaseEntity {
-    float m_flDelay;
-    string_t m_iszKillTarget;
+    float m_flDelay; // ok
+    string_t m_iszKillTarget; // ok
 };
 
 struct CBaseAnimating : CBaseDelay {
@@ -695,8 +695,8 @@ typedef struct {
 struct CBaseMonster : CBaseToggle {
     Activity m_Activity;        // what the monster is doing (animation)
     Activity m_IdealActivity;    // monster should switch to this activity
-    int m_LastHitGroup;            // the last body region that took damage
     int m_bitsDamageType;        // what types of damage has monster (player) taken
+    int monster_nf1;
     char m_rgbTimeBasedDamage[4]; // TODO: why 4 on CSO??
 
     MONSTERSTATE m_MonsterState;    // monster's current state
@@ -910,11 +910,11 @@ struct CBasePlayer : CBaseMonster {
     float m_flgeigerRange;
     float m_flgeigerDelay;
     int m_igeigerRangePrev;
-    int m_iStepLeft;
     char m_szTextureName[MAX_TEXTURENAME_LENGHT];
     char m_chTextureType;
-    int m_idrowndmg;
-    int m_idrownrestored;
+    int m_idrowndmg; // ok
+    int m_idrownrestored; // ok
+    int m_iStepLeft;
     int m_bitsHUDDamage;
     BOOL m_fInitHUD;
     BOOL m_fGameHUDInitialized;
@@ -937,7 +937,7 @@ struct CBasePlayer : CBaseMonster {
     CBasePlayerItem *m_pActiveItem;
     CBasePlayerItem *m_pClientActiveItem;
     CBasePlayerItem *m_pLastItem;
-    int m_rgAmmo[MAX_AMMO_SLOTS];
+    int m_rgAmmo[MAX_AMMO_SLOTS]; // ok
     int m_rgAmmoLast[MAX_AMMO_SLOTS];
 
     int cso_add_b[551];
@@ -1028,8 +1028,8 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     int m_fFireOnEmpty;
     int cso_baseplayer_weapon_1;
     int cso_baseplayer_weapon_2;
-    float m_flNextPrimaryAttack;
-    float m_flNextSecondaryAttack;
+    float m_flNextPrimaryAttack; // ok
+    float m_flNextSecondaryAttack; // ok
     float m_flTimeWeaponIdle;
     int m_iPrimaryAmmoType;
     int m_iSecondaryAmmoType;
