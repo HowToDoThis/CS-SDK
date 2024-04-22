@@ -20,7 +20,8 @@ struct CUDPHolePuncherUnknown
     short unk15;
     int unk16;
     // prob command buffer?
-    const char somethingCBuf[256];
+    const char somethingCBuf[252];
+    struct vector unk17;
 };
 
 struct CUDPHolePuncherUnknown2
@@ -33,11 +34,8 @@ struct CUDPHolePuncher
 {
     void* vfptr;
     CUDPHolePuncherUnknown base;
-    int u1;
-    int u2; // array
     int u3;
-    int u4; // array
-    int u5;
+    struct list u4;
     int u6;
     int iU1[27]; // related lock
     int u7;

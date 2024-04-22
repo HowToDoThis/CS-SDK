@@ -1022,34 +1022,35 @@ struct CBasePlayerItem : CBaseAnimating {
     int cso_baseplayeritem_1;
 };
 
+// CAK47 size 0x238
 struct CBasePlayerWeapon : CBasePlayerItem {
     int m_iPlayEmptySound;
     int m_fFireOnEmpty;
     int cso_baseplayer_weapon_1;
     int cso_baseplayer_weapon_2;
-    float m_flNextPrimaryAttack;	// soonest time ItemPostFrame will call PrimaryAttack
-    float m_flNextSecondaryAttack;	// soonest time ItemPostFrame will call SecondaryAttack
-    float m_flTimeWeaponIdle;		// soonest time ItemPostFrame will call WeaponIdle    
-    int m_iPrimaryAmmoType;			// "primary" ammo index into players m_rgAmmo[]
-    int m_iSecondaryAmmoType;		// "secondary" ammo index into players m_rgAmmo[]
+    float m_flNextPrimaryAttack;
+    float m_flNextSecondaryAttack;
+    float m_flTimeWeaponIdle;
+    int m_iPrimaryAmmoType;
+    int m_iSecondaryAmmoType;
     int cso_baseplayer_weapon_3;
-    int m_iClip;					// number of shots left in the primary weapon clip, -1 it not used
-    int m_iClientClip;				// the last version of m_iClip sent to hud dll
+    int m_iClip; // ok
+    int m_iClientClip;
     int cso_baseplayer_weapon_4;
     int cso_baseplayer_weapon_5;
-    int m_iClientWeaponState;		// the last version of the weapon state sent to hud dll (is current weapon, is on target)
-    int m_fInReload;				// Are we in the middle of a reload;
-    int m_fInSpecialReload;			// Are we in the middle of a reload for the shotguns
-    int m_iDefaultAmmo;				// how much ammo you get when you pick up this weapon as placed by a level designer.
+    int m_iClientWeaponState;
+    int m_fInReload;
+    int m_fInSpecialReload;
+    int m_iDefaultAmmo;
     int cso_baseplayer_weapon_6;
     int m_iShellId;
     float m_fMaxSpeed;
-    bool m_bDelayFire;
+    bool m_bDelayFire; // ok
     BOOL m_iDirection;
     bool m_bSecondarySilencerOn;
-    float m_flAccuracy;
+    float m_flAccuracy; // ok
     float m_flLastFire;
-    int m_iShotsFired;
+    int m_iShotsFired; // ok
     vec3_t m_vVecAiming;
     string_t model_name;
     float m_flFamasShoot;
@@ -1060,5 +1061,5 @@ struct CBasePlayerWeapon : CBasePlayerItem {
 
     int m_iShell;
     int iShellOn;
-    unsigned short m_usFireAK47;
+    unsigned short m_usFireAK47; // temp var, some own class uses
 };

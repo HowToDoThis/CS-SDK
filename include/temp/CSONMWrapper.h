@@ -96,8 +96,8 @@ struct CSONMWrapper
     int unk7;
     int unk8;
     int unk9;
-    const char* unk10; // userName?
-    char unk11;
+    const char* passport;
+    char bLoginVirtual;
     HWND window;
     int unk12;
 };
@@ -110,10 +110,12 @@ struct CLoginWrapper
     HMODULE libFileSystem_Nar;
 };
 
+// Fixed Size
+// 0x6414
 struct CCrashUnk
 {
     int unk1;
-    int unk2;
+    HWND hWnd;
     int unk3;
     char unk4[0x6400];
     int unk5;
