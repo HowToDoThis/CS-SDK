@@ -260,7 +260,7 @@ typedef struct bf_read_s {
 } bf_read_t;
 
 typedef struct mplane_s {
-    vec3_t			normal;			// surface normal
+    fVector			normal;			// surface normal
     float			dist;			// closest appoach to origin
     byte			type;			// for texture axis selection and fast side tests
     byte			signbits;		// signx + signy<<1 + signz<<1
@@ -282,68 +282,68 @@ typedef struct mnode_s {
 typedef struct entvars_s {
     string_t	classname;
     string_t	globalname;
-    vec3_t		origin;
-    vec3_t		oldorigin;
-    vec3_t		velocity;
-    vec3_t		basevelocity;
-    vec3_t      clbasevelocity;  // Base velocity that was passed in to server physics so 
-    vec3_t		movedir;
-    vec3_t		angles;			// Model angles
-    vec3_t		avelocity;		// angle velocity (degrees per second)
-    vec3_t		punchangle;		// auto-decaying view angle adjustment
-    vec3_t		v_angle;		// Viewing angle (player only)
-    vec3_t		endpos;
-    vec3_t		startpos;
+    fVector		origin; // ok
+    fVector		oldorigin;
+    fVector		velocity;
+    fVector		basevelocity;
+    fVector     clbasevelocity;
+    fVector		movedir;
+    fVector		angles;
+    fVector		avelocity;
+    fVector		punchangle;
+    fVector		v_angle;
+    fVector		endpos;
+    fVector		startpos;
     float		impacttime;
     float		starttime;
-    int			fixangle;		// 0:nothing, 1:force view angles, 2:add avelocity
+    int			fixangle; // ok
     float		idealpitch;
     float		pitch_speed;
     float		ideal_yaw;
     float		yaw_speed;
-    int			modelindex;
+    short modelindex;
+    //int			modelindex;
     string_t	model;
-    int			viewmodel;		// player's viewmodel
-    int			weaponmodel;	// what other players see
-    vec3_t		absmin;		// BB max translated to world coord
-    vec3_t		absmax;		// BB max translated to world coord
-    vec3_t		mins;		// local BB min
-    vec3_t		maxs;		// local BB max
-    vec3_t		size;		// maxs - mins
+    int			viewmodel;
+    int			weaponmodel;
+    fVector		absmin;
+    fVector		absmax;
+    fVector		mins;
+    fVector		maxs;
+    fVector		size;
     float		ltime;
     float		nextthink;
-    int			movetype;
-    int			solid;
-    int			skin;			
-    int			body;			// sub-model selection for studiomodels
-    int 		effects;
-    float		gravity;		// % of "normal" gravity
-    float		friction;		// inverse elasticity of MOVETYPE_BOUNCE
+    int			movetype; // ok
+    int			solid; // ok
+    int			skin;
+    int			body;
+    int 		effects; // ok
+    float		gravity;
+    float		friction;
     int			light_level;
-    int			sequence;		// animation sequence
-    int			gaitsequence;	// movement animation sequence for player (0 for none)
-    float		frame;			// % playback position in animation sequences (0..255)
-    float		animtime;		// world time when frame was set
-    float		framerate;		// animation playback rate (-8x to 8x)
-    byte		controller[4];	// bone controller setting (0..255)
-    byte		blending[2];	// blending amount between sub-sequences (0..255)
-    float		scale;			// sprite rendering scale (0..255)
+    int			sequence;
+    int			gaitsequence;
+    float		frame;
+    float		animtime;
+    float		framerate;
+    byte		controller[4];
+    byte		blending[2];
+    float		scale;
     int			rendermode;
     float		renderamt;
-    vec3_t		rendercolor;
+    fVector		rendercolor;
     int			renderfx;
-    float		health;
+    float		health; // OK
     float		frags;
 
     int			weapons;  // bit mask for available weapons
     int			deadflag;
-    float view_ofs[2];
+    int nf1;
+    int nf2;
     float		takedamage; // ok
     
     int cso_add0;
-    int cso_add1;
-    int cso_add2;
-    int cso_add3;
+    fVector view_ofs; // ok
 
     int			button;
     int			impulse;
@@ -354,7 +354,7 @@ typedef struct entvars_s {
     struct edict_t		*owner;
     struct edict_t		*groundentity;
     int			spawnflags;
-    int			flags;
+    int			flags; // OK
     int         cso_add4;
     int			colormap;		// lowbyte topcolor, highbyte bottomcolor
     int			team;
@@ -395,20 +395,18 @@ typedef struct entvars_s {
     int			gamestate;
     int			oldbuttons;
     int			groupinfo;
-
-    // For mods
     int			iuser1; // ok
-    int			iuser2;
-    int			iuser3;
+    int			iuser2; // ok
+    int			iuser3; // ok
     int			iuser4;
     float		fuser1;
     float		fuser2;
     float		fuser3;
     float		fuser4;
-    vec3_t		vuser1;
-    vec3_t		vuser2;
-    vec3_t		vuser3;
-    vec3_t		vuser4;
+    fVector		vuser1;
+    fVector		vuser2;
+    fVector		vuser3;
+    fVector		vuser4;
     struct edict_t		*euser1;
     struct edict_t		*euser2;
     struct edict_t		*euser3;
@@ -504,7 +502,7 @@ typedef struct dheader_s {
 } dheader_t;
 
 typedef struct mvertex_s {
-    vec3_t			position;
+    fVector			position;
 } mvertex_t;
 
 typedef struct medge_s {
@@ -571,7 +569,7 @@ typedef struct hull_s {
     mplane_t		*planes;
     int				firstclipnode;
     int				lastclipnode;
-    vec3_t			clip_mins, clip_maxs;
+    fVector			clip_mins, clip_maxs;
 } hull_t;
 
 typedef struct model_s {
@@ -581,7 +579,7 @@ typedef struct model_s {
     int				numframes;
     synctype_t		synctype;
     int				flags;
-    vec3_t			mins, maxs;
+    fVector			mins, maxs;
     float			radius;
     int				firstmodelsurface, nummodelsurfaces;
     int				numsubmodels;
@@ -658,10 +656,10 @@ typedef struct mspriteframe_t {
 typedef struct mdl_s {
     int				ident;
     int				version;
-    vec3_t			scale;
-    vec3_t			scale_origin;
+    fVector			scale;
+    fVector			scale_origin;
     float			boundingradius;
-    vec3_t			eyeposition;
+    fVector			eyeposition;
     int				numskins;
     int				skinwidth;
     int				skinheight;
@@ -697,11 +695,11 @@ typedef struct userfilter_s {
 } userfilter_t;
 
 typedef struct client_data_s {
-    vec3_t unk;
+    fVector unk;
     // fields that cannot be modified  (ie. have no effect if changed)
-    vec3_t origin;
+    fVector origin;
     // fields that can be changed by the cldll
-    vec3_t viewangles;
+    fVector viewangles;
     int		iWeaponBits;
     float	fov;	// field of view
 } client_data_t;
@@ -910,16 +908,12 @@ typedef struct delta_registry_s {
 
 // entity_state.h
 typedef struct entity_state_s {
-// Fields which are filled in by routines outside of delta compression
     int			entityType;
-    // Index into cl_entities array for this entity.
     int			number;
     float		msg_time;
-    // Message number last time the player/entity state was updated.
     int			messagenum;
-    // Fields which can be transitted and reconstructed over the network stream
-    vec3_t		origin;
-    vec3_t		angles;
+    fVector		origin;
+    fVector		angles;
     int			modelindex;
     int			sequence;
     float		frame;
@@ -929,7 +923,6 @@ typedef struct entity_state_s {
     int			effects;
     float		scale;
     byte		eflags;	
-    // Render information
     int			rendermode;
     int			renderamt;
     color24		rendercolor;
@@ -940,18 +933,13 @@ typedef struct entity_state_s {
     int			body;
     byte		controller[4];
     byte		blending[4];
-    vec3_t		velocity;
-    // Send bbox down to client for use during prediction.
-    vec3_t		mins;
-    vec3_t		maxs;
+    fVector		velocity;
+    fVector		mins;
+    fVector		maxs;
     int			aiment;
-    // If owned by a player, the index of that player ( for projectiles ).
     int			owner;
-    // Friction, for prediction.
     float		friction;
-    // Gravity multiplier
     float		gravity;
-    // PLAYER SPECIFIC
     int			team;
     int			playerclass;
     int         unk1;
@@ -959,25 +947,18 @@ typedef struct entity_state_s {
     qboolean	spectator;
     int			weaponmodel;
     int			gaitsequence;
-    // If standing on conveyor, e.g.
-    vec3_t		basevelocity;
-    // Use the crouched hull, or the regular player hull.
+    fVector		basevelocity;
     int			usehull;
-    // Latched buttons last time state updated.
     int			oldbuttons;
-    // -1 = in air, else pmove entity number
     int			onground;
     int			iStepLeft;
-    // How fast we are falling
     float		flFallVelocity;
     float		fov;
     int			weaponanim;
-    // Parametric movement overrides
-    vec3_t		startpos;
-    vec3_t		endpos;
+    fVector		startpos;
+    fVector		endpos;
     float		impacttime;
     float		starttime;
-    // For mods
     int			iuser1;
     int			iuser2;
     int			iuser3;
@@ -986,10 +967,10 @@ typedef struct entity_state_s {
     float		fuser2;
     float		fuser3;
     float		fuser4;
-    vec3_t		vuser1;
-    vec3_t		vuser2;
-    vec3_t		vuser3;
-    vec3_t		vuser4;
+    fVector		vuser1;
+    fVector		vuser2;
+    fVector		vuser3;
+    fVector		vuser4;
 } entity_state_t;
 
 typedef enum sv_delta_s {
@@ -1320,7 +1301,7 @@ typedef struct {
     int looping;     // where to loop, -1 = no looping
     int entnum;      // to allow overriding a specific sound
     int entchannel;  //
-    vec3_t origin;   // origin of sound effect
+    fVector origin;   // origin of sound effect
     vec_t dist_mult; // distance multiplier (attenuation/clipK)
     int master_vol;  // 0-255 master volume
     int iSentence;
@@ -1379,7 +1360,7 @@ typedef enum {
 typedef struct usercmd_s {
     short	lerp_msec;      // Interpolation time on client
     byte	msec;           // Duration in ms of command
-    vec3_t	viewangles;     // Command view angles.
+    fVector	viewangles;     // Command view angles.
     float	forwardmove;    // Forward velocity.
     float	sidemove;       // Sideways velocity.
     float	upmove;         // Upward velocity.
@@ -1388,20 +1369,20 @@ typedef struct usercmd_s {
     byte    impulse;          // Impulse command issued.
     byte	weaponselect;	// Current weapon id
     int		impact_index;
-    vec3_t	impact_position;
+    fVector	impact_position;
     int unk1;
 } usercmd_t;
 
 // entity_state.h
 typedef struct clientdata_s {
-    vec3_t				origin;
-    vec3_t				velocity;
+    fVector				origin;
+    fVector				velocity;
     int					viewmodel;
-    vec3_t				punchangle;
+    fVector				punchangle;
     int					flags;
     int					waterlevel;
     int					watertype;
-    vec3_t				view_ofs;
+    fVector				view_ofs;
     float				health;
     int					bInDuck;
     int					weapons; // remove?
@@ -1432,10 +1413,10 @@ typedef struct clientdata_s {
     float				fuser2;
     float				fuser3;
     float				fuser4;
-    vec3_t				vuser1;
-    vec3_t				vuser2;
-    vec3_t				vuser3;
-    vec3_t				vuser4;
+    fVector				vuser1;
+    fVector				vuser2;
+    fVector				vuser3;
+    fVector				vuser4;
 
     float              cso_unk2;
     float              cso_unk3;
@@ -1535,14 +1516,14 @@ typedef struct globalvars_s {
     float		teamplay;
     float		serverflags;
     float		found_secrets;
-    vec3_t		v_forward;
-    vec3_t		v_up;
-    vec3_t		v_right;
+    fVector		v_forward;
+    fVector		v_up;
+    fVector		v_right;
     float		trace_allsolid;
     float		trace_startsolid;
     float		trace_fraction;
-    vec3_t		trace_endpos;
-    vec3_t		trace_plane_normal;
+    fVector		trace_endpos;
+    fVector		trace_plane_normal;
     float		trace_plane_dist;
     edict_t		*trace_ent;
     float		trace_inopen;
@@ -1555,7 +1536,7 @@ typedef struct globalvars_s {
     int			maxEntities;
     const char	*pStringBase;
     void		*pSaveData;
-    vec3_t		vecLandmarkOffset;
+    fVector		vecLandmarkOffset;
 } globalvars_t;
 
 // baseline.h
@@ -1822,7 +1803,7 @@ typedef struct {
     char		mapName[ 32 ];
     char		landmarkName[ 32 ];
     edict_t		*pentLandmark;
-    vec3_t		vecLandmarkOrigin;
+    fVector		vecLandmarkOrigin;
 } LEVELLIST;
 
 typedef struct saverestore_s {
@@ -1841,7 +1822,7 @@ typedef struct saverestore_s {
     // smooth transition
     int			fUseLandmark;
     char		szLandmarkName[20];// landmark we'll spawn near in next level
-    vec3_t		vecLandmarkOffset;// for landmark transitions
+    fVector		vecLandmarkOffset;// for landmark transitions
     float		time;
     char		szCurrentMapName[32];	// To check global entities
 
@@ -1907,13 +1888,13 @@ typedef struct server_static_s {
 typedef struct sv_adjusted_positions_s {
     int active;
     int needrelink;
-    vec3_t neworg;
-    vec3_t oldorg;
-    vec3_t initial_correction_org;
-    vec3_t oldabsmin;
-    vec3_t oldabsmax;
+    fVector neworg;
+    fVector oldorg;
+    fVector initial_correction_org;
+    fVector oldabsmin;
+    fVector oldabsmax;
     int deadflag;
-    vec3_t temp_org;
+    fVector temp_org;
     int temp_org_setflag;
 } sv_adjusted_positions_t;
 
@@ -1926,6 +1907,14 @@ typedef struct screenfade_s {
     byte		fader, fadeg, fadeb, fadealpha;	// Fade color
     int			fadeFlags;		// Fading flags
 } screenfade_t;
+
+typedef struct
+{
+	unsigned short duration;
+	unsigned short holdTime;
+	short fadeFlags;
+	byte r,g,b,a;
+} ScreenFade;
 
 typedef struct {
     double receivedtime;
@@ -1964,16 +1953,16 @@ typedef struct {
 typedef struct {
     // Time stamp for this movement
     float					animtime;
-    vec3_t					origin;
-    vec3_t					angles;
+    fVector					origin;
+    fVector					angles;
 } position_history_t;
 
 typedef struct {
     float					prevanimtime;  
     float					sequencetime;
     byte					prevseqblending[2];
-    vec3_t					prevorigin;
-    vec3_t					prevangles;
+    fVector					prevorigin;
+    fVector					prevangles;
     int						prevsequence;
     float					prevframe;
     byte					prevcontroller[4];
@@ -1994,10 +1983,10 @@ typedef struct {
     // Information based on interplocation, extrapolation, prediction, or just copied from last msg received.
     float					lastmove;
     // Actual render position and angles
-    vec3_t					origin;
-    vec3_t					angles;
+    fVector					origin;
+    fVector					angles;
     // Attachment points
-    vec3_t					attachment[4];
+    fVector					attachment[4];
     // Other entity local information
     int						trivial_accept;
     struct model_s			*model;			// cl.model_precache[ curstate.modelindes ];  all visible entities have a model
@@ -2009,7 +1998,7 @@ typedef struct {
 } cl_entity_t;
 
 typedef struct dlight_s {
-    vec3_t	origin;
+    fVector	origin;
     float	radius;
     color24	color;
     float	die;				// stop lighting after this time
@@ -2041,7 +2030,7 @@ typedef struct player_info_s
     int		gaitsequence;
     float	gaitframe;
     float	gaityaw;
-    vec3_t	prevgaitorigin;
+    fVector	prevgaitorigin;
     customization_t customdata;
     //TODO: determine if constant needed - Solokiller
     char hashedcdkey[16];
@@ -2066,16 +2055,16 @@ typedef struct {
     double cso_unk2;
     usercmd_t cmd;
 
-    vec3_t viewangles;
-    vec3_t punchangle;
-    vec3_t crosshairangle;
-    vec3_t simorg;
-    vec3_t simvel;
-    vec3_t simangles;
+    fVector viewangles;
+    fVector punchangle;
+    fVector crosshairangle;
+    fVector simorg;
+    fVector simvel;
+    fVector simangles;
     vec_t predicted_origins[64][3];
-    vec3_t prediction_error;
+    fVector prediction_error;
     float idealpitch;
-    vec3_t viewheight;
+    fVector viewheight;
 
     screenfade_t sf;
     bool paused;

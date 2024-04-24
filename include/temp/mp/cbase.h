@@ -364,7 +364,7 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::Unknown1)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::IsWeapon)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanHolster)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Holster)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::Holster)(struct CBaseEntity* this, int);
     void (__thiscall* CBasePlayerItem::UpdateItemInfo)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::ItemPreFrame)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::ItemPostFrame)(struct CBaseEntity* this);
@@ -693,26 +693,25 @@ typedef struct {
 } activity_map_t;
 
 struct CBaseMonster : CBaseToggle {
-    Activity m_Activity;        // what the monster is doing (animation)
-    Activity m_IdealActivity;    // monster should switch to this activity
-    int m_bitsDamageType;        // what types of damage has monster (player) taken
-    int monster_nf1;
-    char m_rgbTimeBasedDamage[4]; // TODO: why 4 on CSO??
+    Activity m_Activity; // ok
+    Activity m_IdealActivity; // ok
+    int m_bitsDamageType; // ok
+    char m_rgbTimeBasedDamage[8]; // ok
+    MONSTERSTATE m_MonsterState; // ok
+    MONSTERSTATE m_IdealMonsterState; // ok
+    
+    int m_afConditions; // ok
+    int m_afMemory; // ok
 
-    MONSTERSTATE m_MonsterState;    // monster's current state
-    MONSTERSTATE m_IdealMonsterState;// monster should change to this state
-    int m_afConditions;
-    int m_afMemory;
+    float m_flNextAttack; // ok
+    EHANDLE m_hEnemy; // ok
+    EHANDLE m_hTargetEnt;
+    float m_flFieldOfView;
+    int m_bloodColor; // ok
+    vec3_t m_HackedGunPos;
+    fVector m_vecEnemyLKP; // ok
 
-    float m_flNextAttack;// cannot attack again until this time
-    EHANDLE m_hEnemy;    // the entity that the monster is fighting.
-    EHANDLE m_hTargetEnt;// the entity that the monster is trying to reach
-    float m_flFieldOfView;// width of monster's field of view (dot product)
-    int m_bloodColor;    // color of blood particless
-    vec3_t m_HackedGunPos;// HACK until we can query end of gun
-    vec3_t m_vecEnemyLKP;// last known position of enemy. (enemy's origin)
-
-    unsigned char cso_added1;
+    unsigned char monster_nf1;
 };
 
 enum WeaponIdType
@@ -797,17 +796,33 @@ enum WeaponIdType
     WEAPON_DESTROYER = 320,
 };
 
+enum PLAYER_ANIM {
+	PLAYER_IDLE,
+	PLAYER_WALK,
+	PLAYER_JUMP,
+	PLAYER_SUPERJUMP,
+	PLAYER_DIE,
+	PLAYER_ATTACK1,
+	PLAYER_ATTACK2,
+	PLAYER_FLINCH,
+	PLAYER_LARGE_FLINCH,
+	PLAYER_RELOAD,
+	PLAYER_HOLDBOMB
+};
+
+// GetClassPtr
+// Size 0x2350
 struct CBasePlayer : CBaseMonster {
     int cso_u1;
-    int random_seed;
+    int random_seed; // ok
     unsigned short m_usPlayerBleed;
-    EHANDLE m_hObserverTarget;
-    float m_flNextObserverInput;
-    int m_iObserverWeapon;
+    EHANDLE m_hObserverTarget; // ok
+    float m_flNextObserverInput; // ok
+    int m_iObserverWeapon; // ok
     int cso_u2;
     int cso_u3;
-    int m_iObserverC4State;
-    bool m_bObserverHasDefuser;
+    int m_iObserverC4State; // ok
+    bool m_bObserverHasDefuser; // ok
     int m_iObserverLastMode;
     float m_flFlinchTime;
     float m_flAnimTime;
@@ -818,7 +833,7 @@ struct CBasePlayer : CBaseMonster {
     float m_flEjectBrass;
     ArmorType m_iKevlar;
     bool m_bNotKilled;
-    TeamName m_iTeam;
+    int player_nf1;
     int m_iAccount;
     bool m_bHasPrimary;
     float m_flDeathThrowTime;
@@ -836,7 +851,7 @@ struct CBasePlayer : CBaseMonster {
     int m_iTeamKills;
     IgnoreChatMsg m_iIgnoreGlobalChat;
     bool m_bHasNightVision;
-    bool m_bNightVisionOn;
+    bool m_bNightVisionOn; // ok
     vec3_t m_vRecentPath[MAX_RECENT_PATH];
     float m_flIdleCheckTime;
     float m_flRadioTime;
@@ -894,8 +909,8 @@ struct CBasePlayer : CBaseMonster {
     float m_flSndRange;
     float m_flFallVelocity;
     int m_rgItems[MAX_ITEMS];
+    unsigned int m_afPhysicsFlags; // ok
     int m_fNewAmmo;
-    unsigned int m_afPhysicsFlags;
     float m_fNextSuicideTime;
     float m_flTimeStepSound;
     float m_flTimeWeaponIdle;
@@ -927,8 +942,8 @@ struct CBasePlayer : CBaseMonster {
     float m_tSneaking;
     int m_iUpdateTime;
     int m_iClientHealth;
+    int m_iHideHUD; // OK
     int m_iClientBattery;
-    int m_iHideHUD;
     int m_iFOV;
     int m_iClientFOV;
     int m_iNumSpawns;
@@ -968,23 +983,27 @@ struct CBasePlayer : CBaseMonster {
     bool m_bShowHints;
     bool m_bShieldDrawn;
     bool m_bOwnsShield;
-    bool m_bWasFollowing;
-    float m_flNextFollowTime;
-    float m_flYawModifier;
+    bool undef8;
     float m_blindUntilTime;
-    float m_blindStartTime;
-    float m_blindHoldTime;
-    float m_blindFadeTime;
-    int m_blindAlpha;
+    char undef4;
+    char undef5;
+    char m_bWasFollowing;
+    char undef7;
+    float m_flNextFollowTime; // ok
     float m_allowAutoFollowTime;
-    char m_autoBuyString[MAX_AUTOBUY_LENGTH];
+    float undef3;
+    float m_blindStartTime; // ok
+    float m_blindHoldTime; // ok
+    float m_blindFadeTime; // ok
+    int m_blindAlpha; // OK
+    char m_autoBuyString[252];
     char *m_rebuyString;
     RebuyStruct m_rebuyStruct;
     bool m_bIsInRebuy;
     float m_flLastUpdateTime;
     char m_lastLocation[MaxLocationLen];
-    float m_progressStart;
-    float m_progressEnd;
+    int undef2; // m_progressStart
+    int undef1; // m_progressEnd
     bool m_bObserverAutoDirector;
     bool m_canSwitchObserverModes;
     float m_heartBeatTime;
@@ -992,6 +1011,14 @@ struct CBasePlayer : CBaseMonster {
     float m_silentTimestamp;
     MusicState m_musicState;
     float m_flLastCommandTime[COMMANDS_TO_TRACK];
+    int player_nfa[52];
+    float m_progressStart;
+    float m_progressEnd;
+    int player_nf[228];
+    char player_nf2;
+    char player_nf3;
+    char player_related_m_flNextFollowTime; // m_flNextFollowTime
+    char player_nf4;
 };
 
 struct AutoBuyInfoStruct {
