@@ -13,7 +13,7 @@
 #define MAX_DATAGRAM               8000
 #define MAX_PHYSINFO_STRING         256
 #define MAX_EVENT_QUEUE              64
-#define	MAX_ENT_LEAFS                48
+#define    MAX_ENT_LEAFS                48
 #define MAX_INFO_STRING             512
 #define MAX_RESOURCE_LIST          4140
 #define MAX_CONSISTENCY_LIST        512
@@ -23,10 +23,10 @@
 #define MAX_GENERIC                2048
 #define MAX_SOUNDS_HASHLOOKUP_SIZE 2647
 #define MAX_LIGHTSTYLES              64
-#define MIPLEVELS	                  4
-#define MAX_MODEL_NAME	             64
-#define MAX_MAP_HULLS	              4
-#define MAXLIGHTMAPS	              4
+#define MIPLEVELS                      4
+#define MAX_MODEL_NAME                 64
+#define MAX_MAP_HULLS                  4
+#define MAXLIGHTMAPS                  4
 #define CON_MAX_NOTIFY_STRING        80
 #define MAX_KNOWN_MODELS           4096
 #define NUM_AMBIENTS                  4
@@ -63,7 +63,7 @@ typedef struct { unsigned r, g, b, a; } colorVec;
 typedef enum netsrc_s {
     NS_CLIENT = 0,
     NS_SERVER,
-    NS_MULTICAST,	// xxxMO
+    NS_MULTICAST,    // xxxMO
     NS_MAX
 } netsrc_t;
 
@@ -198,22 +198,22 @@ typedef enum modtype_e {
 } modtype_t;
 
 typedef enum AUTH_IDTYPE {
-    AUTH_IDTYPE_UNKNOWN	= 0,
-    AUTH_IDTYPE_STEAM	= 1,
-    AUTH_IDTYPE_VALVE	= 2,
-    AUTH_IDTYPE_LOCAL	= 3
+    AUTH_IDTYPE_UNKNOWN    = 0,
+    AUTH_IDTYPE_STEAM    = 1,
+    AUTH_IDTYPE_VALVE    = 2,
+    AUTH_IDTYPE_LOCAL    = 3
 };
 
 typedef enum DeltaType {
-    DT_BYTE				= BIT(0),	// A byte
-    DT_SHORT			= BIT(1),	// 2 byte field
-    DT_FLOAT			= BIT(2),	// A floating point field
-    DT_INTEGER			= BIT(3),	// 4 byte integer
-    DT_ANGLE			= BIT(4),	// A floating point angle
-    DT_TIMEWINDOW_8		= BIT(5),	// A floating point timestamp relative to server time
-    DT_TIMEWINDOW_BIG	= BIT(6),	// A floating point timestamp relative to server time (with more precision and custom multiplier)
-    DT_STRING			= BIT(7),	// A null terminated string, sent as 8 byte chars
-    DT_SIGNED			= BIT(31)	// sign modificator
+    DT_BYTE                = BIT(0),    // A byte
+    DT_SHORT            = BIT(1),    // 2 byte field
+    DT_FLOAT            = BIT(2),    // A floating point field
+    DT_INTEGER            = BIT(3),    // 4 byte integer
+    DT_ANGLE            = BIT(4),    // A floating point angle
+    DT_TIMEWINDOW_8        = BIT(5),    // A floating point timestamp relative to server time
+    DT_TIMEWINDOW_BIG    = BIT(6),    // A floating point timestamp relative to server time (with more precision and custom multiplier)
+    DT_STRING            = BIT(7),    // A null terminated string, sent as 8 byte chars
+    DT_SIGNED            = BIT(31)    // sign modificator
 };
 
 const int MAX_EXTENSION_DLL = 50;
@@ -251,7 +251,7 @@ typedef struct bf_write_s {
 } bf_write_t;
 
 typedef struct bf_read_s {
-    int nMsgReadCount;	// was msg_readcount
+    int nMsgReadCount;    // was msg_readcount
     sizebuf_t *pbuf;
     int nBitFieldReadStartByte;
     int nBytesRead;
@@ -260,159 +260,158 @@ typedef struct bf_read_s {
 } bf_read_t;
 
 typedef struct mplane_s {
-    fVector			normal;			// surface normal
-    float			dist;			// closest appoach to origin
-    byte			type;			// for texture axis selection and fast side tests
-    byte			signbits;		// signx + signy<<1 + signz<<1
-    byte			pad[2];
+    fVector            normal;            // surface normal
+    float            dist;            // closest appoach to origin
+    byte            type;            // for texture axis selection and fast side tests
+    byte            signbits;        // signx + signy<<1 + signz<<1
+    byte            pad[2];
 } mplane_t;
 
 typedef struct mnode_s {
-    int				contents;		// 0, to differentiate from leafs
-    int				visframe;		// node needs to be traversed if current
-    short			minmaxs[6];		// for bounding box culling
+    int                contents;        // 0, to differentiate from leafs
+    int                visframe;        // node needs to be traversed if current
+    short            minmaxs[6];        // for bounding box culling
     int undef[3];
-    struct mnode_s	*parent;
-    mplane_t		*plane;
-    struct mnode_s	*children[2];
-    unsigned short	firstsurface;
-    unsigned short	numsurfaces;
+    struct mnode_s    *parent;
+    mplane_t        *plane;
+    struct mnode_s    *children[2];
+    unsigned short    firstsurface;
+    unsigned short    numsurfaces;
 } mnode_t;
 
 typedef struct entvars_s {
-    string_t	classname;
-    string_t	globalname;
-    fVector		origin; // ok
-    fVector		oldorigin;
-    fVector		velocity;
-    fVector		basevelocity;
+    string_t    classname;
+    string_t    globalname;
+    fVector        origin; // ok
+    fVector        oldorigin;
+    fVector        velocity;
+    fVector        basevelocity;
     fVector     clbasevelocity;
-    fVector		movedir;
-    fVector		angles;
-    fVector		avelocity;
-    fVector		punchangle;
-    fVector		v_angle;
-    fVector		endpos;
-    fVector		startpos;
-    float		impacttime;
-    float		starttime;
-    int			fixangle; // ok
-    float		idealpitch;
-    float		pitch_speed;
-    float		ideal_yaw;
-    float		yaw_speed;
+    fVector        movedir;
+    fVector        angles;
+    fVector        avelocity;
+    fVector        punchangle; // ok
+    fVector        v_angle;
+    fVector        endpos;
+    fVector        startpos;
+    float        impacttime;
+    float        starttime;
+    int            fixangle; // ok
+    float        idealpitch;
+    float        pitch_speed;
+    float        ideal_yaw;
+    float        yaw_speed;
     short modelindex;
-    //int			modelindex;
-    string_t	model;
-    int			viewmodel;
-    int			weaponmodel;
-    fVector		absmin;
-    fVector		absmax;
-    fVector		mins;
-    fVector		maxs;
-    fVector		size;
-    float		ltime;
-    float		nextthink;
-    int			movetype; // ok
-    int			solid; // ok
-    int			skin;
-    int			body;
-    int 		effects; // ok
-    float		gravity;
-    float		friction;
-    int			light_level;
-    int			sequence;
-    int			gaitsequence;
-    float		frame;
-    float		animtime;
-    float		framerate;
-    byte		controller[4];
-    byte		blending[2];
-    float		scale;
-    int			rendermode;
-    float		renderamt;
-    fVector		rendercolor;
-    int			renderfx;
-    float		health; // OK
-    float		frags;
+    //int            modelindex;
+    string_t    model;
+    int            viewmodel;
+    int            weaponmodel;
+    fVector        absmin;
+    fVector        absmax;
+    fVector        mins;
+    fVector        maxs;
+    fVector        size;
+    float        ltime;
+    float        nextthink;
+    int            movetype; // ok
+    int            solid; // ok
+    int            skin;
+    int            body;
+    int         effects; // ok
+    float        gravity;
+    float        friction;
+    int            light_level;
+    int            sequence;
+    int            gaitsequence;
+    float        frame; // ok
+    float        animtime; // ok
+    float        framerate;
+    byte        controller[4];
+    byte        blending[2];
+    float        scale;
+    int            rendermode;
+    float        renderamt;
+    fVector        rendercolor;
+    int            renderfx;
+    float        health; // OK
+    float        frags;
 
-    int			weapons;  // bit mask for available weapons
-    int			deadflag;
+    int            weapons;
+    int nf3;
     int nf1;
     int nf2;
-    float		takedamage; // ok
-    
-    int cso_add0;
+
+    float takedamage; // ok    
+    int deadflag; // OK
     fVector view_ofs; // ok
 
-    int			button;
-    int			impulse;
-    struct edict_t		*chain;			// Entity pointer when linked into a linked list
-    struct edict_t		*dmg_inflictor;
-    struct edict_t		*enemy;
-    struct edict_t		*aiment;		// entity pointer when MOVETYPE_FOLLOW
-    struct edict_t		*owner;
-    struct edict_t		*groundentity;
-    int			spawnflags;
-    int			flags; // OK
+    int            button;
+    int            impulse;
+    struct edict_t        *chain;
+    struct edict_t        *dmg_inflictor;
+    struct edict_t        *enemy;
+    struct edict_t        *aiment;
+    struct edict_t        *owner;
+    struct edict_t        *groundentity;
+    int            spawnflags; // ok
+    int            flags; // OK
     int         cso_add4;
-    int			colormap;		// lowbyte topcolor, highbyte bottomcolor
-    int			team;
-    float		max_health;
-    float		teleport_time;
-    float		armortype;
-    float		armorvalue;
-    int			waterlevel;
-    int			watertype;
-    string_t	target;
-    string_t	targetname;
-    float		dmg_take;
-    float		dmg_save;
-    string_t	message;
-    string_t	netname;
-    float		dmg; // ok
-    float		dmgtime;
-    string_t	noise;
-    string_t	noise1;
-    string_t	noise2;
-    string_t	noise3;
-    float		speed;
-    float		air_finished; // ok
-    float		pain_finished;
-    float		radsuit_finished;
-    struct edict_t		*pContainingEntity;
-    int			playerclass;
-    float		maxspeed;
-    float		fov;
-    int			weaponanim;
-    int			pushmsec;
-    int			bInDuck;
-    int			flTimeStepSound;
-    int			flSwimTime;
-    int			flDuckTime;
-    int			iStepLeft;
-    float		flFallVelocity;
-    int			gamestate;
-    int			oldbuttons;
-    int			groupinfo;
-    int			iuser1; // ok
-    int			iuser2; // ok
-    int			iuser3; // ok
-    int			iuser4;
-    float		fuser1;
-    float		fuser2;
-    float		fuser3;
-    float		fuser4;
-    fVector		vuser1;
-    fVector		vuser2;
-    fVector		vuser3;
-    fVector		vuser4;
-    struct edict_t		*euser1;
-    struct edict_t		*euser2;
-    struct edict_t		*euser3;
-    struct edict_t		*euser4;
-
-    int cso_add5;
+    int            colormap;
+    int            team;
+    float        max_health;
+    float        teleport_time;
+    float        armortype;
+    float        armorvalue; // ok
+    int            waterlevel;
+    int            watertype;
+    string_t    target;
+    string_t    targetname;
+    string_t    netname; // ok
+    string_t    message;
+    float        dmg_take; // ok
+    float        dmg_save; // ok
+    float        dmg; // ok
+    float        dmgtime;
+    string_t    noise;
+    string_t    noise1;
+    string_t    noise2;
+    string_t    noise3;
+    float        speed;
+    float        air_finished; // ok
+    float        pain_finished;
+    float        radsuit_finished;
+    struct edict_t        *pContainingEntity;
+    int            playerclass;
+    float        maxspeed;
+    float        fov;
+    int            weaponanim;
+    int            pushmsec;
+    int            bInDuck;
+    int            flTimeStepSound;
+    int            flSwimTime;
+    int            flDuckTime;
+    int            iStepLeft;
+    float        flFallVelocity;
+    int            gamestate;
+    int            oldbuttons;
+    int            groupinfo;
+    int            iuser1; // ok
+    int            iuser2; // ok
+    int            iuser3; // ok
+    int            iuser4;
+    float        fuser1;
+    float        fuser2;
+    float        fuser3;
+    float        fuser4;
+    fVector        vuser1;
+    fVector        vuser2;
+    fVector        vuser3;
+    fVector        vuser4;
+    struct edict_t        *euser1;
+    struct edict_t        *euser2;
+    struct edict_t        *euser3;
+    struct edict_t        *euser4;
+    int userID; // ok
 } entvars_t;
 
 typedef struct USERID_s {
@@ -432,17 +431,17 @@ typedef struct customization_s {
 } customization_t;
 
 typedef struct lump_s {
-    int				fileofs;
-    int				filelen;
+    int                fileofs;
+    int                filelen;
 } lump_t;
 
 typedef struct cache_user_s {
-    void	*data;
+    void    *data;
 } cache_user_t;
 
 typedef struct cachepic_s {
-    char			name[64];
-    cache_user_t	cache;
+    char            name[64];
+    cache_user_t    cache;
 } cachepic_t;
 
 typedef enum synctype_e {
@@ -451,173 +450,173 @@ typedef enum synctype_e {
 } synctype_t;
 
 typedef enum cactive_t {
-    ca_dedicated = 0,	// This is a dedicated server, client code is inactive
-    ca_disconnected,	// full screen console with no connection
-    ca_connecting,		// netchan_t established, waiting for svc_serverdata
-    ca_connected,		// processing data lists, donwloading, etc
+    ca_dedicated = 0,    // This is a dedicated server, client code is inactive
+    ca_disconnected,    // full screen console with no connection
+    ca_connecting,        // netchan_t established, waiting for svc_serverdata
+    ca_connected,        // processing data lists, donwloading, etc
     ca_uninitialized,
-    ca_active			// everything is in, so frames can be rendered
+    ca_active            // everything is in, so frames can be rendered
 };
 
 typedef void(*PFNCACHE)(struct cachewad_t *, unsigned char *);
 typedef struct cachewad_s {
-    char			*name;
-    cachepic_t		*cache;
-    int				cacheCount;
-    int				cacheMax;
+    char            *name;
+    cachepic_t        *cache;
+    int                cacheCount;
+    int                cacheMax;
     struct lumpinfo_s *lumps;
-    int				lumpCount;
-    int				cacheExtra;
-    PFNCACHE		pfnCacheBuild;
-    int				numpaths;
-    char			**basedirs;
-    int				*lumppathindices;
-    int				tempWad;
+    int                lumpCount;
+    int                cacheExtra;
+    PFNCACHE        pfnCacheBuild;
+    int                numpaths;
+    char            **basedirs;
+    int                *lumppathindices;
+    int                tempWad;
 } cachewad_t;
 
 typedef struct texture_s {
-    char			name[16];
-    unsigned		width, height;
-    int			gl_texturenum;
-    struct msurface_s *	texturechain;
-    int				anim_total;			// total tenths in sequence ( 0 = no)
-    int				anim_min, anim_max;	// time for this frame min <=time< max
-    struct texture_s *anim_next;		// in the animation sequence
-    struct texture_s *alternate_anims;	// bmodels in frame 1 use these
-    unsigned		offsets[MIPLEVELS];	// four mip maps stored
+    char            name[16];
+    unsigned        width, height;
+    int            gl_texturenum;
+    struct msurface_s *    texturechain;
+    int                anim_total;            // total tenths in sequence ( 0 = no)
+    int                anim_min, anim_max;    // time for this frame min <=time< max
+    struct texture_s *anim_next;        // in the animation sequence
+    struct texture_s *alternate_anims;    // bmodels in frame 1 use these
+    unsigned        offsets[MIPLEVELS];    // four mip maps stored
     byte *pPal;
 } texture_t;
 
 typedef struct dmodel_s {
-    float			mins[3], maxs[3];
-    float			origin[3];
-    int				headnode[MAX_MAP_HULLS];
-    int				visleafs;		// not including the solid leaf 0
-    int				firstface, numfaces;
+    float            mins[3], maxs[3];
+    float            origin[3];
+    int                headnode[MAX_MAP_HULLS];
+    int                visleafs;        // not including the solid leaf 0
+    int                firstface, numfaces;
 } dmodel_t;
 
 typedef struct dheader_s {
-    int				version;
-    lump_t			lumps[15];
+    int                version;
+    lump_t            lumps[15];
 } dheader_t;
 
 typedef struct mvertex_s {
-    fVector			position;
+    fVector            position;
 } mvertex_t;
 
 typedef struct medge_s {
-    unsigned short	v[2];
-    unsigned int	cachededgeoffset;
+    unsigned short    v[2];
+    unsigned int    cachededgeoffset;
 } medge_t;
 
 typedef struct mtexinfo_s {
-    float			vecs[2][4];
-    float			mipadjust;		// ?? mipmap limits for very small surfaces
-    texture_t		*texture;
-    int				flags;			// sky or slime, no lightmap or 256 subdivision
+    float            vecs[2][4];
+    float            mipadjust;        // ?? mipmap limits for very small surfaces
+    texture_t        *texture;
+    int                flags;            // sky or slime, no lightmap or 256 subdivision
 } mtexinfo_t;
 
 typedef struct decal_s {
-    struct decal_t	*pnext;			// linked list for each surface
-    struct msurface_t	*psurface;		// Surface id for persistence / unlinking
-    short			dx;				// Offsets into surface texture (in texture coordinates, so we don't need floats)
-    short			dy;
-    short			texture;		// Decal texture
-    byte			scale;			// Pixel scale
-    byte			flags;			// Decal flags
+    struct decal_t    *pnext;            // linked list for each surface
+    struct msurface_t    *psurface;        // Surface id for persistence / unlinking
+    short            dx;                // Offsets into surface texture (in texture coordinates, so we don't need floats)
+    short            dy;
+    short            texture;        // Decal texture
+    byte            scale;            // Pixel scale
+    byte            flags;            // Decal flags
 
-    short			entityIndex;	// Entity this is attached to
+    short            entityIndex;    // Entity this is attached to
 } decal_t;
 
 typedef struct msurface_s {
-    int				visframe;		// should be drawn when node is crossed
-    int				dlightframe;	// last frame the surface was checked by an animated light
-    int				dlightbits;
-    mplane_t		*plane;			// pointer to shared plane
-    int				flags;			// see SURF_ #defines
-    int				firstedge;	// look up in model->surfedges[], negative numbers
-    int				numedges;	// are backwards edges
+    int                visframe;        // should be drawn when node is crossed
+    int                dlightframe;    // last frame the surface was checked by an animated light
+    int                dlightbits;
+    mplane_t        *plane;            // pointer to shared plane
+    int                flags;            // see SURF_ #defines
+    int                firstedge;    // look up in model->surfedges[], negative numbers
+    int                numedges;    // are backwards edges
     struct surfcache_s *cachespots[MIPLEVELS];
-    short			texturemins[2]; // smallest s/t position on the surface.
-    short			extents[2];		// ?? s/t texture size, 1..256 for all non-sky surfaces
-    mtexinfo_t		*texinfo;
-    byte			styles[MAXLIGHTMAPS];
-    color24			*samples;
-    decal_t			*pdecals;
+    short            texturemins[2]; // smallest s/t position on the surface.
+    short            extents[2];        // ?? s/t texture size, 1..256 for all non-sky surfaces
+    mtexinfo_t        *texinfo;
+    byte            styles[MAXLIGHTMAPS];
+    color24            *samples;
+    decal_t            *pdecals;
 } msurface_t;
 
 typedef struct mleaf_s {
-    int			contents;		// wil be a negative contents number
-    int			visframe;		// node needs to be traversed if current
-    short		minmaxs[6];		// for bounding box culling // TODO: float for gl quake render
-    struct mnode_s	*parent;
-    byte		*compressed_vis;
+    int            contents;        // wil be a negative contents number
+    int            visframe;        // node needs to be traversed if current
+    short        minmaxs[6];        // for bounding box culling // TODO: float for gl quake render
+    struct mnode_s    *parent;
+    byte        *compressed_vis;
     struct efrag_s *efrags;
-    msurface_t	**firstmarksurface;
-    int			nummarksurfaces;
-    int			key;			// BSP sequence number for leaf's contents
-    byte		ambient_sound_level[NUM_AMBIENTS];
+    msurface_t    **firstmarksurface;
+    int            nummarksurfaces;
+    int            key;            // BSP sequence number for leaf's contents
+    byte        ambient_sound_level[NUM_AMBIENTS];
 } mleaf_t;
 
 typedef struct dclipnode_s {
-    int				planenum;
-    short			children[2];	// negative numbers are contents
+    int                planenum;
+    short            children[2];    // negative numbers are contents
 } dclipnode_t;
 
 typedef struct hull_s {
-    dclipnode_t		*clipnodes;
-    mplane_t		*planes;
-    int				firstclipnode;
-    int				lastclipnode;
-    fVector			clip_mins, clip_maxs;
+    dclipnode_t        *clipnodes;
+    mplane_t        *planes;
+    int                firstclipnode;
+    int                lastclipnode;
+    fVector            clip_mins, clip_maxs;
 } hull_t;
 
 typedef struct model_s {
-    char			name[MAX_MODEL_NAME];
-    int		needload;		// bmodels and sprites don't cache normally
-    modtype_t		type;
-    int				numframes;
-    synctype_t		synctype;
-    int				flags;
-    fVector			mins, maxs;
-    float			radius;
-    int				firstmodelsurface, nummodelsurfaces;
-    int				numsubmodels;
-    dmodel_t		*submodels;
-    int				numplanes;
-    mplane_t		*planes;
-    int				numleafs;		// number of visible leafs, not counting 0
-    struct mleaf_s	*leafs;
-    int				numvertexes;
-    mvertex_t		*vertexes;
-    int				numedges;
-    medge_t			*edges;
-    int				numnodes;
-    mnode_t			*nodes;
-    int				numtexinfo;
-    mtexinfo_t		*texinfo;
-    int				numsurfaces;
-    msurface_t		*surfaces;
-    int				numsurfedges;
-    int				*surfedges;
-    int				numclipnodes;
-    dclipnode_t		*clipnodes;
-    int				nummarksurfaces;
-    msurface_t		**marksurfaces;
-    hull_t			hulls[MAX_MAP_HULLS];
-    int				numtextures;
-    texture_t		**textures;
-    byte			*visdata;
-    color24			*lightdata;
-    char			*entities;
+    char            name[MAX_MODEL_NAME];
+    int        needload;        // bmodels and sprites don't cache normally
+    modtype_t        type;
+    int                numframes;
+    synctype_t        synctype;
+    int                flags;
+    fVector            mins, maxs;
+    float            radius;
+    int                firstmodelsurface, nummodelsurfaces;
+    int                numsubmodels;
+    dmodel_t        *submodels;
+    int                numplanes;
+    mplane_t        *planes;
+    int                numleafs;        // number of visible leafs, not counting 0
+    struct mleaf_s    *leafs;
+    int                numvertexes;
+    mvertex_t        *vertexes;
+    int                numedges;
+    medge_t            *edges;
+    int                numnodes;
+    mnode_t            *nodes;
+    int                numtexinfo;
+    mtexinfo_t        *texinfo;
+    int                numsurfaces;
+    msurface_t        *surfaces;
+    int                numsurfedges;
+    int                *surfedges;
+    int                numclipnodes;
+    dclipnode_t        *clipnodes;
+    int                nummarksurfaces;
+    msurface_t        **marksurfaces;
+    hull_t            hulls[MAX_MAP_HULLS];
+    int                numtextures;
+    texture_t        **textures;
+    byte            *visdata;
+    color24            *lightdata;
+    char            *entities;
     int unk[8];
-    cache_user_t	cache;			// only access through Mod_Extradata
+    cache_user_t    cache;            // only access through Mod_Extradata
 } model_t;
 
 typedef struct mod_known_info_s {
-    qboolean		shouldCRC;
-    qboolean		firstCRCDone;
-    CRC32_t			initialCRC;
+    qboolean        shouldCRC;
+    qboolean        firstCRCDone;
+    CRC32_t            initialCRC;
 } mod_known_info_t;
 
 typedef enum synctype_e {
@@ -626,49 +625,49 @@ typedef enum synctype_e {
 } synctype_t;
 
 typedef struct dsprite_s {
-    int				ident;
-    int				version;
-    int				type;
-    int				texFormat;
-    float			boundingradius;
-    int				width;
-    int				height;
-    int				numframes;
-    float			beamlength;
-    synctype_t		synctype;
+    int                ident;
+    int                version;
+    int                type;
+    int                texFormat;
+    float            boundingradius;
+    int                width;
+    int                height;
+    int                numframes;
+    float            beamlength;
+    synctype_t        synctype;
     int unk;
 } dsprite_t;
 
 typedef struct dspriteframe_s {
-    int				origin[2];
-    int				width;
-    int				height;
+    int                origin[2];
+    int                width;
+    int                height;
 } dspriteframe_t;
 
 typedef struct mspriteframe_t {
-    int				width;
-    int				height;
-    void			*pcachespot;
-    float			up, down, left, right;
-    byte			pixels[4];
+    int                width;
+    int                height;
+    void            *pcachespot;
+    float            up, down, left, right;
+    byte            pixels[4];
 } mspriteframe_s;
 
 typedef struct mdl_s {
-    int				ident;
-    int				version;
-    fVector			scale;
-    fVector			scale_origin;
-    float			boundingradius;
-    fVector			eyeposition;
-    int				numskins;
-    int				skinwidth;
-    int				skinheight;
-    int				numverts;
-    int				numtris;
-    int				numframes;
-    synctype_t		synctype;
-    int				flags;
-    float			size;
+    int                ident;
+    int                version;
+    fVector            scale;
+    fVector            scale_origin;
+    float            boundingradius;
+    fVector            eyeposition;
+    int                numskins;
+    int                skinwidth;
+    int                skinheight;
+    int                numverts;
+    int                numtris;
+    int                numframes;
+    synctype_t        synctype;
+    int                flags;
+    float            size;
     //int unk;
 } mdl_t;
 
@@ -700,8 +699,8 @@ typedef struct client_data_s {
     fVector origin;
     // fields that can be changed by the cldll
     fVector viewangles;
-    int		iWeaponBits;
-    float	fov;	// field of view
+    int        iWeaponBits;
+    float    fov;    // field of view
 } client_data_t;
 
 // dalias
@@ -715,30 +714,30 @@ typedef enum aliasskintype_s {
 } aliasskintype_t;
 
 typedef struct trivertx_s {
-    byte			v[3];
-    byte			lightnormalindex;
+    byte            v[3];
+    byte            lightnormalindex;
 } trivertx_t;
 
 typedef struct daliasframe_s {
-    trivertx_t		bboxmin, bboxmax;
-    char			name[16];
+    trivertx_t        bboxmin, bboxmax;
+    char            name[16];
 } daliasframe_t;
 
 typedef struct daliasgroup_s {
-    int				numframes;
-    trivertx_t		bboxmin, bboxmax;
+    int                numframes;
+    trivertx_t        bboxmin, bboxmax;
 } daliasgroup_t;
 
 typedef struct daliasskingroup_s {
-    int				numskins;
+    int                numskins;
 } daliasskingroup_t;
 
 typedef struct daliasinterval_s {
-    float			interval;
+    float            interval;
 } daliasinterval_t;
 
 typedef struct daliasskininterval_s {
-    float			interval;
+    float            interval;
 } daliasskininterval_t;
 
 typedef struct daliasframetype_s {
@@ -816,8 +815,8 @@ typedef struct cmd_function_s {
 } cmd_function_t;
 
 typedef enum cmd_source_s {
-    src_client = 0,		// came in over a net connection as a clc_stringcmd. host_client will be valid during this state.
-    src_command = 1,	// from the command buffer.
+    src_client = 0,        // came in over a net connection as a clc_stringcmd. host_client will be valid during this state.
+    src_command = 1,    // from the command buffer.
 } cmd_source_t;
 
 // zone.h
@@ -837,16 +836,16 @@ typedef struct cache_system_s {
 
 // delta.h
 typedef enum {
-    DT_BYTE				= BIT(0),	// A byte
-    DT_SHORT			= BIT(1),	// 2 byte field
-    DT_FLOAT			= BIT(2),	// A floating point field
-    DT_INTEGER			= BIT(3),	// 4 byte integer
-    DT_ANGLE			= BIT(4),	// A floating point angle
-    DT_TIMEWINDOW_8		= BIT(5),	// A floating point timestamp relative to server time
-    DT_TIMEWINDOW_BIG	= BIT(6),	// A floating point timestamp relative to server time (with more precision and custom multiplier)
-    DT_STRING			= BIT(7),	// A null terminated string, sent as 8 byte chars
+    DT_BYTE                = BIT(0),    // A byte
+    DT_SHORT            = BIT(1),    // 2 byte field
+    DT_FLOAT            = BIT(2),    // A floating point field
+    DT_INTEGER            = BIT(3),    // 4 byte integer
+    DT_ANGLE            = BIT(4),    // A floating point angle
+    DT_TIMEWINDOW_8        = BIT(5),    // A floating point timestamp relative to server time
+    DT_TIMEWINDOW_BIG    = BIT(6),    // A floating point timestamp relative to server time (with more precision and custom multiplier)
+    DT_STRING            = BIT(7),    // A null terminated string, sent as 8 byte chars
     DT_BYTES            = BIT(8),   // CSO ADDED??
-    DT_SIGNED			= BIT(31)	// sign modificator
+    DT_SIGNED            = BIT(31)    // sign modificator
 } delta_type;
 
 typedef void(*encoder_t)(struct delta_t *, const unsigned char *, const unsigned char *);
@@ -908,69 +907,69 @@ typedef struct delta_registry_s {
 
 // entity_state.h
 typedef struct entity_state_s {
-    int			entityType;
-    int			number;
-    float		msg_time;
-    int			messagenum;
-    fVector		origin;
-    fVector		angles;
-    int			modelindex;
-    int			sequence;
-    float		frame;
-    int			colormap;
-    short		skin;
-    short		solid;
-    int			effects;
-    float		scale;
-    byte		eflags;	
-    int			rendermode;
-    int			renderamt;
-    color24		rendercolor;
-    int			renderfx;
-    int			movetype;
-    float		animtime;
-    float		framerate;
-    int			body;
-    byte		controller[4];
-    byte		blending[4];
-    fVector		velocity;
-    fVector		mins;
-    fVector		maxs;
-    int			aiment;
-    int			owner;
-    float		friction;
-    float		gravity;
-    int			team;
-    int			playerclass;
+    int            entityType;
+    int            number;
+    float        msg_time;
+    int            messagenum;
+    fVector        origin;
+    fVector        angles;
+    int            modelindex;
+    int            sequence;
+    float        frame;
+    int            colormap;
+    short        skin;
+    short        solid;
+    int            effects;
+    float        scale;
+    byte        eflags;    
+    int            rendermode;
+    int            renderamt;
+    color24        rendercolor;
+    int            renderfx;
+    int            movetype;
+    float        animtime;
+    float        framerate;
+    int            body;
+    byte        controller[4];
+    byte        blending[4];
+    fVector        velocity;
+    fVector        mins;
+    fVector        maxs;
+    int            aiment;
+    int            owner;
+    float        friction;
+    float        gravity;
+    int            team;
+    int            playerclass;
     int         unk1;
-    int			health;
-    qboolean	spectator;
-    int			weaponmodel;
-    int			gaitsequence;
-    fVector		basevelocity;
-    int			usehull;
-    int			oldbuttons;
-    int			onground;
-    int			iStepLeft;
-    float		flFallVelocity;
-    float		fov;
-    int			weaponanim;
-    fVector		startpos;
-    fVector		endpos;
-    float		impacttime;
-    float		starttime;
-    int			iuser1;
-    int			iuser2;
-    int			iuser3;
-    int			iuser4;
-    float		fuser1;
-    float		fuser2;
-    float		fuser3;
-    float		fuser4;
-    fVector		vuser1;
-    fVector		vuser2;
-    fVector		vuser3;
-    fVector		vuser4;
+    int            health;
+    qboolean    spectator;
+    int            weaponmodel;
+    int            gaitsequence;
+    fVector        basevelocity;
+    int            usehull;
+    int            oldbuttons;
+    int            onground;
+    int            iStepLeft;
+    float        flFallVelocity;
+    float        fov;
+    int            weaponanim;
+    fVector        startpos;
+    fVector        endpos;
+    float        impacttime;
+    float        starttime;
+    int            iuser1;
+    int            iuser2;
+    int            iuser3;
+    int            iuser4;
+    float        fuser1;
+    float        fuser2;
+    float        fuser3;
+    float        fuser4;
+    fVector        vuser1;
+    fVector        vuser2;
+    fVector        vuser3;
+    fVector        vuser4;
 } entity_state_t;
 
 typedef enum sv_delta_s {
@@ -1011,7 +1010,7 @@ typedef struct challenge_s {
 } challenge_t;
 
 typedef struct packetlag_s {
-    unsigned char *pPacketData;	// Raw stream data is stored.
+    unsigned char *pPacketData;    // Raw stream data is stored.
     int nSize;
     netadr_t net_from_;
     float receivedTime;
@@ -1202,9 +1201,9 @@ struct clc_func_s {
 };
 
 typedef struct cmdalias_s {
-    struct cmdalias_s	*next;
-    char	name[MAX_ALIAS_NAME];
-    char	*value;
+    struct cmdalias_s    *next;
+    char    name[MAX_ALIAS_NAME];
+    char    *value;
 } cmdalias_t;
 
 // hashpak.h
@@ -1215,7 +1214,7 @@ typedef enum {
     t_decal,
     t_generic,
     t_eventscript,
-    t_world,		// Fake type for world, is really t_model
+    t_world,        // Fake type for world, is really t_model
     rt_unk,
     rt_max
 } resourcetype_t;
@@ -1231,7 +1230,7 @@ typedef struct resource_s {
     unsigned char     rgucMD5_hash[16];    // To determine if we already have it.
     unsigned char     playernum;           // Which player index this resource is associated with, if it's a custom resource.
 
-    unsigned char	  rguc_reserved[ 32 ]; // For future expansion
+    unsigned char      rguc_reserved[ 32 ]; // For future expansion
     struct resource_s *pNext;              // Next in chain.
     struct resource_s *pPrev;
 } resource_t;
@@ -1311,32 +1310,32 @@ typedef struct {
 } channel_t;
 
 struct voxword_t {
-    int		volume;					// increase percent, ie: 125 = 125% increase
-    int		pitch;					// pitch shift up percent
-    int		start;					// offset start of wave percent
-    int		end;					// offset end of wave percent
-    int		cbtrim;					// end of wave after being trimmed to 'end'
-    int		fKeepCached;			// 1 if this word was already in cache before sentence referenced it
-    int		samplefrac;				// if pitch shifting, this is position into wav * 256
-    int		timecompress;			// % of wave to skip during playback (causes no pitch shift)
-    sfx_t*	sfx;					// name and cache pointer
+    int        volume;                    // increase percent, ie: 125 = 125% increase
+    int        pitch;                    // pitch shift up percent
+    int        start;                    // offset start of wave percent
+    int        end;                    // offset end of wave percent
+    int        cbtrim;                    // end of wave after being trimmed to 'end'
+    int        fKeepCached;            // 1 if this word was already in cache before sentence referenced it
+    int        samplefrac;                // if pitch shifting, this is position into wav * 256
+    int        timecompress;            // % of wave to skip during playback (causes no pitch shift)
+    sfx_t*    sfx;                    // name and cache pointer
 };
 
 struct wavinfo_t {
-    int		rate;
-    int		width;
-    int		channels;
-    int		loopstart;
-    int		samples;
-    int		dataofs;		// chunk starts this many bytes from file start
+    int        rate;
+    int        width;
+    int        channels;
+    int        loopstart;
+    int        samples;
+    int        dataofs;        // chunk starts this many bytes from file start
 };
 
 struct wavstream_t {
-    int		csamplesplayed;
-    int		csamplesinmem;
+    int        csamplesplayed;
+    int        csamplesinmem;
     FileHandle_t hFile;
     wavinfo_t info;
-    int		lastposloaded;
+    int        lastposloaded;
 };
 
 // filesystem.h
@@ -1349,74 +1348,74 @@ typedef enum {
 } FileSystemSeek_t;
 
 typedef enum {
-    FILESYSTEM_WARNING = -1,					// A problem!
-    FILESYSTEM_WARNING_QUIET = 0,				// Don't print anything
-    FILESYSTEM_WARNING_REPORTUNCLOSED,			// On shutdown, report names of files left unclosed
-    FILESYSTEM_WARNING_REPORTUSAGE,				// Report number of times a file was opened, closed
-    FILESYSTEM_WARNING_REPORTALLACCESSES		// Report all open/close events to console (!slow!)
+    FILESYSTEM_WARNING = -1,                    // A problem!
+    FILESYSTEM_WARNING_QUIET = 0,                // Don't print anything
+    FILESYSTEM_WARNING_REPORTUNCLOSED,            // On shutdown, report names of files left unclosed
+    FILESYSTEM_WARNING_REPORTUSAGE,                // Report number of times a file was opened, closed
+    FILESYSTEM_WARNING_REPORTALLACCESSES        // Report all open/close events to console (!slow!)
 } FileWarningLevel_t;
 
 // usercmd.h
 typedef struct usercmd_s {
-    short	lerp_msec;      // Interpolation time on client
-    byte	msec;           // Duration in ms of command
-    fVector	viewangles;     // Command view angles.
-    float	forwardmove;    // Forward velocity.
-    float	sidemove;       // Sideways velocity.
-    float	upmove;         // Upward velocity.
-    byte	lightlevel;     // Light level at spot where we are standing.
+    short    lerp_msec;      // Interpolation time on client
+    byte    msec;           // Duration in ms of command
+    fVector    viewangles;     // Command view angles.
+    float    forwardmove;    // Forward velocity.
+    float    sidemove;       // Sideways velocity.
+    float    upmove;         // Upward velocity.
+    byte    lightlevel;     // Light level at spot where we are standing.
     unsigned short  buttons;  // Attack buttons
     byte    impulse;          // Impulse command issued.
-    byte	weaponselect;	// Current weapon id
-    int		impact_index;
-    fVector	impact_position;
+    byte    weaponselect;    // Current weapon id
+    int        impact_index;
+    fVector    impact_position;
     int unk1;
 } usercmd_t;
 
 // entity_state.h
 typedef struct clientdata_s {
-    fVector				origin;
-    fVector				velocity;
-    int					viewmodel;
-    fVector				punchangle;
-    int					flags;
-    int					waterlevel;
-    int					watertype;
-    fVector				view_ofs;
-    float				health;
-    int					bInDuck;
-    int					weapons; // remove?
-    int					flTimeStepSound;
-    int					flDuckTime;
-    int					flSwimTime;
-    int					waterjumptime;
-    float				maxspeed;
-    float				fov;
-    int					weaponanim;
-    int					m_iId;
-    int					ammo_shells;
-    int					ammo_nails;
-    int					ammo_cells;
-    int					ammo_rockets;
-    float				m_flNextAttack;
-    int					tfstate;
-    int					pushmsec;
-    int					deadflag;
+    fVector                origin;
+    fVector                velocity;
+    int                    viewmodel;
+    fVector                punchangle;
+    int                    flags;
+    int                    waterlevel;
+    int                    watertype;
+    fVector                view_ofs;
+    float                health;
+    int                    bInDuck;
+    int                    weapons; // remove?
+    int                    flTimeStepSound;
+    int                    flDuckTime;
+    int                    flSwimTime;
+    int                    waterjumptime;
+    float                maxspeed;
+    float                fov;
+    int                    weaponanim;
+    int                    m_iId;
+    int                    ammo_shells;
+    int                    ammo_nails;
+    int                    ammo_cells;
+    int                    ammo_rockets;
+    float                m_flNextAttack;
+    int                    tfstate;
+    int                    pushmsec;
+    int                    deadflag;
     double              cso_unk1;
-    char				physinfo[ MAX_PHYSINFO_STRING ];
+    char                physinfo[ MAX_PHYSINFO_STRING ];
     // For mods
-    int					iuser1;
-    int					iuser2;
-    int					iuser3;
-    int					iuser4;
-    float				fuser1;
-    float				fuser2;
-    float				fuser3;
-    float				fuser4;
-    fVector				vuser1;
-    fVector				vuser2;
-    fVector				vuser3;
-    fVector				vuser4;
+    int                    iuser1;
+    int                    iuser2;
+    int                    iuser3;
+    int                    iuser4;
+    float                fuser1;
+    float                fuser2;
+    float                fuser3;
+    float                fuser4;
+    fVector                vuser1;
+    fVector                vuser2;
+    fVector                vuser3;
+    fVector                vuser4;
 
     float              cso_unk2;
     float              cso_unk3;
@@ -1426,62 +1425,62 @@ typedef struct clientdata_s {
 
 // weaponinfo.h
 typedef struct weapon_data_s {
-    int			m_iId;
-    int			m_iClip;
-    float		m_flNextPrimaryAttack;
-    float		m_flNextSecondaryAttack;
-    float		m_flTimeWeaponIdle;
-    int			m_fInReload;
-    int			m_fInSpecialReload;
-    float		m_flNextReload;
-    float		m_flPumpTime;
-    float		m_fReloadTime;
-    float		m_fAimedDamage;
-    float		m_fNextAimBonus;
-    int			m_fInZoom;
-    int			m_iWeaponState;
-    int			iuser1;
-    int			iuser2;
-    int			iuser3;
-    int			iuser4;
-    float		fuser1;
-    float		fuser2;
-    float		fuser3;
-    float		fuser4;
+    int            m_iId;
+    int            m_iClip;
+    float        m_flNextPrimaryAttack;
+    float        m_flNextSecondaryAttack;
+    float        m_flTimeWeaponIdle;
+    int            m_fInReload;
+    int            m_fInSpecialReload;
+    float        m_flNextReload;
+    float        m_flPumpTime;
+    float        m_fReloadTime;
+    float        m_fAimedDamage;
+    float        m_fNextAimBonus;
+    int            m_fInZoom;
+    int            m_iWeaponState;
+    int            iuser1;
+    int            iuser2;
+    int            iuser3;
+    int            iuser4;
+    float        fuser1;
+    float        fuser2;
+    float        fuser3;
+    float        fuser4;
     int unk;
 } weapon_data_t;
 
 // edict.h
 typedef struct link_s {
-    struct link_s	*prev, *next;
+    struct link_s    *prev, *next;
 } link_t;
 
 typedef struct edict_s {
-    qboolean	free;
-    int			serialnumber;
-    link_t		area;
-    int			headnode;
-    int			num_leafs;
-    short		leafnums[MAX_ENT_LEAFS];
-    float		freetime;
-    void*		pvPrivateData;
-    entvars_t	v;
+    qboolean    free;
+    int            serialnumber;
+    link_t        area;
+    int            headnode;
+    int            num_leafs;
+    short        leafnums[MAX_ENT_LEAFS];
+    float        freetime;
+    void*        pvPrivateData;
+    entvars_t    v;
 } edict_t;
 
 // event.h
 typedef struct event_args_s {
-    int		flags;
-    int		entindex;
-    float	origin[3];
-    float	angles[3];
-    float	velocity[3];
-    int		ducking;
-    float	fparam1;
-    float	fparam2;
-    int		iparam1;
-    int		iparam2;
-    int		bparam1;
-    int		bparam2;
+    int        flags;
+    int        entindex;
+    float    origin[3];
+    float    angles[3];
+    float    velocity[3];
+    int        ducking;
+    float    fparam1;
+    float    fparam2;
+    int        iparam1;
+    int        iparam2;
+    int        bparam1;
+    int        bparam2;
 } event_args_t;
 
 typedef struct event_info_s {
@@ -1490,7 +1489,7 @@ typedef struct event_info_s {
     short entity_index;
     float fire_time;
     event_args_t args;
-    int	  flags;
+    int      flags;
 } event_info_t;
 
 typedef struct event_state_s {
@@ -1505,38 +1504,38 @@ typedef struct event_s {
 } event_t;
 
 // progdefs.h
-typedef struct globalvars_s {	
-    float		time;
-    float		frametime;
-    float		force_retouch;
-    string_t	mapname;
-    string_t	startspot;
-    float		deathmatch_;
-    float		coop_;
-    float		teamplay;
-    float		serverflags;
-    float		found_secrets;
-    fVector		v_forward;
-    fVector		v_up;
-    fVector		v_right;
-    float		trace_allsolid;
-    float		trace_startsolid;
-    float		trace_fraction;
-    fVector		trace_endpos;
-    fVector		trace_plane_normal;
-    float		trace_plane_dist;
-    edict_t		*trace_ent;
-    float		trace_inopen;
-    float		trace_inwater;
-    int			trace_hitgroup;
-    int			trace_flags;
-    int			msg_entity;
-    int			cdAudioTrack;
-    int			maxClients;
-    int			maxEntities;
-    const char	*pStringBase;
-    void		*pSaveData;
-    fVector		vecLandmarkOffset;
+typedef struct globalvars_s {    
+    float        time;
+    float        frametime;
+    float        force_retouch;
+    string_t    mapname;
+    string_t    startspot;
+    float        deathmatch_;
+    float        coop_;
+    float        teamplay;
+    float        serverflags;
+    float        found_secrets;
+    fVector        v_forward;
+    fVector        v_up;
+    fVector        v_right;
+    float        trace_allsolid;
+    float        trace_startsolid;
+    float        trace_fraction;
+    fVector        trace_endpos;
+    fVector        trace_plane_normal;
+    float        trace_plane_dist;
+    edict_t        *trace_ent;
+    float        trace_inopen;
+    float        trace_inwater;
+    int            trace_hitgroup;
+    int            trace_flags;
+    int            msg_entity;
+    int            cdAudioTrack;
+    int            maxClients;
+    int            maxEntities;
+    const char    *pStringBase;
+    void        *pSaveData;
+    fVector        vecLandmarkOffset;
 } globalvars_t;
 
 // baseline.h
@@ -1560,17 +1559,17 @@ typedef struct consistency_s {
 
 // sequence.h
 typedef enum sequenceModifierBits {
-    SEQUENCE_MODIFIER_EFFECT_BIT		= (1 << 1),
-    SEQUENCE_MODIFIER_POSITION_BIT		= (1 << 2),
-    SEQUENCE_MODIFIER_COLOR_BIT			= (1 << 3),
-    SEQUENCE_MODIFIER_COLOR2_BIT		= (1 << 4),
-    SEQUENCE_MODIFIER_FADEIN_BIT		= (1 << 5),
-    SEQUENCE_MODIFIER_FADEOUT_BIT		= (1 << 6),
-    SEQUENCE_MODIFIER_HOLDTIME_BIT		= (1 << 7),
-    SEQUENCE_MODIFIER_FXTIME_BIT		= (1 << 8),
-    SEQUENCE_MODIFIER_SPEAKER_BIT		= (1 << 9),
-    SEQUENCE_MODIFIER_LISTENER_BIT		= (1 << 10),
-    SEQUENCE_MODIFIER_TEXTCHANNEL_BIT	= (1 << 11),
+    SEQUENCE_MODIFIER_EFFECT_BIT        = (1 << 1),
+    SEQUENCE_MODIFIER_POSITION_BIT        = (1 << 2),
+    SEQUENCE_MODIFIER_COLOR_BIT            = (1 << 3),
+    SEQUENCE_MODIFIER_COLOR2_BIT        = (1 << 4),
+    SEQUENCE_MODIFIER_FADEIN_BIT        = (1 << 5),
+    SEQUENCE_MODIFIER_FADEOUT_BIT        = (1 << 6),
+    SEQUENCE_MODIFIER_HOLDTIME_BIT        = (1 << 7),
+    SEQUENCE_MODIFIER_FXTIME_BIT        = (1 << 8),
+    SEQUENCE_MODIFIER_SPEAKER_BIT        = (1 << 9),
+    SEQUENCE_MODIFIER_LISTENER_BIT        = (1 << 10),
+    SEQUENCE_MODIFIER_TEXTCHANNEL_BIT    = (1 << 11),
 } sequenceModifierBits_e;
 
 typedef enum sequenceCommandEnum_ {
@@ -1607,61 +1606,61 @@ typedef enum sequenceCommandType_ {
 } sequenceCommandType_e;
 
 typedef struct sequenceCommandMapping_ {
-    sequenceCommandEnum_e	commandEnum;
-    const char*				commandName;
-    sequenceCommandType_e	commandType;
+    sequenceCommandEnum_e    commandEnum;
+    const char*                commandName;
+    sequenceCommandType_e    commandType;
 } sequenceCommandMapping_s;
 
 typedef struct client_textmessage_s {
-    int		effect;
-    byte	r1, g1, b1, a1;		// 2 colors for effects
-    byte	r2, g2, b2, a2;
-    float	x;
-    float	y;
-    float	fadein;
-    float	fadeout;
-    float	holdtime;
-    float	fxtime;
+    int        effect;
+    byte    r1, g1, b1, a1;        // 2 colors for effects
+    byte    r2, g2, b2, a2;
+    float    x;
+    float    y;
+    float    fadein;
+    float    fadeout;
+    float    holdtime;
+    float    fxtime;
     const char *pName;
     const char *pMessage;
 } client_textmessage_t;
 
 typedef struct sequenceCommandLine_ {
-    int						commandType;		// Specifies the type of command
-    client_textmessage_t	clientMessage;		// Text HUD message struct
-    char*					speakerName;		// Targetname of speaking entity
-    char*					listenerName;		// Targetname of entity being spoken to
-    char*					soundFileName;		// Name of sound file to play
-    char*					sentenceName;		// Name of sentences.txt to play
-    char*					fireTargetNames;	// List of targetnames to fire
-    char*					killTargetNames;	// List of targetnames to remove
-    float					delay;				// Seconds 'till next command
-    int						repeatCount;		// If nonzero, reset execution pointer to top of block (N times, -1 = infinite)
-    int						textChannel;		// Display channel on which text message is sent
-    int						modifierBitField;	// Bit field to specify what clientmessage fields are valid
-    sequenceCommandLine_s*	nextCommandLine;	// Next command (linked list)
+    int                        commandType;        // Specifies the type of command
+    client_textmessage_t    clientMessage;        // Text HUD message struct
+    char*                    speakerName;        // Targetname of speaking entity
+    char*                    listenerName;        // Targetname of entity being spoken to
+    char*                    soundFileName;        // Name of sound file to play
+    char*                    sentenceName;        // Name of sentences.txt to play
+    char*                    fireTargetNames;    // List of targetnames to fire
+    char*                    killTargetNames;    // List of targetnames to remove
+    float                    delay;                // Seconds 'till next command
+    int                        repeatCount;        // If nonzero, reset execution pointer to top of block (N times, -1 = infinite)
+    int                        textChannel;        // Display channel on which text message is sent
+    int                        modifierBitField;    // Bit field to specify what clientmessage fields are valid
+    sequenceCommandLine_s*    nextCommandLine;    // Next command (linked list)
 } sequenceCommandLine_s;
 
 typedef struct sequenceEntry_ {
-    char*					fileName;		// Name of sequence file without .SEQ extension
-    char*					entryName;		// Name of entry label in file
-    sequenceCommandLine_s*	firstCommand;	// Linked list of commands in entry
-    sequenceEntry_s*		nextEntry;		// Next loaded entry
-    qboolean				isGlobal;		// Is entry retained over level transitions?
+    char*                    fileName;        // Name of sequence file without .SEQ extension
+    char*                    entryName;        // Name of entry label in file
+    sequenceCommandLine_s*    firstCommand;    // Linked list of commands in entry
+    sequenceEntry_s*        nextEntry;        // Next loaded entry
+    qboolean                isGlobal;        // Is entry retained over level transitions?
 } sequenceEntry_s;
 
 typedef struct sentenceEntry_ {
-    char*					data;			// sentence data (ie "We have hostiles" )
-    sentenceEntry_s*		nextEntry;		// Next loaded entry
-    qboolean				isGlobal;		// Is entry retained over level transitions?
-    unsigned int			index;			// this entry's position in the file.
+    char*                    data;            // sentence data (ie "We have hostiles" )
+    sentenceEntry_s*        nextEntry;        // Next loaded entry
+    qboolean                isGlobal;        // Is entry retained over level transitions?
+    unsigned int            index;            // this entry's position in the file.
 } sentenceEntry_s;
 
 typedef struct sentenceGroupEntry_ {
-    char*					groupName;		// name of the group (ie CT_ALERT )
-    unsigned int			numSentences;	// number of sentences in group
-    sentenceEntry_s*		firstSentence;	// head of linked list of sentences in group
-    struct sentenceGroupEntry_s*	nextEntry;		// next loaded group
+    char*                    groupName;        // name of the group (ie CT_ALERT )
+    unsigned int            numSentences;    // number of sentences in group
+    sentenceEntry_s*        firstSentence;    // head of linked list of sentences in group
+    struct sentenceGroupEntry_s*    nextEntry;        // next loaded group
 } sentenceGroupEntry_s;
 
 
@@ -1790,41 +1789,41 @@ typedef struct server_s {
 #define MAX_LEVEL_CONNECTIONS 16
 
 typedef struct {
-    int			id;				// Ordinal ID of this entity (used for entity <--> pointer conversions)
-    edict_t	*pent;			// Pointer to the in-game entity
-    int			location;		// Offset from the base data of this entity
-    int			size;			// Byte size of this entity's data
-    int			flags;			// This could be a short -- bit mask of transitions that this entity is in the PVS of
-    string_t	classname;		// entity class name
+    int            id;                // Ordinal ID of this entity (used for entity <--> pointer conversions)
+    edict_t    *pent;            // Pointer to the in-game entity
+    int            location;        // Offset from the base data of this entity
+    int            size;            // Byte size of this entity's data
+    int            flags;            // This could be a short -- bit mask of transitions that this entity is in the PVS of
+    string_t    classname;        // entity class name
 
 } ENTITYTABLE;
 
 typedef struct {
-    char		mapName[ 32 ];
-    char		landmarkName[ 32 ];
-    edict_t		*pentLandmark;
-    fVector		vecLandmarkOrigin;
+    char        mapName[ 32 ];
+    char        landmarkName[ 32 ];
+    edict_t        *pentLandmark;
+    fVector        vecLandmarkOrigin;
 } LEVELLIST;
 
 typedef struct saverestore_s {
-    char		*pBaseData;		// Start of all entity save data
-    char		*pCurrentData;	// Current buffer pointer for sequential access
-    int			size;			// Current data size
-    int			bufferSize;		// Total space for data
-    int			tokenSize;		// Size of the linear list of tokens
-    int			tokenCount;		// Number of elements in the pTokens table
-    char		**pTokens;		// Hash table of entity strings (sparse)
-    int			currentIndex;	// Holds a global entity table ID
-    int			tableCount;		// Number of elements in the entity table
-    int			connectionCount;// Number of elements in the levelList[]
-    ENTITYTABLE	*pTable;		// Array of ENTITYTABLE elements (1 for each entity)
-    LEVELLIST	levelList[ MAX_LEVEL_CONNECTIONS ];		// List of connections from this level
+    char        *pBaseData;        // Start of all entity save data
+    char        *pCurrentData;    // Current buffer pointer for sequential access
+    int            size;            // Current data size
+    int            bufferSize;        // Total space for data
+    int            tokenSize;        // Size of the linear list of tokens
+    int            tokenCount;        // Number of elements in the pTokens table
+    char        **pTokens;        // Hash table of entity strings (sparse)
+    int            currentIndex;    // Holds a global entity table ID
+    int            tableCount;        // Number of elements in the entity table
+    int            connectionCount;// Number of elements in the levelList[]
+    ENTITYTABLE    *pTable;        // Array of ENTITYTABLE elements (1 for each entity)
+    LEVELLIST    levelList[ MAX_LEVEL_CONNECTIONS ];        // List of connections from this level
     // smooth transition
-    int			fUseLandmark;
-    char		szLandmarkName[20];// landmark we'll spawn near in next level
-    fVector		vecLandmarkOffset;// for landmark transitions
-    float		time;
-    char		szCurrentMapName[32];	// To check global entities
+    int            fUseLandmark;
+    char        szLandmarkName[20];// landmark we'll spawn near in next level
+    fVector        vecLandmarkOffset;// for landmark transitions
+    float        time;
+    char        szCurrentMapName[32];    // To check global entities
 
 } SAVERESTOREDATA;
 
@@ -1900,20 +1899,20 @@ typedef struct sv_adjusted_positions_s {
 
 // client.h
 typedef struct screenfade_s {
-    float		fadeSpeed;		// How fast to fade (tics / second) (+ fade in, - fade out)
-    float		fadeEnd;		// When the fading hits maximum
-    float		fadeTotalEnd;	// Total End Time of the fade (used for FFADE_OUT)
-    float		fadeReset;		// When to reset to not fading (for fadeout and hold)
-    byte		fader, fadeg, fadeb, fadealpha;	// Fade color
-    int			fadeFlags;		// Fading flags
+    float        fadeSpeed;        // How fast to fade (tics / second) (+ fade in, - fade out)
+    float        fadeEnd;        // When the fading hits maximum
+    float        fadeTotalEnd;    // Total End Time of the fade (used for FFADE_OUT)
+    float        fadeReset;        // When to reset to not fading (for fadeout and hold)
+    byte        fader, fadeg, fadeb, fadealpha;    // Fade color
+    int            fadeFlags;        // Fading flags
 } screenfade_t;
 
 typedef struct
 {
-	unsigned short duration;
-	unsigned short holdTime;
-	short fadeFlags;
-	byte r,g,b,a;
+    unsigned short duration;
+    unsigned short holdTime;
+    short fadeFlags;
+    byte r,g,b,a;
 } ScreenFade;
 
 typedef struct {
@@ -1938,99 +1937,99 @@ typedef struct {
 } frame_t;
 
 typedef struct efrag_s {
-    struct mleaf_s		*leaf;
-    struct efrag_s		*leafnext;
-    struct cl_entity_s	*entity;
-    struct efrag_s		*entnext;
+    struct mleaf_s        *leaf;
+    struct efrag_s        *leafnext;
+    struct cl_entity_s    *entity;
+    struct efrag_s        *entnext;
 } efrag_t;
 
 typedef struct {
-    byte					mouthopen;		// 0 = mouth closed, 255 = mouth agape
-    byte					sndcount;		// counter for running average
-    int						sndavg;			// running average
+    byte                    mouthopen;        // 0 = mouth closed, 255 = mouth agape
+    byte                    sndcount;        // counter for running average
+    int                        sndavg;            // running average
 } mouth_t;
 
 typedef struct {
     // Time stamp for this movement
-    float					animtime;
-    fVector					origin;
-    fVector					angles;
+    float                    animtime;
+    fVector                    origin;
+    fVector                    angles;
 } position_history_t;
 
 typedef struct {
-    float					prevanimtime;  
-    float					sequencetime;
-    byte					prevseqblending[2];
-    fVector					prevorigin;
-    fVector					prevangles;
-    int						prevsequence;
-    float					prevframe;
-    byte					prevcontroller[4];
-    byte					prevblending[2];
+    float                    prevanimtime;  
+    float                    sequencetime;
+    byte                    prevseqblending[2];
+    fVector                    prevorigin;
+    fVector                    prevangles;
+    int                        prevsequence;
+    float                    prevframe;
+    byte                    prevcontroller[4];
+    byte                    prevblending[2];
 } latchedvars_t;
 
 #define HISTORY_MAX 64
 typedef struct {
-    int						index;      // Index into cl_entities ( should match actual slot, but not necessarily )
-    qboolean				player;     // True if this entity is a "player"
-    entity_state_t			baseline;   // The original state from which to delta during an uncompressed message
-    entity_state_t			prevstate;  // The state information from the penultimate message received from the server
-    entity_state_t			curstate;   // The state information from the last message received from server
-    int						current_position;  // Last received history update index
-    position_history_t		ph[HISTORY_MAX];   // History of position and angle updates for this player
-    mouth_t					mouth;			// For synchronizing mouth movements.
-    latchedvars_t			latched;		// Variables used by studio model rendering routines
+    int                        index;      // Index into cl_entities ( should match actual slot, but not necessarily )
+    qboolean                player;     // True if this entity is a "player"
+    entity_state_t            baseline;   // The original state from which to delta during an uncompressed message
+    entity_state_t            prevstate;  // The state information from the penultimate message received from the server
+    entity_state_t            curstate;   // The state information from the last message received from server
+    int                        current_position;  // Last received history update index
+    position_history_t        ph[HISTORY_MAX];   // History of position and angle updates for this player
+    mouth_t                    mouth;            // For synchronizing mouth movements.
+    latchedvars_t            latched;        // Variables used by studio model rendering routines
     // Information based on interplocation, extrapolation, prediction, or just copied from last msg received.
-    float					lastmove;
+    float                    lastmove;
     // Actual render position and angles
-    fVector					origin;
-    fVector					angles;
+    fVector                    origin;
+    fVector                    angles;
     // Attachment points
-    fVector					attachment[4];
+    fVector                    attachment[4];
     // Other entity local information
-    int						trivial_accept;
-    struct model_s			*model;			// cl.model_precache[ curstate.modelindes ];  all visible entities have a model
-    struct efrag_s			*efrag;			// linked list of efrags
-    struct mnode_s			*topnode;		// for bmodels, first world node that splits bmodel, or NULL if not split
-    float					syncbase;		// for client-side animations -- used by obsolete alias animation system, remove?
-    int						visframe;		// last frame this entity was found in an active leaf
-    colorVec				cvFloorColor;
+    int                        trivial_accept;
+    struct model_s            *model;            // cl.model_precache[ curstate.modelindes ];  all visible entities have a model
+    struct efrag_s            *efrag;            // linked list of efrags
+    struct mnode_s            *topnode;        // for bmodels, first world node that splits bmodel, or NULL if not split
+    float                    syncbase;        // for client-side animations -- used by obsolete alias animation system, remove?
+    int                        visframe;        // last frame this entity was found in an active leaf
+    colorVec                cvFloorColor;
 } cl_entity_t;
 
 typedef struct dlight_s {
-    fVector	origin;
-    float	radius;
-    color24	color;
-    float	die;				// stop lighting after this time
-    float	decay;				// drop this each second
-    float	minlight;			// don't add when contributing less
-    int		key;
-    qboolean	dark;			// subtracts light instead of adding
+    fVector    origin;
+    float    radius;
+    color24    color;
+    float    die;                // stop lighting after this time
+    float    decay;                // drop this each second
+    float    minlight;            // don't add when contributing less
+    int        key;
+    qboolean    dark;            // subtracts light instead of adding
 } dlight_t;
 
 typedef struct player_info_s
 {
     // User id on server
-    int		userid;
+    int        userid;
     // User info string
-    char	userinfo[ MAX_INFO_STRING ];
+    char    userinfo[ MAX_INFO_STRING ];
     // Name
-    char	name[32];
+    char    name[32];
     // Spectator or not, unused
-    int		spectator;
-    int		ping;
-    int		packet_loss;
+    int        spectator;
+    int        ping;
+    int        packet_loss;
     // skin information
-    char	model[MAX_QPATH];
-    int		topcolor;
-    int		bottomcolor;
+    char    model[MAX_QPATH];
+    int        topcolor;
+    int        bottomcolor;
     // last frame rendered
-    int		renderframe;
+    int        renderframe;
     // Gait frame estimation
-    int		gaitsequence;
-    float	gaitframe;
-    float	gaityaw;
-    fVector	prevgaitorigin;
+    int        gaitsequence;
+    float    gaitframe;
+    float    gaityaw;
+    fVector    prevgaitorigin;
     customization_t customdata;
     //TODO: determine if constant needed - Solokiller
     char hashedcdkey[16];
@@ -2204,3 +2203,12 @@ typedef struct client_static_s {
     uint64 GameServerSteamID;
     int build_num;
 } client_static_t;
+
+typedef struct CSound_s {
+    fVector m_vecOrigin;
+    int m_iType;
+    int m_iVolume;
+    float m_flExpireTime;
+    int m_iNext;
+    int m_iNextAudible;
+} CSound;

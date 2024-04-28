@@ -198,7 +198,7 @@ enum _Menu {
 // only load first n chars of name
 #define MAX_TEXTURENAME_LENGHT 17
 #define MAX_ITEM_TYPES 6
-#define MAX_AMMO_SLOTS 32
+#define MAX_AMMO_SLOTS 93
 #define MAX_SBAR_STRING 128
 #define MAX_TEAM_NAME_LENGTH 16
 #define MAX_AUTOBUY_LENGTH 256
@@ -206,7 +206,6 @@ enum _Menu {
 
 struct CUtlMemory {
     void* vfptr;
-
     CUtlMemory* m_pMemory;
     int m_nAllocationCount;
     int m_nGrowSize;
@@ -214,17 +213,13 @@ struct CUtlMemory {
 
 struct CUtlvec3_t {
     void* vfptr;
-
     CUtlMemory* m_memory;
     int m_Size;
-    // For easier access to the elements through the debugger
-    // it's in release builds so this can be used in libraries correctly
     CUtlvec3_t *m_pElements;
 };
 
 struct CHintMessageQueue {
     void* vfptr;
-
     float m_tmMessageEnd;
     CUtlvec3_t m_messages;
 };
@@ -238,11 +233,12 @@ enum sbar_data {
     SBAR_ID_TARGETTYPE = 1,
     SBAR_ID_TARGETNAME,
     SBAR_ID_TARGETHEALTH,
-    SBAR_END
+    SBAR_END,
 };
 enum MusicState { SILENT, CALM, INTENSE };
 
 struct RebuyStruct {
+    void* vfptr;
     int m_primaryWeapon;
     int m_primaryAmmo;
     int m_secondaryWeapon;
@@ -333,16 +329,16 @@ struct CBaseEntity_vt {
     vec_t* (__thiscall* EarPosition)(struct CBaseEntity* this, vec_t*);
     vec_t* (__thiscall* BodyTarget)(struct CBaseEntity* this, vec_t*);
     void (__thiscall* CSO_ADD_5)(struct CBaseEntity* this);
-    void (__thiscall* Illumination)(struct CBaseEntity* this);
-    void (__thiscall* FVisibleV)(struct CBaseEntity* this);
-    void (__thiscall* FVisibleE)(struct CBaseEntity* this);
+    int  (__thiscall* Illumination)(struct CBaseEntity* this);
+    BOOL (__thiscall* FVisibleV)(struct CBaseEntity* this);
+    BOOL (__thiscall* FVisibleE)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_6)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_7)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_8)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_9)(struct CBaseEntity* this);
     void (__thiscall* CSO_ADD_10)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_11)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_12)(struct CBaseEntity* this);
+    int (__thiscall* CSO_ADD_11)(struct CBaseEntity* this);
+    int (__thiscall* CSO_ADD_12)(struct CBaseEntity* this, CBasePlayer*);
     void (__thiscall* CSO_ADD_13)(struct CBaseEntity* this); // UTIL_GetGlobalTrace
     void (__thiscall* CSO_ADD_14)(struct CBaseEntity* this);
     
@@ -355,9 +351,9 @@ struct CBaseEntity_vt {
 
 #ifdef GoPlayerItem
     // CBasePlayerItem
-    void (__thiscall* CBasePlayerItem::AddToPlayer)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this);
+    int (__thiscall* CBasePlayerItem::AddToPlayer)(struct CBaseEntity* this);
+    int (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this);
+    int (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanDeploy)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanDrop)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Deploy)(struct CBaseEntity* this);
@@ -365,7 +361,7 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::IsWeapon)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanHolster)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Holster)(struct CBaseEntity* this, int);
-    void (__thiscall* CBasePlayerItem::UpdateItemInfo)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerItem::UpdateItemInfo_ResetMaxSpeed)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::ItemPreFrame)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::ItemPostFrame)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Drop)(struct CBaseEntity* this);
@@ -379,12 +375,12 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::Unknown2)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetWeaponType)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetUnk12)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x400)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x400__GetGunPosition)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x800)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x8000)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x10000)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x1000)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x40000)(struct CBaseEntity* this);
+    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x40000__SetAnimation)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown3)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown4)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetAutoaimVector)(struct CBaseEntity* this, float* a, float b);
@@ -402,9 +398,9 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::Unknown17)(struct CBaseEntity* this);
 
     // CBasePlayerWeapon
-    void (__thiscall* CBasePlayerWeapon::Unknown1)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::ExtractAmmo)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown2)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown3)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::AddWeapon)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown4)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::PlayEmptySound)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::ResetEmptySound)(struct CBaseEntity* this);
@@ -423,7 +419,7 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerWeapon::Unknown14)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x2000)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x4000)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::GetAmmoClip)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::GetAmmoClip__iMaxClip)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::GetAmmoClip2)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown15)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::Unknown16)(struct CBaseEntity* this);
@@ -463,35 +459,26 @@ struct CBaseEntity_vt {
 #endif
 };
 
-struct CBaseEntity {
-    CBaseEntity_vt* vfptr;
+struct AmmoInventory {
+    int iMaxAmmo;
+    int iAmmo;
+};
 
-    struct entvars_t* pev;
+struct CBaseEntity {
+    CBaseEntity_vt* vfptr; // ok
+    struct entvars_t* pev; // ok
     CBaseEntity* m_pGoalEnt;
     CBaseEntity* m_pLink;
-
-    // TYPEDESCRIPTION
-    int undef1[4];
-
-    void* m_pfnThink;
-    void* m_pfnTouch;
-    void* m_pfnUse;
-    void* m_pfnBlocked;
-
-    // Special stuff for grenades and knife.
-    float m_flStartThrow;
-    float m_flReleaseThrow;
+    int undef1[4]; // TYPEDESCRIPTION
+    void* m_pfnThink; // ok
+    void* m_pfnTouch; // ok
+    void* m_pfnUse; // ok
+    void* m_pfnBlocked; // ok
+    AmmoInventory ammoTypes[35]; // CBasePlayer::TabulateAmmo, maybe ok
+    float m_flStartThrow; // ok
+    float m_flReleaseThrow; // ok
     int m_iSwing;
-
-    int u1[65];
-
-    int entity_nf1;
-    int entity_nf2;
-    int entity_nf3;
-    int entity_nf4;
-    int entity_nf5;
     bool has_disconnected; // ok
-
     TeamName m_iTeam; // ok
     int m_LastHitGroup; // ok
     int entity_nf6;
@@ -505,12 +492,11 @@ struct CBaseDelay : CBaseEntity {
 };
 
 struct CBaseAnimating : CBaseDelay {
-    // animation needs
-    float m_flFrameRate;    // computed FPS for current sequence
-    float m_flGroundSpeed;    // computed linear movement rate for current sequence
-    float m_flLastEventCheck;// last time the event list was checked
-    BOOL m_fSequenceFinished;// flag set when StudioAdvanceFrame moves across a frame boundry
-    BOOL m_fSequenceLoops;    // true if the sequence loops
+    float m_flFrameRate; // ok
+    float m_flGroundSpeed; // ok
+    float m_flLastEventCheck; // ok
+    BOOL m_fSequenceFinished; // ok
+    BOOL m_fSequenceLoops; // ok
 };
 
 // Things that toggle (buttons/triggers/doors) need this
@@ -522,37 +508,25 @@ struct EHANDLE {
 };
 
 struct CBaseToggle : CBaseAnimating {
-    TOGGLE_STATE m_toggle_state;
-    float m_flActivateFinished;// like attack_finished, but for doors
-    float m_flMoveDistance;    // how far a door should slide or rotate
-    float m_flWait;
-    float m_flLip;
-    float m_flTWidth;        // for plats
-    float m_flTLength;        // for plats
+    TOGGLE_STATE m_toggle_state; // ok
+    float m_flActivateFinished; // ok
+    float m_flMoveDistance; // ok
+    float m_flWait; // ok
+    float m_flLip; // ok
+    float m_flTWidth;
+    float m_flTLength;
     vec3_t m_vecPosition1;
     vec3_t m_vecPosition2;
     vec3_t m_vecAngle1;
     vec3_t m_vecAngle2;
-
-    int m_cTriggersLeft;    // trigger_counter only, # of activations remaining
-    float m_flHeight;
-    EHANDLE m_hActivator;
-
+    int m_cTriggersLeft; // ok
+    float m_flHeight; // ok
+    EHANDLE m_hActivator; // ok
     void* m_pfnCallWhenMoveDone;
-
     vec3_t m_vecFinalDest;
     vec3_t m_vecFinalAngle;
-
-    int m_bitsDamageInflict;// DMG_ damage type that the door or tigger does
-
-    /*
-    If this button has a master switch, this is the targetname.
-    A master switch must be of the multisource type. If all
-    of the switches in the multisource have been triggered, then
-    the button will be allowed to operate. Otherwise, it will be
-    deactivated.
-    */
-    string_t m_sMaster; 
+    int m_bitsDamageInflict; // ok
+    string_t m_sMaster;  // ok
 };
 
 enum
@@ -708,7 +682,7 @@ struct CBaseMonster : CBaseToggle {
     EHANDLE m_hTargetEnt;
     float m_flFieldOfView;
     int m_bloodColor; // ok
-    vec3_t m_HackedGunPos;
+    fVector m_HackedGunPos; // ok
     fVector m_vecEnemyLKP; // ok
 
     unsigned char monster_nf1;
@@ -823,59 +797,59 @@ struct CBasePlayer : CBaseMonster {
     int cso_u3;
     int m_iObserverC4State; // ok
     bool m_bObserverHasDefuser; // ok
-    int m_iObserverLastMode;
+    int m_iObserverLastMode; // ok
     float m_flFlinchTime;
     float m_flAnimTime;
     bool m_bHighDamage;
     float m_flVelocityModifier;
     int m_iLastZoom;
     bool m_bResumeZoom;
-    float m_flEjectBrass;
-    ArmorType m_iKevlar;
-    bool m_bNotKilled;
-    int player_nf1;
-    int m_iAccount;
+    float m_flEjectBrass; // ok
+    int cso_u4;
+    ArmorType m_iKevlar; // ok
+    char m_bNotKilled; // ok
+    int m_iAccount; // ok
     bool m_bHasPrimary;
     float m_flDeathThrowTime;
     int m_iThrowDirection;
     float m_flLastTalk;
     bool m_bJustConnected;
     bool m_bContextHelp;
-    JoinState m_iJoiningState;
+    JoinState m_iJoiningState; // ok
     CBaseEntity *m_pIntroCamera;
     float m_fIntroCamTime;
     float m_fLastMovement;
-    bool m_bMissionBriefing;
+    bool m_bMissionBriefing; // ok
     bool m_bTeamChanged;
     ModelName m_iModelName;
-    int m_iTeamKills;
-    IgnoreChatMsg m_iIgnoreGlobalChat;
-    bool m_bHasNightVision;
+    int m_iTeamKills; // ok
+    IgnoreChatMsg m_iIgnoreGlobalChat; // ok
+    bool m_bHasNightVision; // ok
     bool m_bNightVisionOn; // ok
-    vec3_t m_vRecentPath[MAX_RECENT_PATH];
-    float m_flIdleCheckTime;
-    float m_flRadioTime;
-    int m_iRadioMessages;
-    bool m_bIgnoreRadio;
-    bool m_bHasC4;
-    bool m_bHasDefuser;
+    vec3_t m_vRecentPath[MAX_RECENT_PATH]; // ok
+    float m_flIdleCheckTime; // ok
+    float m_flRadioTime; // ok
+    int m_iRadioMessages; // ok
+    bool m_bIgnoreRadio; // ok
+    bool m_bHasC4; // ok
+    bool m_bHasDefuser; // ok
     bool m_bKilledByBomb;
     vec3_t m_vBlastVector;
     bool m_bKilledByGrenade;
     CHintMessageQueue m_hintMessageQueue;
-    int m_flDisplayHistory;
-    _Menu m_iMenu;
+    int m_flDisplayHistory; // ok
+    _Menu m_iMenu; // ok
     int m_iChaseTarget;
     CBaseEntity *m_pChaseTarget;
     float m_fCamSwitch;
     bool m_bEscaped;
-    bool m_bIsVIP;
+    bool m_bIsVIP; // ok
     float m_tmNextRadarUpdate;
     vec3_t m_vLastOrigin;
     int m_iCurrentKickVote;
     float m_flNextVoteTime;
     bool m_bJustKilledTeammate;
-    int m_iHostagesKilled;
+    int m_iHostagesKilled; // ok
     int m_iMapVote;
     bool m_bCanShoot;
     float m_flLastFired;
@@ -884,22 +858,22 @@ struct CBasePlayer : CBaseMonster {
     bool m_bPunishedForTK;
     bool m_bReceivesNoMoneyNextRound;
     int m_iTimeCheckAllowed;
-    bool m_bHasChangedName;
-    char m_szNewName[MAX_PLAYER_NAME_LENGTH];
-    bool m_bIsDefusing;
-    float m_tmHandleSignals;
+    bool m_bHasChangedName; // ok
+    char m_szNewName[MAX_PLAYER_NAME_LENGTH]; // ok
+    bool m_bIsDefusing; // ok
+    float m_tmHandleSignals; // ok
     CUnifiedSignals m_signals;
     edict_t *m_pentCurBombTarget;
-    int m_iPlayerSound;
-    int m_iTargetVolume;
     int cso_baseplayer_1;
+    int m_iPlayerSound; // ok
+    int m_iTargetVolume; // ok
+    int m_iWeaponVolume; // ok
+    int m_iExtraSoundTypes; // ok
+    int m_iWeaponFlash; // ok
+    float m_flStopExtraSoundTime; // ok
+    float m_flFlashLightTime; // ok
+    int m_iFlashBattery; // ok
     int cso_baseplayer_2;
-    int m_iWeaponVolume;
-    int m_iExtraSoundTypes;
-    int m_iWeaponFlash;
-    float m_flStopExtraSoundTime;
-    float m_flFlashLightTime;
-    int m_iFlashBattery;
     int m_afButtonLast;
     int m_afButtonPressed;
     int m_afButtonReleased;
@@ -908,7 +882,7 @@ struct CBasePlayer : CBaseMonster {
     float m_flSndRoomtype;
     float m_flSndRange;
     float m_flFallVelocity;
-    int m_rgItems[MAX_ITEMS];
+    int m_rgItems[MAX_ITEMS]; // ok
     unsigned int m_afPhysicsFlags; // ok
     int m_fNewAmmo;
     float m_fNextSuicideTime;
@@ -929,39 +903,37 @@ struct CBasePlayer : CBaseMonster {
     char m_chTextureType;
     int m_idrowndmg; // ok
     int m_idrownrestored; // ok
+    int m_bitsHUDDamage; // ok
     int m_iStepLeft;
-    int m_bitsHUDDamage;
     BOOL m_fInitHUD;
+    int m_iTrain; // ok
+    BOOL m_fWeapon; // OK
     BOOL m_fGameHUDInitialized;
-    int m_iTrain;
-    BOOL m_fWeapon;
-    EHANDLE m_pTank;
-    float m_fDeadTime;
-    BOOL m_fNoPlayerSound;
     BOOL m_fLongJump;
+    float m_fDeadTime; // OK
+    BOOL m_fNoPlayerSound; // ok
+    EHANDLE m_pTank;
     float m_tSneaking;
-    int m_iUpdateTime;
-    int m_iClientHealth;
+    int m_iClientHealth; // ok
+    int m_iClientBattery; // ok
     int m_iHideHUD; // OK
-    int m_iClientBattery;
-    int m_iFOV;
-    int m_iClientFOV;
-    int m_iNumSpawns;
+    int m_iClientHideHUD; // ok
+    int m_iFOV; // ok
+    int m_iClientFOV; // ok
+    short m_iNumSpawns; // ok
     CBaseEntity *m_pObserver;
-    CBasePlayerItem *m_rgpPlayerItems[MAX_ITEM_TYPES];
-    CBasePlayerItem *m_pActiveItem;
-    CBasePlayerItem *m_pClientActiveItem;
-    CBasePlayerItem *m_pLastItem;
+    CBasePlayerItem *m_rgpPlayerItems[MAX_ITEM_TYPES]; // ok
+    CBasePlayerItem *m_pActiveItem; // ok
+    CBasePlayerItem *m_pClientActiveItem; // ok
+    CBasePlayerItem *m_pLastItem; // ok
     int m_rgAmmo[MAX_AMMO_SLOTS]; // ok
-    int m_rgAmmoLast[MAX_AMMO_SLOTS];
-
-    int cso_add_b[551];
-
-    vec3_t m_vecAutoAim;
-    BOOL m_fOnTarget;
+    int m_rgAmmoLast[MAX_AMMO_SLOTS]; // ok
+    fVector m_vecAutoAim; // ok
+    BOOL m_fOnTarget; // ok
     int m_iDeaths;
     int m_izSBarState[SBAR_END];
     float m_flNextSBarUpdateTime;
+    int cso_add_c[429];
     float m_flStatusBarDisappearDelay;
     char m_SbarString0[MAX_SBAR_STRING];
     int m_lastx;
@@ -984,14 +956,14 @@ struct CBasePlayer : CBaseMonster {
     bool m_bShieldDrawn;
     bool m_bOwnsShield;
     bool undef8;
-    float m_blindUntilTime;
+    float undef3;
     char undef4;
     char undef5;
-    char m_bWasFollowing;
+    char m_bWasFollowing; // ok
     char undef7;
     float m_flNextFollowTime; // ok
     float m_allowAutoFollowTime;
-    float undef3;
+    float m_blindUntilTime; // ok
     float m_blindStartTime; // ok
     float m_blindHoldTime; // ok
     float m_blindFadeTime; // ok
@@ -1000,19 +972,22 @@ struct CBasePlayer : CBaseMonster {
     char *m_rebuyString;
     RebuyStruct m_rebuyStruct;
     bool m_bIsInRebuy;
-    float m_flLastUpdateTime;
-    char m_lastLocation[MaxLocationLen];
+    char undef9[32];
     int undef2; // m_progressStart
     int undef1; // m_progressEnd
-    bool m_bObserverAutoDirector;
-    bool m_canSwitchObserverModes;
+    bool player_nf5;
+    bool player_nf6;
     float m_heartBeatTime;
     float m_intenseTimestamp;
     float m_silentTimestamp;
     MusicState m_musicState;
     float m_flLastCommandTime[COMMANDS_TO_TRACK];
-    int player_nfa[52];
+    int player_nfa[44];
+    float m_flLastUpdateTime;
+    char m_lastLocation[32];
     float m_progressStart;
+    bool m_bObserverAutoDirector;
+    bool m_canSwitchObserverModes;
     float m_progressEnd;
     int player_nf[228];
     char player_nf2;
@@ -1044,33 +1019,33 @@ struct ItemInfo {
 struct CBasePlayerItem : CBaseAnimating {
     struct CBasePlayer *m_pPlayer;
     CBasePlayerItem *m_pNext;
-    int m_iId; // WEAPON_???
+    int m_iId; // ok, WEAPON_???
     int m_iModelIndex;
     int cso_baseplayeritem_1;
 };
 
 // CAK47 size 0x238
 struct CBasePlayerWeapon : CBasePlayerItem {
-    int m_iPlayEmptySound;
-    int m_fFireOnEmpty;
+    int m_iPlayEmptySound; // ok
+    int m_fFireOnEmpty; // ok
     int cso_baseplayer_weapon_1;
     int cso_baseplayer_weapon_2;
     float m_flNextPrimaryAttack; // ok
     float m_flNextSecondaryAttack; // ok
-    float m_flTimeWeaponIdle;
-    int m_iPrimaryAmmoType;
-    int m_iSecondaryAmmoType;
+    float m_flTimeWeaponIdle; // ok
     int cso_baseplayer_weapon_3;
+    int m_iPrimaryAmmoType; // ok
+    int m_iSecondaryAmmoType; // ok
     int m_iClip; // ok
-    int m_iClientClip;
+    int m_iClientClip; // ok
     int cso_baseplayer_weapon_4;
     int cso_baseplayer_weapon_5;
-    int m_iClientWeaponState;
+    int m_iClientWeaponState; // ok
     int m_fInReload;
-    int m_fInSpecialReload;
-    int m_iDefaultAmmo;
+    int m_fInSpecialReload; // ok
+    int m_iDefaultAmmo; // ok
     int cso_baseplayer_weapon_6;
-    int m_iShellId;
+    int m_iShellId; // ok
     float m_fMaxSpeed;
     bool m_bDelayFire; // ok
     BOOL m_iDirection;
@@ -1079,14 +1054,15 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     float m_flLastFire;
     int m_iShotsFired; // ok
     vec3_t m_vVecAiming;
-    string_t model_name;
-    float m_flFamasShoot;
-    int m_iFamasShotsFired;
-    float m_fBurstSpread;
+    string_t model_name; // ok
+    float m_flFamasShoot; // ok
+    int m_iFamasShotsFired; // ok
+    float m_fBurstSpread; // ok
     int m_iWeaponState;
-    float m_flNextReload;
+    float m_flNextReload; // ok
 
-    int m_iShell;
-    int iShellOn;
-    unsigned short m_usFireAK47; // temp var, some own class uses
+    int nf_weapon1;
+    int nf_weapon2;
+
+    unsigned short m_usFireWeapon; // temp var, some own class uses
 };
