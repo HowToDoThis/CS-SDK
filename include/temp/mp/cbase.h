@@ -812,7 +812,7 @@ struct CBasePlayer : CBaseMonster {
     bool m_bHasPrimary;
     float m_flDeathThrowTime;
     int m_iThrowDirection;
-    float m_flLastTalk;
+    float m_flLastTalk; // ok
     bool m_bJustConnected;
     bool m_bContextHelp;
     JoinState m_iJoiningState; // ok
@@ -962,38 +962,29 @@ struct CBasePlayer : CBaseMonster {
     char m_bWasFollowing; // ok
     char undef7;
     float m_flNextFollowTime; // ok
-    float m_allowAutoFollowTime;
+    int player_nf7;
     float m_blindUntilTime; // ok
     float m_blindStartTime; // ok
     float m_blindHoldTime; // ok
     float m_blindFadeTime; // ok
     int m_blindAlpha; // OK
-    char m_autoBuyString[252];
-    char *m_rebuyString;
-    RebuyStruct m_rebuyStruct;
-    bool m_bIsInRebuy;
-    char undef9[32];
-    int undef2; // m_progressStart
-    int undef1; // m_progressEnd
-    bool player_nf5;
-    bool player_nf6;
-    float m_heartBeatTime;
-    float m_intenseTimestamp;
-    float m_silentTimestamp;
-    MusicState m_musicState;
-    float m_flLastCommandTime[COMMANDS_TO_TRACK];
-    int player_nfa[44];
-    float m_flLastUpdateTime;
-    char m_lastLocation[32];
+    float m_allowAutoFollowTime;
+    int player_nfa[141];
+    float m_flLastUpdateTime; // ok
+    char m_lastLocation[32]; // ok
     float m_progressStart;
+    float m_progressEnd;
     bool m_bObserverAutoDirector;
     bool m_canSwitchObserverModes;
-    float m_progressEnd;
-    int player_nf[228];
+    int player_nf[227];
     char player_nf2;
     char player_nf3;
-    char player_related_m_flNextFollowTime; // m_flNextFollowTime
     char player_nf4;
+    char player_nf5;
+    char player_nf6;
+    char player_nf8;
+    char player_nf9;
+    int player_nfb[808];
 };
 
 struct AutoBuyInfoStruct {
