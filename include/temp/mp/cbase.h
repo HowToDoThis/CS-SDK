@@ -204,6 +204,29 @@ enum _Menu {
 #define MAX_AUTOBUY_LENGTH 256
 #define MaxLocationLen 32
 
+#define MAX_WEAPONS 352
+
+struct AmmoInfo
+{
+	const char *pszName;
+	int iId;
+};
+
+struct ItemInfo
+{
+	int iSlot;
+	int iPosition;
+	const char *pszAmmo1;
+	int iMaxAmmo1;
+	const char *pszAmmo2;
+	int iMaxAmmo2;
+	const char *pszName;
+	int iMaxClip;
+	int iId;
+	int iFlags;
+	int iWeight;
+};
+
 struct CUtlMemory {
     void* vfptr;
     CUtlMemory* m_pMemory;
@@ -293,7 +316,7 @@ struct CBaseEntity_vt {
     void (__thiscall* AddPointsToTeam)(struct CBaseEntity* this);
     BOOL (__thiscall* AddPlayerItem)(struct CBaseEntity* this);
     BOOL (__thiscall* RemovePlayerItem)(struct CBaseEntity* this);
-    void (__thiscall* GiveAmmo)(struct CBaseEntity* this);
+    int  (__thiscall* GiveAmmo)(struct CBaseEntity* this, int iCount, const char* szName, int iMax);
     void (__thiscall* GetDelay)(struct CBaseEntity* this);
     void (__thiscall* IsMoving)(struct CBaseEntity* this);
     void (__thiscall* OverrideReset)(struct CBaseEntity* this);
@@ -353,7 +376,7 @@ struct CBaseEntity_vt {
     // CBasePlayerItem
     int (__thiscall* CBasePlayerItem::AddToPlayer)(struct CBaseEntity* this);
     int (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this);
-    int (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this);
+    int (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this, struct ItemInfo* info);
     void (__thiscall* CBasePlayerItem::CanDeploy)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanDrop)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Deploy)(struct CBaseEntity* this);
@@ -373,7 +396,7 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::GetWeaponPtr)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetMaxSpeed)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::Unknown2)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetWeaponType)(struct CBaseEntity* this);
+    int  (__thiscall* CBasePlayerItem::GetItemSlot)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::GetUnk12)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x400__GetGunPosition)(struct CBaseEntity* this);
     bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x800)(struct CBaseEntity* this);
@@ -1026,8 +1049,8 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     int m_iClientWeaponState; // ok
     int m_fInReload;
     int m_fInSpecialReload; // ok
-    int m_iDefaultAmmo; // ok
-    int cso_baseplayer_weapon_6;
+    int m_iDefaultPrimaryAmmo; // ok
+    int m_iDefaultSecondaryAmmo; // ok
     int m_iShellId; // ok
     float m_fMaxSpeed;
     bool m_bDelayFire; // ok
