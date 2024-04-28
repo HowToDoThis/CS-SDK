@@ -933,11 +933,9 @@ struct CBasePlayer : CBaseMonster {
     int m_iDeaths;
     int m_izSBarState[SBAR_END];
     float m_flNextSBarUpdateTime;
-    int cso_add_c[429];
-    float m_flStatusBarDisappearDelay;
-    char m_SbarString0[MAX_SBAR_STRING];
-    int m_lastx;
-    int m_lasty;
+    int cso_add_c[115];
+    char player_undef1[1340]; // ClientPutInServer, memset
+    int player_nfc[17];
     int m_nCustomSprayFrames;
     float m_flNextDecalTime;
     char m_szTeamName[MAX_TEAM_NAME_LENGTH];
@@ -953,12 +951,6 @@ struct CBasePlayer : CBaseMonster {
     int m_iAutoWepSwitch;
     bool m_bVGUIMenus;
     bool m_bShowHints;
-    bool m_bShieldDrawn;
-    bool m_bOwnsShield;
-    bool undef8;
-    float undef3;
-    char undef4;
-    char undef5;
     char m_bWasFollowing; // ok
     char undef7;
     float m_flNextFollowTime; // ok
