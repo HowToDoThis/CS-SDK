@@ -375,7 +375,7 @@ struct CBaseEntity_vt {
 #ifdef GoPlayerItem
     // CBasePlayerItem
     int (__thiscall* CBasePlayerItem::AddToPlayer)(struct CBaseEntity* this);
-    int (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this);
+    int (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this, struct CBasePlayerItem* pOriginal);
     int (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this, struct ItemInfo* info);
     void (__thiscall* CBasePlayerItem::CanDeploy)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerItem::CanDrop)(struct CBaseEntity* this);
@@ -421,10 +421,10 @@ struct CBaseEntity_vt {
     void (__thiscall* CBasePlayerItem::Unknown17)(struct CBaseEntity* this);
 
     // CBasePlayerWeapon
-    void (__thiscall* CBasePlayerWeapon::ExtractAmmo)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown2)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::AddWeapon)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown4)(struct CBaseEntity* this);
+    int  (__thiscall* CBasePlayerWeapon::ExtractAmmo)(struct CBaseEntity* this, CBasePlayerWeapon *pWeapon);
+    int  (__thiscall* CBasePlayerWeapon::ExtractClipAmmo)(struct CBaseEntity* this, CBasePlayerWeapon *pWeapon);
+    int  (__thiscall* CBasePlayerWeapon::AddWeapon)(struct CBaseEntity* this);
+    void (__thiscall* CBasePlayerWeapon::AddSpecialAmmo)(struct CBaseEntity* this, struct CBasePlayer* pPlayer);
     void (__thiscall* CBasePlayerWeapon::PlayEmptySound)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::ResetEmptySound)(struct CBaseEntity* this);
     void (__thiscall* CBasePlayerWeapon::SendWeaponAnim)(struct CBaseEntity* this, int, bool);
@@ -713,84 +713,347 @@ struct CBaseMonster : CBaseToggle {
 
 enum WeaponIdType
 {
-    WEAPON_NONE,
-    WEAPON_P228,
-    WEAPON_GLOCK,
-    WEAPON_SCOUT,
-    WEAPON_HEGRENADE,
-    WEAPON_XM1014,
-    WEAPON_C4,
-    WEAPON_MAC10,
-    WEAPON_AUG,
-    WEAPON_SMOKEGRENADE,
-    WEAPON_ELITE,
-    WEAPON_FIVESEVEN,
-    WEAPON_UMP45,
-    WEAPON_SG550,
-    WEAPON_GALIL,
-    WEAPON_FAMAS,
-    WEAPON_USP,
-    WEAPON_GLOCK18,
-    WEAPON_AWP,
-    WEAPON_MP5N,
-    WEAPON_M249,
-    WEAPON_M3,
-    WEAPON_M4A1,
-    WEAPON_TMP,
-    WEAPON_G3SG1,
-    WEAPON_FLASHBANG,
-    WEAPON_DEAGLE,
-    WEAPON_SG552,
-    WEAPON_AK47,
-    WEAPON_KNIFE,
-    WEAPON_P90,
-    WEAPON_SHIELDGUN = 99,
-
-    WEAPON_XM8 = 34,
+    WEAPON_NONE = 0,
+    WEAPON_P228 = 1,
+    WEAPON_UNK2 = 2,
+    WEAPON_SCOUT = 3,
+    WEAPON_HEGRENADE = 4,
+    WEAPON_XM1014 = 5,
+    WEAPON_C4 = 6,
+    WEAPON_MAC10 = 7,
+    WEAPON_AUG = 8,
+    WEAPON_SMOKEGRENADE = 9,
+    WEAPON_ELITE = 10,
+    WEAPON_FIVESEVEN = 11,
+    WEAPON_UMP45 = 12,
+    WEAPON_SG550 = 13,
+    WEAPON_GALIL = 14,
+    WEAPON_FAMAS = 15,
+    WEAPON_USP = 16,
+    WEAPON_GLOCK18 = 17,
+    WEAPON_AWP = 18,
+    WEAPON_MP5 = 19,
+    WEAPON_M249 = 20,
+    WEAPON_M3 = 21,
+    WEAPON_M4A1 = 22,
+    WEAPON_TMP = 23,
+    WEAPON_G3SG1 = 24,
+    WEAPON_FLASHBANG = 25,
+    WEAPON_DEAGLE = 26,
+    WEAPON_SG552 = 27,
+    WEAPON_AK47 = 28,
+    WEAPON_KNIFE = 29,
+    WEAPON_P90 = 30,
+    WEAPON_SCARL = 31,
+    WEAPON_SCARH = 32,
+    WEAPON_XM8C = 33,
+    WEAPON_XM8S = 34,
     WEAPON_SVD = 35,
+    WEAPON_MP7A1P = 36,
+    WEAPON_MP7A1C = 37,
+    WEAPON_K1A = 38,
+    WEAPON_USAS12 = 39,
     WEAPON_VSK94 = 40,
+    WEAPON_QBB95 = 41,
+    WEAPON_SCARA = 42,
+    WEAPON_XM8A = 43,
+    WEAPON_ZOMBIBOMB = 44,
+    WEAPON_MG3 = 45,
+    WEAPON_ANACONDA = 46,
     WEAPON_TRG42 = 47,
-    WEAPON_AWP_XMAS = 51,
+    WEAPON_MP7A1D = 48,
+    WEAPON_DEAGLED = 49,
+    WEAPON_AK47L = 50,
+    WEAPON_AWPXMAS = 51,
+    WEAPON_M249XMAS = 52,
     WEAPON_M400 = 53,
+    WEAPON_M4A1G = 54,
+    WEAPON_AK47G = 55,
+    WEAPON_DEAGLEG = 56,
     WEAPON_SL8 = 57,
+    WEAPON_M1887 = 58,
+    WEAPON_M134 = 59,
+    WEAPON_F2000 = 60,
+    WEAPON_K1ASE = 61,
+    WEAPON_UNK62 = 62,
+    WEAPON_M1887G = 63,
     WEAPON_SL8G = 64,
+    WEAPON_GUITAR = 65,
     WEAPON_M24 = 66,
+    WEAPON_INFINITY = 67,
+    WEAPON_WATERGUN = 68,
+    WEAPON_M4A1GOLD = 69,
+    WEAPON_INFINITYEX1 = 70,
     WEAPON_AWPCAMO = 71,
-    WEAPON_CARTBLUE = 92,
+    WEAPON_SVDEX = 72,
+    WEAPON_QBB95EX = 73,
+    WEAPON_MP7A160R = 74,
+    WEAPON_M79 = 75,
+    WEAPON_M134XMAS = 76,
+    WEAPON_MG3XMAS = 77,
+    WEAPON_INFINITYEX2 = 78,
+    WEAPON_HK23 = 79,
+    WEAPON_M4A1DRAGON = 80,
+    WEAPON_AK47DRAGON = 81,
+    WEAPON_MP5TIGER = 82,
+    WEAPON_CROSSBOW = 83,
+    WEAPON_INFINITYSB = 84,
+    WEAPON_INFINITYSR = 85,
+    WEAPON_INFINITYSS = 86,
+    WEAPON_M14EBR = 87,
+    WEAPON_USAS12CAMO = 88,
+    WEAPON_THOMPSONGOLD = 89,
+    WEAPON_DBARREL = 90,
+    WEAPON_CARTBLUEC = 91,
+    WEAPON_CARTBLUES = 92,
+    WEAPON_CARTREDL = 93,
+    WEAPON_CARTREDH = 94,
+    WEAPON_KRISS = 95,
     WEAPON_M249EX = 96,
+    WEAPON_WATERPISTOL = 97,
     WEAPON_WA2000 = 98,
+    WEAPON_LUGERG = 99,
     WEAPON_TRG42G = 100,
     WEAPON_AT4 = 101,
+    WEAPON_TAR21 = 102,
     WEAPON_M95 = 103,
+    WEAPON_MP5G = 104,
+    WEAPON_DUALKRISS = 105,
+    WEAPON_M60 = 106,
+    WEAPON_AN94 = 107,
+    WEAPON_M16A4 = 108,
+    WEAPON_MG3G = 109,
+    WEAPON_P90LAPIN = 110,
+    WEAPON_GATLING = 111,
     WEAPON_SKULL5 = 112,
+    WEAPON_THOMPSON = 113,
+    WEAPON_LUGER = 114,
     WEAPON_MG36 = 115,
+    WEAPON_SFGUN = 116,
     WEAPON_WA2000G = 117,
+    WEAPON_FLAMETHROWER = 118,
     WEAPON_XM2010 = 119,
     WEAPON_SL8EX = 120,
+    WEAPON_KSG12 = 121,
     WEAPON_AS50 = 122,
+    WEAPON_QBARREL = 123,
+    WEAPON_LUGERS = 124,
+    WEAPON_M134EX = 125,
+    WEAPON_RAINBOWGUN = 126,
+    WEAPON_MUSKET = 127,
+    WEAPON_STG44 = 128,
+    WEAPON_HK23G = 129,
+    WEAPON_SKULL1 = 130,
+    WEAPON_QBZ95B = 131,
+    WEAPON_M79G = 132,
     WEAPON_AT4EX = 133,
+    WEAPON_PKM = 134,
+    WEAPON_SFSMG = 135,
+    WEAPON_CATAPULT = 136,
+    WEAPON_SPAS12 = 137,
+    WEAPON_SPAS12EX = 138,
+    WEAPON_M14EBRGOLD = 139,
     WEAPON_M95XMAS = 140,
+    WEAPON_BAZOOKA = 141,
+    WEAPON_SKULL3 = 142,
+    WEAPON_SKULL3D = 143,
+    WEAPON_CANNON = 144,
+    WEAPON_TMPDRAGON = 145,
+    WEAPON_SPAS12EX2 = 146,
+    WEAPON_MK48 = 147,
     WEAPON_M82 = 148,
+    WEAPON_KSG12G = 149,
+    WEAPON_SFMG = 150,
+    WEAPON_STG44G = 151,
+    WEAPON_SKULL11 = 152,
+    WEAPON_FIRECRACKER = 153,
+    WEAPON_MOUNTGUN = 154,
+    WEAPON_M249CAMO = 155,
+    WEAPON_XM1014RED = 156,
+    WEAPON_DEAGLERED = 157,
+    WEAPON_GLOCKRED = 158,
+    WEAPON_USPRED = 159,
+    WEAPON_FNC = 160,
+    WEAPON_L85A2 = 161,
+    WEAPON_AUTOMAG = 162,
+    WEAPON_AKM = 163,
     WEAPON_SCOUTRED = 164,
+    WEAPON_HK416 = 165,
+    WEAPON_AW50 = 166,
+    WEAPON_BLASER93 = 167,
+    WEAPON_VIOLINGUN = 168,
+    WEAPON_ETHEREAL = 169,
+    WEAPON_M32 = 170,
+    WEAPON_POISONGUN = 171,
+    WEAPON_BALROG7 = 172,
     WEAPON_KINGCOBRA = 173,
+    WEAPON_M16A1 = 174,
+    WEAPON_LIGHTZG = 175,
+    WEAPON_HEAVYZG = 176,
     WEAPON_BALROG5 = 177,
+    WEAPON_UNK178 = 178,
     WEAPON_AS50G = 179,
+    WEAPON_M60G = 180,
     WEAPON_SFSNIPER = 181,
+    WEAPON_DBARRELG = 182,
+    WEAPON_OICW = 183,
+    WEAPON_AK47RED = 184,
+    WEAPON_M4A1RED = 185,
+    WEAPON_UTS15 = 186,
+    WEAPON_M249EP = 187,
     WEAPON_MG36XMAS = 188,
+    WEAPON_G11 = 189,
+    WEAPON_M32BRBOT = 190,
+    WEAPON_BALROG1 = 191,
+    WEAPON_TBARREL = 192,
+    WEAPON_CHAINSAW = 193,
+    WEAPON_SNAKEGUN = 194,
+    WEAPON_BALROG3 = 195,
+    WEAPON_FGLAUNCHER = 196,
+    WEAPON_K3 = 197,
     WEAPON_MG36G = 198,
+    WEAPON_M16A1EP = 199,
+    WEAPON_COILGUN = 200,
+    WEAPON_SKULL4 = 201,
+    WEAPON_KINGCOBRAG = 202,
+    WEAPON_BALROG11 = 203,
+    WEAPON_AK74U = 204,
+    WEAPON_SKULL8 = 205,
     WEAPON_ZGUN = 206,
+    WEAPON_PLASMAGUN = 207,
     WEAPON_PSG1 = 208,
+    WEAPON_WATERCANNON = 209,
+    WEAPON_BGALIL = 210,
+    WEAPON_BFAMAS = 211,
+    WEAPON_BQBB95 = 212,
+    WEAPON_BGLOCK18 = 213,
+    WEAPON_BUSP45 = 214,
+    WEAPON_BMP5 = 215,
     WEAPON_SKULL6 = 216,
+    WEAPON_UTS15G = 217,
+    WEAPON_TKNIFE = 218,
+    WEAPON_TKNIFEEX = 219,
+    WEAPON_TKNIFEEX2 = 220,
+    WEAPON_BOW = 221,
+    WEAPON_ARX160 = 222,
+    WEAPON_JANUSMK5 = 223,
+    WEAPON_JANUS7 = 224,
+    WEAPON_DRILLGUN = 225,
+    WEAPON_G11G = 226,
     WEAPON_SPRIFLE = 227,
+    WEAPON_JANUS1 = 228,
+    WEAPON_GROZA = 229,
+    WEAPON_M2 = 230,
+    WEAPON_PKMG = 231,
+    WEAPON_M1887XMAS = 232,
+    WEAPON_SPEARGUN = 233,
+    WEAPON_HORSEGUN = 234,
+    WEAPON_SFPISTOL = 235,
+    WEAPON_M60CRAFT = 236,
+    WEAPON_MONKEYWPNSET1 = 237,
+    WEAPON_MONKEYWPNSET2 = 238,
+    WEAPON_SPAS12EXCRAFT = 239,
+    WEAPON_JANUS11 = 240,
+    WEAPON_SPMG = 241,
+    WEAPON_BALROG7B = 242,
     WEAPON_BALROG5B = 243,
+    WEAPON_BALROG1B = 244,
+    WEAPON_BALROG3B = 245,
+    WEAPON_BALROG11B = 246,
+    WEAPON_GALILCRAFT = 247,
+    WEAPON_M1887CRAFT = 248,
+    WEAPON_PETROLBOOMER = 249,
     WEAPON_BENDITA = 250,
+    WEAPON_MAUSERC96 = 251,
     WEAPON_MOSIN = 252,
-    WEAPON_SKULL5WC = 272,
-    WEAPON_SKULL7WC = 273,
+    WEAPON_MG42 = 253,
+    WEAPON_MP40 = 254,
+    WEAPON_JANUS3 = 255,
+    WEAPON_M1GARAND = 256,
+    WEAPON_RAILCANNON = 257,
+    WEAPON_CANNONM = 258,
+    WEAPON_CHAINSAWM = 259,
+    WEAPON_M1911A1 = 260,
+    WEAPON_STENMK2 = 261,
+    WEAPON_M1918BAR = 262,
+    WEAPON_LASERGUIDE = 263,
+    WEAPON_K1ACRAFT = 264,
+    WEAPON_GILBOA = 265,
+    WEAPON_GILBOAEX = 266,
+    WEAPON_BLOCKAR = 267,
+    WEAPON_OZWPNSET1 = 268,
+    WEAPON_OZWPNSET2 = 269,
+    WEAPON_FUNAT4 = 270,
+    WEAPON_FUNCHAINSAW = 271,
+    WEAPON_UNK272 = 272,
+    WEAPON_UNK273 = 273,
+    WEAPON_THANATOS7 = 274,
+    WEAPON_RPG7 = 275,
+    WEAPON_FIREEXTINGUISHER = 276,
+    WEAPON_GUILLOTINE = 277,
+    WEAPON_THANATOS11 = 278,
+    WEAPON_CROSSBOWEX = 279,
     WEAPON_SFSNIPERM = 280,
+    WEAPON_GATLINGM = 281,
+    WEAPON_UZI = 282,
+    WEAPON_M950 = 283,
+    WEAPON_MK3A1 = 284,
+    WEAPON_SPSMG = 285,
+    WEAPON_FNP45 = 286,
+    WEAPON_PGM = 287,
+    WEAPON_NORINCO86S = 288,
+    WEAPON_THANATOS5 = 289,
+    WEAPON_DARTPISTOL = 290,
+    WEAPON_DUALKRISSHERO = 291,
+    WEAPON_M134HERO = 292,
+    WEAPON_VULCANUS7 = 293,
+    WEAPON_SAPIENTIA = 294,
+    WEAPON_COILMG = 295,
+    WEAPON_ZOMBIBOMB2 = 296,
+    WEAPON_BLOCKAS = 297,
+    WEAPON_AIRBURSTER = 298,
     WEAPON_VULCANUS5 = 299,
+    WEAPON_UNK300 = 300,
+    WEAPON_UNK301 = 301,
+    WEAPON_DUALUZI = 302,
+    WEAPON_LASERMINIGUN = 303,
+    WEAPON_QBS09 = 304,
+    WEAPON_THANATOS1 = 305,
+    WEAPON_BUFFM4 = 306,
+    WEAPON_BUFFAK = 307,
+    WEAPON_NG7 = 308,
+    WEAPON_CAMERAGUN = 309,
+    WEAPON_FALCON = 310,
     WEAPON_BUFFAWP = 311,
+    WEAPON_SKULL2 = 312,
+    WEAPON_PYTHON = 313,
+    WEAPON_THANATOS3 = 314,
+    WEAPON_VULCANUS11 = 315,
+    WEAPON_JANUS7XMAS = 316,
+    WEAPON_CROW7 = 317,
+    WEAPON_M950SE = 318,
+    WEAPON_SGDRILL = 319,
     WEAPON_DESTROYER = 320,
+    WEAPON_BAZOOKA_ZS2 = 321,
+    WEAPON_HK121 = 322,
+    WEAPON_HK121EX = 323,
+    WEAPON_CROW5 = 324,
+    WEAPON_VULCANUS1 = 325,
+    WEAPON_PP2000 = 326,
+    WEAPON_SPSG = 327,
+    WEAPON_BLOCKMG = 328,
+    WEAPON_BLOODHUNTER = 329,
+    WEAPON_ULTIMAX100 = 330,
+    WEAPON_VULCANUS3 = 331,
+    WEAPON_BISON = 332,
+    WEAPON_KH2002 = 333,
+    WEAPON_UNK334 = 334,
+    WEAPON_UNK335 = 335,
+    WEAPON_FALCONEX = 336,
+    WEAPON_UNK337 = 337,
+    WEAPON_BUFFSG552 = 338,
+    WEAPON_BROAD = 339,
+    WEAPON_UNK340 = 340,
 };
 
 enum PLAYER_ANIM {
@@ -961,9 +1224,10 @@ struct CBasePlayer : CBaseMonster {
     int player_nfc[17];
     int m_nCustomSprayFrames;
     float m_flNextDecalTime;
-    char m_szTeamName[MAX_TEAM_NAME_LENGTH];
-    int m_modelIndexPlayer;
-    char m_szAnimExtention[32];
+    int m_modelIndexPlayer; // ok
+    char m_szTeamName[13];
+    char m_szAnimExtention[32]; // ok
+    int undef9;
     int m_iGaitsequence;
     float m_flGaitframe;
     float m_flGaityaw;
@@ -971,13 +1235,12 @@ struct CBasePlayer : CBaseMonster {
     float m_flPitch;
     float m_flYaw;
     float m_flGaitMovement;
-    int m_iAutoWepSwitch;
     bool m_bVGUIMenus;
     bool m_bShowHints;
     char m_bWasFollowing; // ok
     char undef7;
     float m_flNextFollowTime; // ok
-    int player_nf7;
+    int undef8;
     float m_blindUntilTime; // ok
     float m_blindStartTime; // ok
     float m_blindHoldTime; // ok
@@ -1022,6 +1285,17 @@ struct ItemInfo {
 	int iWeight;
 };
 
+struct WeaponInfoStruct {
+	int id;
+	int clipCost;
+	int buyClipSize;
+	int gunClipSize;
+	int maxRounds;
+	AmmoType ammoType;
+	char *entityName;
+    int unk19;
+};
+
 struct CBasePlayerItem : CBaseAnimating {
     struct CBasePlayer *m_pPlayer;
     CBasePlayerItem *m_pNext;
@@ -1044,7 +1318,7 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     int m_iSecondaryAmmoType; // ok
     int m_iClip; // ok
     int m_iClientClip; // ok
-    int cso_baseplayer_weapon_4;
+    int m_iSpecialAmmo; // ok
     int cso_baseplayer_weapon_5;
     int m_iClientWeaponState; // ok
     int m_fInReload;
@@ -1064,10 +1338,9 @@ struct CBasePlayerWeapon : CBasePlayerItem {
     float m_flFamasShoot; // ok
     int m_iFamasShotsFired; // ok
     float m_fBurstSpread; // ok
-    int m_iWeaponState;
+    int m_iWeaponState; // ok
     float m_flNextReload; // ok
-
-    int nf_weapon1;
+    float m_flDecreaseShotsFired; // ok    
     int nf_weapon2;
 
     unsigned short m_usFireWeapon; // temp var, some own class uses

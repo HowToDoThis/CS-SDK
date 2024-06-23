@@ -4,7 +4,7 @@ struct CTatooMgrUnk {
     vector unk3;
     int unk4;
     int unk5;
-    int unk6;
+    float unk6;
 };
 
 struct CTatooMgr {

@@ -222,28 +222,30 @@ struct CGameRoomManager
 struct CGameRoom
 {
     void* vfptr;
-    int unk01;
+    int iRoomID;
     char* password;
-    int maxLevel;
-    int unk04;
-    char* roomName;
-    int unk06;
-    int unk07;
-    int maxPlayers;
-    int gameMode;
-    int mapID;
-    int unk11;
-    int unk12;
-    short unk13;
-    int unk14;
-    short unk15;
-    char unk15a;
-    char clanMatch; // bool
-    char banList; // bool
-    char quickStart; // bool
-    char unk18;
-    char unk19a;
-    char overDeath; // bool
+    int maxLevel; // 0x8
+    int armsRestriction; // 0x100
+    char* roomName; // 0x1
+    int unk06; // 0x2
+    int curPlayers; // 0x40
+    int maxPlayers; // 0x80
+    int gameMode; // 0x10
+    int mapID; // 0x20
+    int hostID; // 0x200
+
+    int unk12; // 0x800
+    short unk13; // 0x800
+    int unk14; // 0x800
+    short unk15; // 0x800
+
+    char isLocked; // 0x4
+    char clanMatch; // 0x1000 (bool)
+    char banList;
+    char quickStart;
+    char unk18; // 0x200 (bool)
+    char unk19a; // 0x400 (bool)
+    char killDeathRule; // 0x10000 (bool)
     char unk19aa;
     char unk19ab;
     int winLimit;
@@ -251,21 +253,22 @@ struct CGameRoom
     int timeLimit;
     int roundTime;
     int unk24;
-    int unk25;
-    int unk26;
-    int unk27;
+    int manner; // 0x80
+    int unk26; // 0x2000
+    int roomStatus; // 0x4000
     int unk28;
     int clanMatchMode;
     int startingCash;
-    int unk31;
-    int unk32;
-    int unk33;
-    char unk34;
-    int unk35;
-    int unk36;
-    int unk37; // 128?? or longlong
-    int unk38;
-    int unk39;
+    int unk31; // 0x8000
+    int unk32; // 0x20000
+    char unk33a; // 0x40000 (flag 0x3)
+    char unk33b; // 0x40000 (flag < 0)
+    char unk33c; // 0x40000 (flag 0x20)
+    char unk33d; // 0x40000 (flag 0x40)
+    char friendlyFire; // 0x80000 (flag)
+    int randomMap; // 0x200000
+    int iMapRotationCount; // 0x400000
+    struct vector vMapRotation; // 0x400000
     int unk40;
     int unk41;
     int unk42; // 128?? or long long
@@ -273,14 +276,13 @@ struct CGameRoom
     int unk44;
     int unk45;
     int unk46;
-    int unk47;
-    int unk48;
-    int unk49;
-    int difficulty;
-    int unk51;
-    int unk52;
-    int unk53;
-    long long unk54; // QWORD
-    int unk56;
-    char unk57;
+    int mapRotationId; // 0x800000
+    int unk48; // 0x100000
+    int isSoySD; // 0x1000000
+    int zsDifficulty; // 0x2000000
+    int leagueRule; // 0x4000000
+    int unk52; // 0x8000000
+    int zombieLimit; // 0x20000000
+    int vBannedZB[3]; // 0x20000000
+    char unk57; // 0x40000000 (bool)
 };

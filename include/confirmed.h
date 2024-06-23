@@ -999,7 +999,7 @@ typedef struct netadr_s {
     unsigned char ipx[14]; // 16
     //unsigned short unk3;   // 18
     unsigned short port;   // 20
-    int localIP;
+    int userID;
     int unk5;
 } netadr_t;
 

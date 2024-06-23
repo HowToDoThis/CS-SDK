@@ -17,7 +17,7 @@ struct CSocket
     unsigned char* szSendFinal;
     int unk13;
     char unk14A;
-    char unk14B;
+    char iSequenceRecv;
     char sequence;
     int iUnk1;
     int iUnk2;

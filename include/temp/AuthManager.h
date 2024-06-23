@@ -6,11 +6,22 @@ struct AuthManager_vtables
 
 typedef void(__thiscall*** pfnAuthManager9)(void*, int, int, const wchar_t*, int, int);
 
+typedef struct ServerInfo_s {
+    const char* ip;
+    unsigned int port;
+} ServerInfo;
+
+struct vector_ServerInfo {
+    ServerInfo* first;
+    ServerInfo* last;
+    ServerInfo* end;
+};
+
 struct AuthManager
 {
     struct AuthManager_vtables* vfptr;
     char unk1; // captcha
-    vector serverinfo;
+    vector_ServerInfo serverinfo;
     char bIsAge18;
     char unk5B;
     char unk6A;

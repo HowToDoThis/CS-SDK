@@ -173,5 +173,34 @@ struct Packet_UMsg : Packet {
 struct Packet_RoomList : Packet {
     int subType;
     struct CGameRoom pGameRoom;
-    int u2;
+    int iRoomID_Remove;
+    int iRoomID_Update;
+    int iRoomID_UpdateFlag;
+};
+
+struct Packet_Report : Packet {
+    int subType;
+};
+
+struct ServerList {
+    int iId;
+    int bIsMax;
+    int iType;
+
+    int* szName; // str
+
+    int iChannelId;
+    int szChannelName; // str
+    int iChannelUsersCount;
+};
+
+struct vector_ServerList {
+    ServerList* first;
+    ServerList* last;
+    ServerList* end;
+};
+
+struct Packet_ServerList : Packet {
+    vector_ServerList vList;
+    char nf4;
 };

@@ -115,7 +115,7 @@ struct CWeaponData
     char* szWpnModelP;
     char* szWpnModelW;
     AmmoInfoStruct* pAmmoInfo1;
-    int iAmmoType2;
+    AmmoInfoStruct* pAmmoType2;
     int iAmmoClip;
     int iWeight; // CBasePlayerWeapon::GetItemInfo
     int iWeaponType;
@@ -148,6 +148,7 @@ struct CWeaponMgrTable
     void (__thiscall* desctuctor)(struct CWeaponMgr* ptr);
 };
 
+// size 0x10(16)
 struct CWeaponMgr
 {
     struct CWeaponMgrTable* vfptr;

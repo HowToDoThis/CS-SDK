@@ -61,3 +61,10 @@ struct Packet_HostServer : Packet
     int serverPort;
     int hostip;
 };
+
+class Buffer {
+public:
+    int size;
+    int unk2;
+    int unk3;
+};
