@@ -4,23 +4,30 @@ struct vector {
     int* end;
 };
 
+struct vector_string {
+    int* first;
+    int* last;
+    int* end;
+};
+
 struct pair {
     int first;
     int second;
 };
 
 struct mapNode {
-    pair* left;
-    pair* parent;
-    pair* right;
-    char color;
-    char isnil;
-    pair myval;
+    pair* _Left;
+    pair* _Parent;
+    pair* _Right;
+    char _Color;
+    char _Isnil;
+    pair _Myval;
 };
 
+// 0x18
 struct map {
-    mapNode* head;
-    int size;
+    mapNode* _Myhead;
+    unsigned int _Mysize;
 };
 
 union _Bxty {

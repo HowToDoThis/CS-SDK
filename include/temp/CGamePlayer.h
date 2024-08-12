@@ -188,7 +188,7 @@ struct CGameUser
     int unk20B[3]; // first userID
     int unkB[64];
 
-    int cash2; // Func39
+    int nf1; // Func39
     int b2; // Func40, FIND OUT
 
     // Clan section

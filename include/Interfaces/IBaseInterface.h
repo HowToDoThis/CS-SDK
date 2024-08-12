@@ -1,12 +1,5 @@
-// EXTRACT FROM IDA, I think its working ?
-
-struct IBaseInterface;
-struct IBaseInterface_vtbl
-{
-  void (__thiscall *~IBaseInterface)(IBaseInterface *this);
+class IBaseInterface {
+  virtual ~IBaseInterface() {}
 };
 
-struct __cppobj IBaseInterface
-{
-  IBaseInterface_vtbl* __vftable;
-};
+typedef IBaseInterface *(*CreateInterfaceFn)(const char *pName, int *pReturnCode);

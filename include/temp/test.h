@@ -35,3 +35,36 @@ struct UserStartUnk {
     int unk1;
     string str;
 };
+
+struct Dummy30 {
+    int u00;
+    int u01;
+    int u02;
+    int u03;
+    int u04;
+    int u05;
+    int u06;
+    int u07;
+    int u08;
+    int u09;
+    int u10;
+    int u11;
+    int u12;
+    int u13;
+    int u14;
+    int u15;
+    int u16;
+    int u17;
+    int u18;
+    int u19;
+    int u20;
+    int u21;
+    int u22;
+    int u23;
+    int u24;
+    int u25;
+    int u26;
+    int u27;
+    int u28;
+    int u29;
+};

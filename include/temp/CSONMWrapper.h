@@ -122,40 +122,40 @@ struct CCrashUnk
     void* pNext;
 };
 
-struct CFriendManager_vtables
-{
-    void (__thiscall* AddFriend)(struct CFriendManager* ptr, wchar_t* gameName);
-    void (__thiscall* SetSerialNo)(struct CFriendManager* ptr);
-    void (__thiscall* ConfirmFriend_1)(struct CFriendManager* ptr);
-    void (__thiscall* ConfirmFriend_2)(struct CFriendManager* ptr);
-    void (__thiscall* ConfirmFriend_3)(struct CFriendManager* ptr);
-    void (__thiscall* Function6)(struct CFriendManager* ptr);
-    void (__thiscall* Function7)(struct CFriendManager* ptr);
-    void (__thiscall* Function8)(struct CFriendManager* ptr);
-};
-
-struct CFriend_vec1_data {
-    int u1;
-    int u2;
+struct CFriend_Unknown1 {
+    NMIDCode friendCode;
     int u3;
+    int u4;
+    wstring u5;
+    string u6;
     int u7;
-    string u5;
-    wstring u6;
     int u8;
     int u9;
 };
 
-struct vector_CFriend_vec1 {
-    CFriend_vec1_data* first;
-    CFriend_vec1_data* last;
-    CFriend_vec1_data* end;
+struct vec_CFriend_Unknown1 {
+    CFriend_Unknown1* first;
+    CFriend_Unknown1* last;
+    CFriend_Unknown1* end;
 };
 
-struct CFriendManager {
-    struct CFriendManager_vtables* vfptr;
-    vector_CFriend_vec1 vec1;
+class CFriendManager {
+public:
+    virtual void AddFriend(wchar_t* gameName);
+    virtual void SetSerialNo(unsigned int sn);
+    virtual void ConfirmFriend_1();
+    virtual void ConfirmFriend_2();
+    virtual void ConfirmFriend_3();
+    virtual void Function6();
+    virtual CFriend_Unknown1* Function7(CFriend_Unknown1*, int);
+    virtual void Function8();
+
+public:
+    vec_CFriend_Unknown1 u1;
     unsigned int uFriendSerialNo;
-    vector vec2;
+    int u4;
+    int u5;
+    int u6;
 };
 
 struct CStreamCryptorFactory

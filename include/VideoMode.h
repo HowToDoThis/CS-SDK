@@ -1,52 +1,77 @@
-struct CVideoMode_Common_vt
-{
-    const char* (__thiscall* GetVideoModeString)(struct CVideoMode_Common* this);
-    bool (__thiscall* Init)(struct CVideoMode_Common* this, void* pvInstance);
-    void (__thiscall* Shutdown)(struct CVideoMode_Common* this);
-    void (__thiscall* AddMode)(struct CVideoMode_Common* this, int width, int height, int bit);
-    vmode_t* (__thiscall* GetCurrentMode)(struct CVideoMode_Common* this);
-    vmode_t* (__thiscall* GetMode)(struct CVideoMode_Common* this, int num);
-    void (__thiscall* GetModeCount)(struct CVideoMode_Common* this);
-    bool (__thiscall* IsWindowedMode)(struct CVideoMode_Common* this);
-    bool (__thiscall* GetInitialized)(struct CVideoMode_Common* this);
-    void (__thiscall* SetInitialized)(struct CVideoMode_Common* this, bool);
-    void (__thiscall* UpdateWindowPosition)(struct CVideoMode_Common* this);
-    void (__thiscall* FlipScreen)(struct CVideoMode_Common* this);
-    void (__thiscall* RestoreVideo)(struct CVideoMode_Common* this);
-    void (__thiscall* ReleaseVideo)(struct CVideoMode_Common* this);
-    void (__thiscall* Function15)(struct CVideoMode_Common* this);
-    void (__thiscall* Function16)(struct CVideoMode_Common* this);
-    void (__thiscall* Function17)(struct CVideoMode_Common* this);
-    void (__thiscall* BackgroundSomething)(struct CVideoMode_Common* this, int unk);
-    void (__thiscall* PlayStartupVideo)(struct CVideoMode_Common* this, int unk);
-    void (__thiscall* NULLFUNC3)(struct CVideoMode_Common* this);
-    void (__thiscall* NULLFUNC4)(struct CVideoMode_Common* this); // related window mode
-    void (__thiscall* NULLFUNC5)(struct CVideoMode_Common* this);
-    void (__thiscall* VIDEOMODE_ERROR)(struct CVideoMode_Common* this);
-    void (__thiscall* destruction)(struct CVideoMode_Common* this);
-    int  (__thiscall* MaxBitsPerPixel)(struct CVideoMode_Common* this);
-    void (__thiscall* NULLFUNC1)(struct CVideoMode_Common* this);
-    void (__thiscall* NULLFUNC2)(struct CVideoMode_Common* this);
+struct vmode_t {
+    int width;
+    int height;
+    int bpp;
 };
 
-struct vmode_t
-{
-    int width; // 24 * unk2
-    int height; // a3
-    int bpp; // a2
+class IVideoMode {
+public:
+    virtual const char* GetName();
+
+    virtual bool Init(void* pvInstance);
+    virtual void Shutdown();
+
+    virtual bool AddMode(int width, int height, int bpp);
+    virtual vmode_t* GetCurrentMode();
+    virtual vmode_t* GetMode( int num );
+    virtual int GetModeCount();
+
+    virtual bool IsWindowedMode();
+
+    virtual bool GetInitialized();
+    virtual void SetInitialized(bool init);
+
+    virtual void UpdateWindowPosition();
+
+    virtual void FlipScreen();
+
+    virtual void RestoreVideo();
+    virtual void ReleaseVideo();
 };
 
-// same as OpenGL, CSO
-struct CVideoMode_Common
-{
-    CVideoMode_Common_vt* vfptr;
+struct bimage_t {
+    byte *buffer;
+    int x;
+    int y;
+    int width;
+    int height;
+    bool scaled;
+};
+
+class CUtlMemory_bimage_t {
+	bimage_t* m_pMemory;
+	int m_nAllocationCount;
+	int m_nGrowSize;
+};
+
+class CUtlVector_bimage_t {
+    CUtlMemory_bimage_t m_Memory;
+    int m_Size;
+    bimage_t* m_pElements;
+};
+
+class CVideoMode_Common : public IVideoMode {
+public:
+    virtual void Unknown1(int width, int height, int bpp, bool isWindow);
+    virtual void Unknown2(int,int,int);
+    virtual void Unknown3();
+    virtual void LoadStartupGraphic(int a2);
+    virtual void PlayStartupVideo(int a2);
+    virtual void Unknown4();
+    virtual void Unknown5(); // related window mode
+    virtual void Unknown6(); // update?
+    virtual void VIDEOMODE_ERROR();
+    virtual ~CVideoMode_Common();
+    virtual int  MaxBitsPerPixel();
+    virtual void Minimize();
+    virtual void FullScreen();
+
+public:
     vmode_t modeSafe;
     char m_bInitialized;
-    vmode_t unkStuff;
-    int unk8;
-    int unk9;
-    int unk10;
-    int unk11;
+    CUtlVector_bimage_t m_ImageID;
+    int m_iBaseResX;
+    int m_iBaseResY;
     char m_bWindowed;
     vmode_t modes[32];
     int m_nNumModes;

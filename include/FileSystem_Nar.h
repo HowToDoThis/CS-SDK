@@ -4,101 +4,98 @@ typedef int WaitForResourcesHandle_t;
 
 typedef enum
 {
-	FILESYSTEM_SEEK_HEAD,
-	FILESYSTEM_SEEK_CURRENT,
-	FILESYSTEM_SEEK_TAIL,
+    FILESYSTEM_SEEK_HEAD,
+    FILESYSTEM_SEEK_CURRENT,
+    FILESYSTEM_SEEK_TAIL,
 } FileSystemSeek_t;
 typedef enum
 {
-	FILESYSTEM_WARNING = -1,					// A problem!
-	FILESYSTEM_WARNING_QUIET,				// Don't print anything
-	FILESYSTEM_WARNING_REPORTUNCLOSED,			// On shutdown, report names of files left unclosed
-	FILESYSTEM_WARNING_REPORTUSAGE,				// Report number of times a file was opened, closed
-	FILESYSTEM_WARNING_REPORTALLACCESSES		// Report all open/close events to console (!slow!)
+    FILESYSTEM_WARNING = -1,    // A problem!
+    FILESYSTEM_WARNING_QUIET,    // Don't print anything
+    FILESYSTEM_WARNING_REPORTUNCLOSED,    // On shutdown, report names of files left unclosed
+    FILESYSTEM_WARNING_REPORTUSAGE,    // Report number of times a file was opened, closed
+    FILESYSTEM_WARNING_REPORTALLACCESSES    // Report all open/close events to console (!slow!)
 } FileWarningLevel_t;
 typedef void (*WarningFunc_t)(const char *fmt, ...);
 
-struct CFileSystem_Nar_Vtables
-{
-    void (__thiscall* destcructor)(struct CFileSystem_Nar* ptr, struct CFileSystem_Nar* ptr);
-	void (__thiscall* Mount)(void);
-	void (__thiscall* Unmount)(void);
-	void (__thiscall* RemoveAllSearchPaths)(void);
-	void (__thiscall* AddSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath, const char *pathID);
-	bool (__thiscall* RemoveSearchPath)(struct CFileSystem_Nar* ptr, const char *pPath);
-	void (__thiscall* RemoveFile)(struct CFileSystem_Nar* ptr, const char *pRelativePath, const char *pathID);
-	void (__thiscall* CreateDirHierarchy)(struct CFileSystem_Nar* ptr, const char *path, const char *pathID);
-	bool (__thiscall* FileExists)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	bool (__thiscall* IsDirectory)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	FileHandle_t (__thiscall* Open)(struct CFileSystem_Nar* ptr, const char *pFileName, const char *pOptions, const char *pathID);
-	void (__thiscall* Close)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	void (__thiscall* Seek)(struct CFileSystem_Nar* ptr, FileHandle_t file, int pos, FileSystemSeek_t seekType);
-	unsigned (__thiscall* Tell)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	unsigned (__thiscall* Size)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	unsigned (__thiscall* Size2)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	long (__thiscall* GetFileTime)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	void (__thiscall* FileTimeToString)(struct CFileSystem_Nar* ptr, char *pStrip, int maxCharsIncludingTerminator, long fileTime);
-	bool (__thiscall* IsOk)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	void (__thiscall* Flush)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	bool (__thiscall* EndOfFile)(struct CFileSystem_Nar* ptr, FileHandle_t file);
-	int (__thiscall* Read)(struct CFileSystem_Nar* ptr, void *pOutput, int size, FileHandle_t file);
-	int (__thiscall* Write)(struct CFileSystem_Nar* ptr, void const *pInput, int size, FileHandle_t file);
-	char *(__thiscall* ReadLine)(struct CFileSystem_Nar* ptr, char *pOutput, int maxChars, FileHandle_t file);
-	int (__thiscall* FPrintf)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pFormat, ...);
-	char *(__thiscall* GetReadBuffer)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pBuffer);
-	void (__thiscall* ReleaseReadBuffer)(struct CFileSystem_Nar* ptr, FileHandle_t file, char *pBuffer);
-	const char *(__thiscall* FindFirst)(struct CFileSystem_Nar* ptr, const char *pWildCard, FileFindHandle_t *pHandle, const char *pathID);
-	const char *(__thiscall* FindNext)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
-	bool (__thiscall* FindIsDirectory)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
-	void (__thiscall* FindClose)(struct CFileSystem_Nar* ptr, FileFindHandle_t handle);
-	void (__thiscall* GetLocalCopy)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	const char *(__thiscall* GetLocalPath)(struct CFileSystem_Nar* ptr, const char *pFileName, char *pLocalPath, int maxlen);
-	char *(__thiscall* ParseFile)(struct CFileSystem_Nar* ptr, char *data, char *token, bool *wasquoted);
-	bool (__thiscall* FullPathToRelativePath)(struct CFileSystem_Nar* ptr, const char *pFullpath, char *pRelative);
-	bool (__thiscall* GetCurrentDirectory)(struct CFileSystem_Nar* ptr, char *pDirectory, int maxlen);
-	void (* PrintOpenedFiles)(void);
-	void (__thiscall* SetWarningFunc)(struct CFileSystem_Nar* ptr, void (*pfnWarning)(const char *fmt, ...));
-	void (__thiscall* SetWarningLevel)(struct CFileSystem_Nar* ptr, FileWarningLevel_t level);
-	void (__thiscall* LogLevelLoadStarted)(struct CFileSystem_Nar* ptr, const char *name);
-	void (__thiscall* LogLevelLoadFinished)(struct CFileSystem_Nar* ptr, const char *name);
-	int (__thiscall* HintResourceNeed)(struct CFileSystem_Nar* ptr, const char *hintlist, int forgetEverything);
-	int (* PauseResourcePreloading)(void);
-	int (* ResumeResourcePreloading)(void);
-	int (__thiscall* SetVBuf)(struct CFileSystem_Nar* ptr, FileHandle_t stream, char *buffer, int mode, long size);
-	void (__thiscall* GetInterfaceVersion)(struct CFileSystem_Nar* ptr, char *p, int maxlen);
-	bool (__thiscall* IsFileImmediatelyAvailable)(struct CFileSystem_Nar* ptr, const char *path);
-	void *(__thiscall* WaitForResources)(struct CFileSystem_Nar* ptr, const char *pFileName);
-	bool (__thiscall* GetWaitForResourcesProgress)(struct CFileSystem_Nar* ptr, WaitForResourcesHandle_t handle, float *progress, bool *complete);
-	void (__thiscall* CancelWaitForResources)(struct CFileSystem_Nar* ptr, WaitForResourcesHandle_t handle);
-	bool (* IsAppReadyForOfflinePlay)(void);
-	void (__thiscall* AddPackFile)(struct CFileSystem_Nar* ptr, const char *pPath, const char *pathID);
-	void *(__thiscall* OpenFromCacheForRead)(struct CFileSystem_Nar* ptr, const char *pFileName, const char *pOptions, const char *pathID);
-	// CSO Functions
-	void  (__thiscall* LoadNar)(struct CFileSystem_Nar* ptr, const char* pFileName, const char* pathID);
-	void  (__thiscall* SetNarFilePath)(struct CFileSystem_Nar* ptr, const char* dataPath);
-	void  (__thiscall* Unknown03)(struct CFileSystem_Nar* ptr, const char* pFileName, char* a1);
-	int   (__thiscall* GetChecksum)(struct CFileSystem_Nar* ptr);
-	void  (__thiscall* NarOpen)(struct CFileSystem_Nar* ptr, const char* filePath, const char* mode, const char* pathID);
-	int   (__thiscall* Unknown05)(struct CFileSystem_Nar* ptr, int(__thiscall*** a1)(void*, int));
-	void  (__thiscall* NarSeek)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, int a4);
-	void  (__thiscall* NarTell)(struct CFileSystem_Nar* ptr, int a1);
-	void  (__thiscall* Unknown08)(struct CFileSystem_Nar* ptr, int a1);
-	void  (__thiscall* Unknown09)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, int a4);
-	void  (__thiscall* Unknown10)(struct CFileSystem_Nar* ptr, int a1, int a2, int a3, void* a4);
-	void  (* Unknown11)();
-	void  (* Unknown12)();
-	void  (* Unknown13)();
-	char* (__thiscall* NarReadLine)(struct CFileSystem_Nar* ptr, char* a1, int a2, int a3);
-	void  (__thiscall* NarStat)(struct CFileSystem_Nar* ptr, char* FileName, struct _stat32* Stat);
-	void  (__thiscall* FindFirstFile2)(struct CFileSystem_Nar* ptr, LPCSTR lpFileName, void* lpFindFileData);
-	void  (__thiscall* FindNextFile2)(struct CFileSystem_Nar* ptr, HANDLE hFindFile, void* lpFindFileData);
-	void  (__thiscall* FindClose2)(struct CFileSystem_Nar* ptr, HANDLE hFile);
-	void  (__thiscall* Unknown15)(struct CFileSystem_Nar* ptr, void* a1);
-};
+class CFileSystem_Nar {
+public:
+    virtual ~CFileSystem_Nar();
+    virtual void Mount(void);
+    virtual void Unmount(void);
+    virtual void RemoveAllSearchPaths(void);
+    virtual void AddSearchPath(const char *pPath, const char *pathID);
+    virtual bool RemoveSearchPath(const char *pPath);
+    virtual void RemoveFile(const char *pRelativePath, const char *pathID);
+    virtual void CreateDirHierarchy(const char *path, const char *pathID);
+    virtual bool FileExists(const char *pFileName);
+    virtual bool IsDirectory(const char *pFileName);
+    virtual FileHandle_t Open(const char *pFileName, const char *pOptions, const char *pathID);
+    virtual void Close(FileHandle_t file);
+    virtual void Seek(FileHandle_t file, int pos, FileSystemSeek_t seekType);
+    virtual unsigned Tell(FileHandle_t file);
+    virtual unsigned Size(FileHandle_t file);
+    virtual unsigned Size2(const char *pFileName);
+    virtual long GetFileTime(const char *pFileName);
+    virtual void FileTimeToString(char *pStrip, int maxCharsIncludingTerminator, long fileTime);
+    virtual bool IsOk(FileHandle_t file);
+    virtual void Flush(FileHandle_t file);
+    virtual bool EndOfFile(FileHandle_t file);
+    virtual int Read(void *pOutput, int size, FileHandle_t file);
+    virtual int Write(void const *pInput, int size, FileHandle_t file);
+    virtual char* ReadLine(char *pOutput, int maxChars, FileHandle_t file);
+    virtual int FPrintf(FileHandle_t file, char *pFormat, ...);
+    virtual char* GetReadBuffer(FileHandle_t file, char *pBuffer);
+    virtual void ReleaseReadBuffer(FileHandle_t file, char *pBuffer);
+    virtual const char * FindFirst(const char *pWildCard, FileFindHandle_t *pHandle, const char *pathID);
+    virtual const char * FindNext(FileFindHandle_t handle);
+    virtual bool FindIsDirectory(FileFindHandle_t handle);
+    virtual void FindClose(FileFindHandle_t handle);
+    virtual void GetLocalCopy(const char *pFileName);
+    virtual const char* GetLocalPath(const char *pFileName, char *pLocalPath, int maxlen);
+    virtual char* ParseFile(char *data, char *token, bool *wasquoted, int unk);
+    virtual bool FullPathToRelativePath(const char *pFullpath, char *pRelative);
+    virtual bool GetCurrentDirectory(char *pDirectory, int maxlen);
+    virtual void PrintOpenedFiles(void);
+    virtual void SetWarningFunc(void (*pfnWarning)(const char *fmt, ...));
+    virtual void SetWarningLevel(FileWarningLevel_t level);
+    virtual void LogLevelLoadStarted(const char *name);
+    virtual void LogLevelLoadFinished(const char *name);
+    virtual int HintResourceNeed(const char *hintlist, int forgetEverything);
+    virtual int PauseResourcePreloading(void);
+    virtual int ResumeResourcePreloading(void);
+    virtual int SetVBuf(FileHandle_t stream, char *buffer, int mode, long size);
+    virtual void GetInterfaceVersion(char *p, int maxlen);
+    virtual bool IsFileImmediatelyAvailable(const char *path);
+    virtual void *WaitForResources(const char *pFileName);
+    virtual bool GetWaitForResourcesProgress(WaitForResourcesHandle_t handle, float *progress, bool *complete);
+    virtual void CancelWaitForResources(WaitForResourcesHandle_t handle);
+    virtual bool IsAppReadyForOfflinePlay(void);
+    virtual void AddPackFile(const char *pPath, const char *pathID);
+    virtual void *OpenFromCacheForRead(const char *pFileName, const char *pOptions, const char *pathID);
+    // CSO Functions
+    virtual void  LoadNar(const char* pFileName, const char* pathID);
+    virtual void  SetNarFilePath(const char* dataPath);
+    virtual void  Unknown03(const char* pFileName, char* a1); //read file
+    virtual int GetChecksum(struct CFileSystem_Nar* ptr);
+    virtual void  NarOpen(const char* filePath, const char* mode, const char* pathID);
+    virtual int Unknown05(int(__thiscall*** a1)(void*, int));
+    virtual void  NarSeek(int a1, int a2, int a3, int a4);
+    virtual void  NarTell(int a1);
+    virtual void  Unknown08(int a1);
+    virtual void  Unknown09(int a1, int a2, int a3, int a4);
+    virtual void  Unknown10(int a1, int a2, int a3, void* a4);
+    virtual void  Unknown11();
+    virtual void  Unknown12();
+    virtual void  Unknown13();
+    virtual char* NarReadLine(char* a1, int a2, int a3);
+    virtual void  NarStat(char* FileName, struct _stat32* Stat);
+    virtual void  FindFirstFile2(LPCSTR lpFileName, void* lpFindFileData);
+    virtual void  FindNextFile2(HANDLE hFindFile, void* lpFindFileData);
+    virtual void  FindClose2(HANDLE hFile);
+    virtual void  Unknown15(void* a1);
 
-struct CFileSystem_Nar
-{
-    CFileSystem_Nar_Vtables* vfptr;
+public:
     int unk1;
     int unk2;
     int unk3;
@@ -148,37 +145,37 @@ struct CFileHandle
 
 typedef struct
 {
-	char        name[56];
-	int         filepos;
-	int         filelen;
+    char    name[56];
+    int   filepos;
+    int   filelen;
 } packfile_t;
 
 typedef struct
 {
-	char id[4];
-	int dirofs;
-	int dirlen;
+    char id[4];
+    int dirofs;
+    int dirlen;
 } packheader_t;
 
 typedef struct
 {
-	char        name[112];
-	int64_t     filepos;
-	int64_t     filelen;
+    char    name[112];
+    int64_t filepos;
+    int64_t filelen;
 } packfile64_t;
 
 typedef struct
 {
-	char        id[4];
-	int64_t     dirofs;
-	int64_t     dirlen;
+    char    id[4];
+    int64_t dirofs;
+    int64_t dirlen;
 } packheader64_t;
 
 typedef struct
 {
-	char        id[8];
-	int64_t     packheaderpos;
-	int64_t     originalfilesize;
+    char    id[8];
+    int64_t packheaderpos;
+    int64_t originalfilesize;
 } packappenededheader_t;
 
 // CUtlSymbol
@@ -201,40 +198,36 @@ struct CSearchPath
 };
 
 // CUtlSymbol
-class CPackFileEntry
-{
-	CUtlSymbol m_Name;
-	int64_t    m_nPosition;
-	int64_t    m_nLength;
+class CPackFileEntry {
+    CUtlSymbol m_Name;
+    int64_t    m_nPosition;
+    int64_t    m_nLength;
 };
 
-struct FindData_t
-{
-	WIN32_FIND_DATA  m_FindData;
-	int              m_CurrentSearchPathID;
-	int              m_LimitedPathID;
-	int              m_WildCardString;
-	HANDLE           m_FindHandle;
+struct FindData_t {
+    WIN32_FIND_DATA  m_FindData;
+    int    m_CurrentSearchPathID;
+    int    m_LimitedPathID;
+    int    m_WildCardString;
+    HANDLE   m_FindHandle;
 };
 
-struct CNarUnknown_vtables
-{
-    void (__thiscall* destcructor)(struct CNarUnknown* ptr);
-    void (__thiscall* Function1)(struct CNarUnknown* ptr);
-    void (__thiscall* Function2)(struct CNarUnknown* ptr);
-    void (__thiscall* Function3)(struct CNarUnknown* ptr);
-    void (__thiscall* Function4)(struct CNarUnknown* ptr);
-    void (__thiscall* Function5)(struct CNarUnknown* ptr);
-};
 struct CNarUnknown2_vtables
 {
-    void (__thiscall* destcructor)(struct CNarUnknown* ptr);
-    void (__thiscall* Function1)(struct CNarUnknown* ptr);
+    virtual void destcructor();
+    virtual void Function1();
 };
 
-struct CNarUnknown
+class CNarUnknown
 {
-    CNarUnknown_vtables* vfptr;
+public:
+    virtual ~CNarUnknown();
+    virtual void Function1();
+    virtual void Function2();
+    virtual void Function3();
+    virtual void Function4();
+    virtual void Function5();
+
     int unk02;
     int unk03;
     int unk04;
@@ -308,14 +301,12 @@ struct CNarUnknown3Unk3
     int unk12;
 };
 
-struct CNarUnknown3_vtables
+class CNarUnknown3
 {
-    void (__thiscall* destcructor)(struct CNarUnknown3* ptr);
-    void (__thiscall* Function1)(struct CNarUnknown3* ptr);
-};
-struct CNarUnknown3
-{
-    CNarUnknown3_vtables* vfptr;
+public:
+    virtual ~CNarUnknown3();
+    virtual void Function1();
+
     CNarUnknown4* unk2; // func
     CNarUnknown3Unk3* unk3; // array 48
     char* unk4; // array 4096

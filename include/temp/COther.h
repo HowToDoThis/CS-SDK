@@ -169,40 +169,60 @@ struct Gift
     int unk22;
 };
 
-struct GiftBoxVtables
+class map_GiftBox_Node_Pair
 {
-    void  (__thiscall* Function01)(struct GiftBox* this);
-    int   (__thiscall* Function02)(struct GiftBox* this);
-    void* (__thiscall* Function03)(struct GiftBox* this);
-    void  (__thiscall* Function04)(struct GiftBox* this);
-    int   (__thiscall* Function05)(struct GiftBox* this, int);
-    void  (__thiscall* SendShop7)(struct GiftBox* this);
-    int   (__thiscall* Function07)(struct GiftBox* this);
-    void  (__thiscall* SendShop3)(struct GiftBox* this);
-    void  (__thiscall* SendShop4)(struct GiftBox* this);
-    void  (__thiscall* SendShop5)(struct GiftBox* this);
-    void  (__thiscall* SendShop10)(struct GiftBox* this);
-    int   (__thiscall* Function12)(struct GiftBox* this);
-    int   (__thiscall* SendShop6)(struct GiftBox* this);
-    void  (__thiscall* Function14)(struct GiftBox* this);
-    void  (__thiscall* Function15)(struct GiftBox* this);
-    void  (__thiscall* Function16)(struct GiftBox* this);
+    long long first;
+    int* second;
 };
 
-struct GiftBox
+class map_GiftBox_Node
 {
-    GiftBoxVtables* vfptr;
+    map_GiftBox_Node_Pair* _Left;
+    map_GiftBox_Node_Pair* _Parent;
+    map_GiftBox_Node_Pair* _Right;
+    char _Color;
+    char _Isnil;
+    map_GiftBox_Node_Pair _Myval;
+};
+
+class map_GiftBox
+{
+    map_GiftBox_Node* _Myhead;
+    int _Mysize;
+};
+
+class GiftBox
+{
+public:
+    virtual void Function1();
+    virtual void Function2();
+    virtual void Function3();
+    virtual void Function4();
+    virtual void Function5(int);
+    virtual void Shop7(bool, int);
+    virtual void Function6(vector);
+    virtual void Shop3(); // unk1
+    virtual void Shop4();
+    virtual void Shop5();
+    virtual void Shop10();
+    virtual void Function7();
+    virtual void Shop6();
+    virtual void Function8();
+    virtual void Function9();
+    virtual void Function10();
+
+public:
     char unk1;
-    int unk2;
-    int unk3;
-    int unk4;
-    int unk5;
-    int unk6;
+
+    map_GiftBox u2;
+    vector u3;
+
     short unk6A;
     int unkA[3];
     int unk7;
     int unk8;
-    char unk9;
+
+    bool bCouponInquiry;
 };
 
 struct ItemCSV_tables
