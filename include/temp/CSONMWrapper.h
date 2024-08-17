@@ -122,21 +122,32 @@ struct CCrashUnk
     void* pNext;
 };
 
-struct CFriend_Unknown1 {
+// 0x48
+struct CSOFriend {
     NMIDCode friendCode;
-    int u3;
-    int u4;
-    wstring u5;
-    string u6;
-    int u7;
-    int u8;
-    int u9;
+    int uOID;
+    int uLevel;
+    wstring szNickName;
+    string szPosition;
+    int uStatus;
+    int uCategoryCode;
 };
 
-struct vec_CFriend_Unknown1 {
-    CFriend_Unknown1* first;
-    CFriend_Unknown1* last;
-    CFriend_Unknown1* end;
+struct CFriend_Unknown2 {
+    void* vfptr;
+    int u2;
+    int uOID;
+    int uLevel;
+    char* szNickName;
+    char* szPosition;
+    int uStatus;
+    int u8;
+};
+
+struct vec_CSOFriend {
+    CSOFriend* first;
+    CSOFriend* last;
+    CSOFriend* end;
 };
 
 class CFriendManager {
@@ -147,14 +158,16 @@ public:
     virtual void ConfirmFriend_2();
     virtual void ConfirmFriend_3();
     virtual void Function6();
-    virtual CFriend_Unknown1* Function7(CFriend_Unknown1*, int);
+    virtual CSOFriend* Function7(CSOFriend*, int);
     virtual void Function8();
 
 public:
-    vec_CFriend_Unknown1 u1;
+    CSOFriend* u1;
+    CSOFriend* u2;
+    int u3;
     unsigned int uFriendSerialNo;
-    int u4;
-    int u5;
+    CFriend_Unknown2* u4;
+    CFriend_Unknown2* u5;
     int u6;
 };
 
@@ -187,7 +200,7 @@ struct CStreamCryptor_v1 : CStreamCryptor {
 struct CNMManager
 {
     void* vfptr;
-    unsigned char* m_pRetData;
+    class CNMFunc* m_pRetData;
     CRITICAL_SECTION cs;
     int m_codePage;
 };

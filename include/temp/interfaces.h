@@ -107,43 +107,6 @@ struct CThread
     int unk6;
 };
 
-struct CEngine_vt : IBaseInterface
-{
-    BOOL (__thiscall* Load)(struct CEngine* this, BOOL dedicated, char* basedir, char* cmdline);
-    void (__thiscall* Unload)(struct CEngine* this);
-    void (__thiscall* SetState)(struct CEngine* this, int state);
-    void (__thiscall* GetState)(struct CEngine* this);
-    void (__thiscall* SetSubState)(struct CEngine* this);
-    void (__thiscall* GetSubState)(struct CEngine* this);
-    void (__thiscall* Frame)(struct CEngine* this);
-    void (__thiscall* GetFrameTime)(struct CEngine* this);
-    void (__thiscall* GetCurTime)(struct CEngine* this);
-    void (__thiscall* TrapKey_Event)(struct CEngine* this, int key, bool down);
-    void (__thiscall* TrapMouse_Event)(struct CEngine* this);
-    void (__thiscall* StartTrapMode)(struct CEngine* this);
-    bool (__thiscall* IsTrapping)(struct CEngine* this);
-    void (__thiscall* CheckDoneTrapping)(struct CEngine* this);
-    int  (__thiscall* GetQuitting)(struct CEngine* this);
-    void (__thiscall* SetQuitting)(struct CEngine* this, int quitType);
-};
-
-struct CEngine
-{
-    CEngine_vt* vfptr;
-    int m_nQuitting;
-    int m_nDLLState;
-    int m_nSubState;
-    double m_fCurTime;
-    double m_fFrameTime;
-    double m_fOldTime;
-    char m_bTrapMode;
-    char m_bDoneTrapping;
-    short unk5;
-    int m_nTrapKey;
-    int m_nTrapButtons;
-    int undef3;
-};
-
 struct CSOCoreSDM_vt : IBaseInterface
 {
     void (__thiscall* Init)(struct CSOCoreSDM* this);

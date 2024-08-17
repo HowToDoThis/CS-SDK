@@ -1,14 +1,30 @@
+struct CSOGameRules_unknown_1 {
+    int* mapHead;
+    unsigned int mapSize;
+    int nf1;
+    int nf2;
+    int nf3;
+    char nf4;
+};
+
 class CSOGameRules {
 public:
     virtual ~CSOGameRules();
+    virtual void Func1();
+    virtual void Func2_Save();
+    virtual void Func3_Read();
+    virtual int  Func4(int,int);
+    virtual int  Func5(int,int);
+    virtual bool ClientCommand_DeadOrAlive(class CBasePlayer* pPlayer, const char* pcmd);
+    virtual int  Func7(int,int);
+    virtual void Func8();
+    virtual void Func9();
+    virtual void Func10();
+    virtual void InitHUD(class CBasePlayer* pPlayer);
+    virtual void Think();
 
 public:
-    int rules_nf1;
-    int rules_nf2;
-    int rules_nf3;
-    int rules_nf4;
-    int rules_nf5;
-    int rules_nf6;
+    CSOGameRules_unknown_1 rules_nf1;
     char rules_nf7;
     short rules_nf8[160];
     int rules_nf9;

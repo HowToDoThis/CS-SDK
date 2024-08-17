@@ -77,6 +77,7 @@ public:
     int m_nNumModes;
     int m_nGameMode;
     int unk15;
+    int nf1[12];
 };
 
 struct CLauncherDirectDraw_vfptr {

@@ -5,8 +5,11 @@ public:
     virtual bool  Init(HINSTANCE hInstance);
     virtual bool  InitCSONMWrapper();
     virtual void  InitCSOCoreSDM();
-    virtual bool  ShutdownCSOCoreSDM();
-    virtual void  Shutdown();
+    virtual bool  ShutdownCSOCoreSDM1();
+    virtual void  ShutdownCSOCoreSDM2();
+#ifdef CHN240411
+    virtual void  ShutdownGameWindow(); // newest
+#endif
     virtual bool  CreateGameWindow();
     virtual void  SleepUntilInput(int time);
     virtual HWND  GetMainWindow();
