@@ -206,14 +206,12 @@ enum _Menu {
 
 #define MAX_WEAPONS 352
 
-struct AmmoInfo
-{
+struct AmmoInfo {
 	const char *pszName;
 	int iId;
 };
 
-struct ItemInfo
-{
+struct ItemInfo {
 	int iSlot;
 	int iPosition;
 	const char *pszAmmo1;
@@ -274,8 +272,7 @@ struct RebuyStruct {
     ArmorType m_armor;
 };
 
-enum TrackCommands
-{
+enum TrackCommands {
     CMD_SAY = 0,
     CMD_SAYTEAM,
     CMD_FULLUPDATE,
@@ -287,208 +284,86 @@ enum TrackCommands
     COMMANDS_TO_TRACK,
 };
 
-struct CBaseEntity_vt {
-    void (__thiscall* Function1)(struct CBaseEntity* this); // unk ptr
-    void (__thiscall* Function2)(struct CBaseEntity* this); // null most
-    void (__thiscall* Spawn)(struct CBaseEntity* this);
-    void (__thiscall* Precache)(struct CBaseEntity* this);
-    void (__thiscall* Restart)(struct CBaseEntity* this);
-    void (__thiscall* KeyValue)(struct CBaseEntity* this);
-    void (__thiscall* Save)(struct CBaseEntity* this);
-    void (__thiscall* Restore)(struct CBaseEntity* this);
-    void (__thiscall* ObjectCaps)(struct CBaseEntity* this);
-    void (__thiscall* Activate)(struct CBaseEntity* this);
-    void (__thiscall* SetObjectCollisionBox)(struct CBaseEntity* this);
-    int  (__thiscall* Classify)(struct CBaseEntity* this);
-    void (__thiscall* DeathNotice)(struct CBaseEntity* this, struct entvars_t*);
-    void (__thiscall* TraceAttack)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir01, float vecDir2, TraceResult *ptra, int bitsDamageType);
-    void (__thiscall* TraceAttack_Proxy)(struct CBaseEntity* this, entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir1, float vecDir2, TraceResult *ptra, int bitsDamageType, int);
-    bool (__thiscall* TakeDamage)(struct CBaseEntity* this, entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
-    bool (__thiscall* TakeHealth)(struct CBaseEntity* this);
-    void (__thiscall* Killed)(struct CBaseEntity* this, entvars_t *pevAttacker, int iGib);
-    int  (__thiscall* BloodColor)(struct CBaseEntity* this);
-    void (__thiscall* TraceBleed)(struct CBaseEntity* this, float flDamage, vec3_t vecDir, struct TraceResult *ptr, int bitsDamageType);
-    BOOL (__thiscall* IsTriggered)(struct CBaseEntity* this);
-    class CBaseMonster*  (__thiscall* MyMonsterPointer)(struct CBaseEntity* this);
-    class CSquadMonster* (__thiscall* MySquadMonsterPointer)(struct CBaseEntity* this);
-    void (__thiscall* GetToggleState)(struct CBaseEntity* this);
-    void (__thiscall* AddPoints)(struct CBaseEntity* this);
-    void (__thiscall* AddPointsToTeam)(struct CBaseEntity* this);
-    BOOL (__thiscall* AddPlayerItem)(struct CBaseEntity* this);
-    BOOL (__thiscall* RemovePlayerItem)(struct CBaseEntity* this);
-    int  (__thiscall* GiveAmmo)(struct CBaseEntity* this, int iCount, const char* szName, int iMax);
-    void (__thiscall* GetDelay)(struct CBaseEntity* this);
-    void (__thiscall* IsMoving)(struct CBaseEntity* this);
-    void (__thiscall* OverrideReset)(struct CBaseEntity* this);
-    void (__thiscall* DamageDecal)(struct CBaseEntity* this, int bitsDamageType);
-    void (__thiscall* SetToggleState)(struct CBaseEntity* this);
-    void (__thiscall* StartSneaking)(struct CBaseEntity* this);
-    void (__thiscall* StopSneaking)(struct CBaseEntity* this);
-    void (__thiscall* OnControls)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsSneaking)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsAlive)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsBSPModel)(struct CBaseEntity* this);
-    BOOL (__thiscall* ReflectGauss)(struct CBaseEntity* this);
-    BOOL (__thiscall* HasTarget)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsInWorld)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsPlayer)(struct CBaseEntity* this);
-    BOOL (__thiscall* IsNetClient)(struct CBaseEntity* this);
-    void (__thiscall* TeamID)(struct CBaseEntity* this);
-    void (__thiscall* GetKnockbackData)(struct CBaseEntity* this);
-    void (__thiscall* GetArmorData)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_1)(struct CBaseEntity* this);
-    struct CBaseEntity* (__thiscall* GetNextTarget)(struct CBaseEntity* this);
-    void (__thiscall* Think)(struct CBaseEntity* this);
-    void (__thiscall* Touch)(struct CBaseEntity* this, CBaseEntity *pOther);
-    void (__thiscall* Use)(struct CBaseEntity* this, CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
-    void (__thiscall* Blocked)(struct CBaseEntity* this, CBaseEntity *pOther);
-    void (__thiscall* UpdateOnRemove)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_2)(struct CBaseEntity* this);
-    struct CBaseEntity* (__thiscall* Respawn)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_3)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_4)(struct CBaseEntity* this);
-    vec_t* (__thiscall* Center)(struct CBaseEntity* this, vec_t*);
-    vec_t* (__thiscall* EyePosition)(struct CBaseEntity* this, vec_t*);
-    vec_t* (__thiscall* EarPosition)(struct CBaseEntity* this, vec_t*);
-    vec_t* (__thiscall* BodyTarget)(struct CBaseEntity* this, vec_t*);
-    void (__thiscall* CSO_ADD_5)(struct CBaseEntity* this);
-    int  (__thiscall* Illumination)(struct CBaseEntity* this);
-    BOOL (__thiscall* FVisibleV)(struct CBaseEntity* this);
-    BOOL (__thiscall* FVisibleE)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_6)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_7)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_8)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_9)(struct CBaseEntity* this);
-    void (__thiscall* CSO_ADD_10)(struct CBaseEntity* this);
-    int (__thiscall* CSO_ADD_11)(struct CBaseEntity* this);
-    int (__thiscall* CSO_ADD_12)(struct CBaseEntity* this, CBasePlayer*);
-    void (__thiscall* CSO_ADD_13)(struct CBaseEntity* this); // UTIL_GetGlobalTrace
-    void (__thiscall* CSO_ADD_14)(struct CBaseEntity* this);
-    
-    void (__thiscall* CBaseAnimating__HandleAnimEvent)(struct CBaseEntity* this, struct MonsterEvent_t* pEvent);
+class CBaseEntity {
+public:
+    virtual void Function1(); // unk ptr
+    virtual void Function2(); // null most
+    virtual void Spawn();
+    virtual void Precache();
+    virtual void Restart();
+    virtual void KeyValue();
+    virtual void Save();
+    virtual void Restore();
+    virtual void ObjectCaps();
+    virtual void Activate();
+    virtual void SetObjectCollisionBox();
+    virtual int Classify();
+    virtual void DeathNotice(struct entvars_t*);
+    virtual void TraceAttack(entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir01, float vecDir2, TraceResult *ptra, int bitsDamageType);
+    virtual void TraceAttack_Proxy(entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir1, float vecDir2, TraceResult *ptra, int bitsDamageType, int);
+    virtual BOOL TakeDamage(entvars_t *pevInflictor, entvars_t *pevAttacker, float flDamage, int bitsDamageType);
+    virtual BOOL TakeHealth();
+    virtual void Killed(entvars_t *pevAttacker, int iGib);
+    virtual int BloodColor();
+    virtual void TraceBleed(float flDamage, vec3_t vecDir, struct TraceResult *ptr, int bitsDamageType);
+    virtual BOOL IsTriggered();
+    virtual class CBaseMonster*  MyMonsterPointer();
+    virtual class CSquadMonster* MySquadMonsterPointer();
+    virtual void GetToggleState();
+    virtual void AddPoints();
+    virtual void AddPointsToTeam();
+    virtual BOOL AddPlayerItem();
+    virtual BOOL RemovePlayerItem();
+    virtual int GiveAmmo(int iCount, const char* szName, int iMax);
+    virtual void GetDelay();
+    virtual void IsMoving();
+    virtual void OverrideReset();
+    virtual void DamageDecal(int bitsDamageType);
+    virtual void SetToggleState();
+    virtual void StartSneaking();
+    virtual void StopSneaking();
+    virtual void OnControls();
+    virtual BOOL IsSneaking();
+    virtual BOOL IsAlive();
+    virtual BOOL IsBSPModel();
+    virtual BOOL ReflectGauss();
+    virtual BOOL HasTarget();
+    virtual BOOL IsInWorld();
+    virtual BOOL IsPlayer();
+    virtual BOOL IsNetClient();
+    virtual void TeamID();
+    virtual void GetKnockbackData();
+    virtual void GetArmorData();
+    virtual void CSO_ADD_1();
+    virtual struct CBaseEntity* GetNextTarget();
+    virtual void Think();
+    virtual void Touch(CBaseEntity *pOther);
+    virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
+    virtual void Blocked(CBaseEntity *pOther);
+    virtual void UpdateOnRemove();
+    virtual void CSO_ADD_2();
+    virtual struct CBaseEntity* Respawn();
+    virtual void CSO_ADD_3();
+    virtual void CSO_ADD_4();
+    virtual vec_t* Center(vec_t*);
+    virtual vec_t* EyePosition(vec_t*);
+    virtual vec_t* EarPosition(vec_t*);
+    virtual vec_t* BodyTarget(vec_t*);
+    virtual void CSO_ADD_5();
+    virtual int Illumination();
+    virtual BOOL FVisibleV();
+    virtual BOOL FVisibleE();
+    virtual void CSO_ADD_6();
+    virtual void CSO_ADD_7();
+    virtual void CSO_ADD_8();
+    virtual void CSO_ADD_9();
+    virtual void CSO_ADD_10();
+    virtual int CSO_ADD_11();
+    virtual int CSO_ADD_12(CBasePlayer*);
+    virtual void CSO_ADD_13(); // UTIL_GetGlobalTrace
+    virtual void CSO_ADD_14();
 
-    // Start from here, splited with CBaseMonster and CBasePlayerItem
-
-#define GoPlayerItem
-//#define GoMonster
-
-#ifdef GoPlayerItem
-    // CBasePlayerItem
-    int (__thiscall* CBasePlayerItem::AddToPlayer)(struct CBaseEntity* this);
-    int (__thiscall* CBasePlayerItem::AddDuplicate)(struct CBaseEntity* this, struct CBasePlayerItem* pOriginal);
-    int (__thiscall* CBasePlayerItem::GetItemInfo)(struct CBaseEntity* this, struct ItemInfo* info);
-    void (__thiscall* CBasePlayerItem::CanDeploy)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::CanDrop)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Deploy)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown1)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::IsWeapon)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::CanHolster)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Holster)(struct CBaseEntity* this, int);
-    void (__thiscall* CBasePlayerItem::UpdateItemInfo_ResetMaxSpeed)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::ItemPreFrame)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::ItemPostFrame)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Drop)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Kill)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::AttachToPlayer)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::PrimaryAmmoIndex)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::SecondaryAmmoIndex)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::UpdateClientData)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetWeaponPtr)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetMaxSpeed)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown2)(struct CBaseEntity* this);
-    int  (__thiscall* CBasePlayerItem::GetItemSlot)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetUnk12)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x400__GetGunPosition)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x800)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x8000)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x10000)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x1000)(struct CBaseEntity* this);
-    bool (__thiscall* CBasePlayerItem::IsWeaponFlag0x40000__SetAnimation)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown3)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown4)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::GetAutoaimVector)(struct CBaseEntity* this, float* a, float b);
-    double (__thiscall* CBasePlayerItem::Unknown6)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown7)(struct CBaseEntity* this, float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
-    void (__thiscall* CBasePlayerItem::Unknown8)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown9)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown10)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown11)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown12)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown13)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown14)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown15)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown16)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerItem::Unknown17)(struct CBaseEntity* this);
-
-    // CBasePlayerWeapon
-    int  (__thiscall* CBasePlayerWeapon::ExtractAmmo)(struct CBaseEntity* this, CBasePlayerWeapon *pWeapon);
-    int  (__thiscall* CBasePlayerWeapon::ExtractClipAmmo)(struct CBaseEntity* this, CBasePlayerWeapon *pWeapon);
-    int  (__thiscall* CBasePlayerWeapon::AddWeapon)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::AddSpecialAmmo)(struct CBaseEntity* this, struct CBasePlayer* pPlayer);
-    void (__thiscall* CBasePlayerWeapon::PlayEmptySound)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::ResetEmptySound)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::SendWeaponAnim)(struct CBaseEntity* this, int, bool);
-    void (__thiscall* CBasePlayerWeapon::IsUseable)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::PrimaryAttack)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::SecondaryAttack)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Reload)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::WeaponIdle)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::RetireWeapon)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown9)(struct CBaseEntity* this); // MPToCL
-    void (__thiscall* CBasePlayerWeapon::Unknown10)(struct CBaseEntity* this);
-    int  (__thiscall* CBasePlayerWeapon::UseDecrement)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown12)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown13)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown14)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x2000)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::IsWeaponFlag0x4000)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::GetAmmoClip__iMaxClip)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::GetAmmoClip2)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown15)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::Unknown16)(struct CBaseEntity* this);
-    void (__thiscall* CBasePlayerWeapon::FireRemaining)(struct CBaseEntity* this,int *shotsFired, float *shootTime, int bIsGlock);
-    void (__thiscall* CBasePlayerWeapon::ItemPostFrame)(struct CBaseEntity* this);
-
-    // Weapon Own
-    void (__thiscall* CWeapon::FireEvent)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
-    // Fun fact
-    // SIG: 56 FF 15 ? ? ? ? 8B C8 8B 10 FF 92 ? ? ? ? 8B F0 FF 15 ? ? ? ? 6A FE 6A 24 6A 23 6A 20 6A 1D 6A 18 6A 14 6A 0D 8B C8 6A 0B 6A 0E 6A 09 8B 01 6A 08 FF 90 ? ? ? ? 50 E8 ? ? ? ? 83 C4 34 84 C0 75 38 83 FE 1E 74
-    void (__thiscall* CWeapon::GetDamage)(struct CBaseEntity* this, float flSpread, float flCycleTime, BOOL fUseAutoAim);
-#elif defined GoMonster
-    // CBaseMonster
-    void (__thiscall* CBaseMonster::ChangeYaw)(struct CBaseEntity* this, int speed);
-    BOOL (__thiscall* CBaseMonster::HasHumanGibs)(struct CBaseEntity* this);
-    BOOL (__thiscall* CBaseMonster::HasAlienGibs)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::FadeMonster)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::GibMonster)(struct CBaseEntity* this);
-    Activity (__thiscall* CBaseMonster::GetDeathActivity)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::BecomeDead)(struct CBaseEntity* this);
-    BOOL (__thiscall* CBaseMonster::ShouldFadeOnDeath)(struct CBaseEntity* this);
-    int (__thiscall* CBaseMonster::IRelationship)(struct CBaseEntity* this, CBaseEntity *pTarget);
-    void (__thiscall* CBaseMonster::PainSound)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::ResetMaxSpeed)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::ReportAIState)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::MonsterInitDead)(struct CBaseEntity* this);
-    void (__thiscall* CBaseMonster::Look)(struct CBaseEntity* this, int iDistance);
-    CBaseEntity* (__thiscall* CBaseMonster::BestVisibleEnemy)(struct CBaseEntity* this);
-    BOOL (__thiscall* CBaseMonster::FInViewCone_Vector)(struct CBaseEntity* this, vec_t* pOrigin);
-    BOOL (__thiscall* CBaseMonster::FInViewCone_Entity)(struct CBaseEntity* this, struct CBaseEntity*);
-    int (__thiscall* CBaseMonster::CSO_ADD_15)(struct CBaseEntity* this);
-
-    // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
-    // ret 0
-    void Pain(int iLastHitGroup, bool bHasArmour);
-    
-#endif
-};
-
-struct AmmoInventory {
-    int iMaxAmmo;
-    int iAmmo;
-};
-
-struct CBaseEntity {
-    CBaseEntity_vt* vfptr; // ok
+public:
     struct entvars_t* pev; // ok
     CBaseEntity* m_pGoalEnt;
     CBaseEntity* m_pLink;
@@ -509,12 +384,17 @@ struct CBaseEntity {
     int entity_nf8;
 };
 
-struct CBaseDelay : CBaseEntity {
+class CBaseDelay : public CBaseEntity {
+public:
     float m_flDelay; // ok
     string_t m_iszKillTarget; // ok
 };
 
-struct CBaseAnimating : CBaseDelay {
+class CBaseAnimating : public CBaseDelay {
+public:
+    virtual void HandleAnimEvent(struct MonsterEvent_t* pEvent);
+
+public:
     float m_flFrameRate; // ok
     float m_flGroundSpeed; // ok
     float m_flLastEventCheck; // ok
@@ -522,15 +402,16 @@ struct CBaseAnimating : CBaseDelay {
     BOOL m_fSequenceLoops; // ok
 };
 
-// Things that toggle (buttons/triggers/doors) need this
-enum TOGGLE_STATE { TS_AT_TOP, TS_AT_BOTTOM, TS_GOING_UP, TS_GOING_DOWN };
-
 struct EHANDLE {
     edict_t *m_pent;
     int m_serialnumber;
 };
 
-struct CBaseToggle : CBaseAnimating {
+// Things that toggle (buttons/triggers/doors) need this
+enum TOGGLE_STATE { TS_AT_TOP, TS_AT_BOTTOM, TS_GOING_UP, TS_GOING_DOWN };
+
+class CBaseToggle : public CBaseAnimating {
+public:
     TOGGLE_STATE m_toggle_state; // ok
     float m_flActivateFinished; // ok
     float m_flMoveDistance; // ok
@@ -552,8 +433,12 @@ struct CBaseToggle : CBaseAnimating {
     string_t m_sMaster;  // ok
 };
 
-enum
-{
+struct AmmoInventory {
+    int iMaxAmmo;
+    int iAmmo;
+};
+
+enum {
     ITBD_PARALYZE = 0,
     ITBD_NERVE_GAS,
     ITBD_POISON,
@@ -565,8 +450,7 @@ enum
     ITBD_END,
 };
 
-enum MONSTERSTATE
-{
+enum MONSTERSTATE {
     MONSTERSTATE_NONE = 0,
     MONSTERSTATE_IDLE,
     MONSTERSTATE_COMBAT,
@@ -689,7 +573,32 @@ typedef struct {
     char *name;
 } activity_map_t;
 
-struct CBaseMonster : CBaseToggle {
+class CBaseMonster : public CBaseToggle {
+public:
+    virtual void ChangeYaw(int speed);
+    virtual BOOL HasHumanGibs();
+    virtual BOOL HasAlienGibs();
+    virtual void FadeMonster();
+    virtual void GibMonster();
+    virtual Activity GetDeathActivity();
+    virtual void BecomeDead();
+    virtual BOOL ShouldFadeOnDeath();
+    virtual int IRelationship(CBaseEntity *pTarget);
+    virtual void PainSound();
+    virtual void ResetMaxSpeed();
+    virtual void ReportAIState();
+    virtual void MonsterInitDead();
+    virtual void Look(int iDistance);
+    virtual CBaseEntity* BestVisibleEnemy();
+    virtual BOOL FInViewCone_Vector(vec_t* pOrigin);
+    virtual BOOL FInViewCone_Entity(struct CBaseEntity*);
+    virtual int CSO_ADD_15();
+
+    // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
+    // ret 0
+    void Pain(int iLastHitGroup, bool bHasArmour);
+
+public:
     Activity m_Activity; // ok
     Activity m_IdealActivity; // ok
     int m_bitsDamageType; // ok
@@ -711,8 +620,7 @@ struct CBaseMonster : CBaseToggle {
     unsigned char monster_nf1;
 };
 
-enum WeaponIdType
-{
+enum WeaponIdType {
     WEAPON_NONE = 0,
     WEAPON_P228 = 1,
     WEAPON_UNK2 = 2,
@@ -1070,9 +978,22 @@ enum PLAYER_ANIM {
 	PLAYER_HOLDBOMB
 };
 
+struct Player_ZBEnhance {
+    int u1;
+    int u2;
+    int u3;
+    int u4;
+    int u5;
+    int u6;
+    int u7;
+};
+
 // GetClassPtr
 // Size 0x2350
-struct CBasePlayer : CBaseMonster {
+class CBasePlayer : public CBaseMonster {
+public:
+
+public:
     int cso_u1;
     int random_seed; // ok
     unsigned short m_usPlayerBleed;
@@ -1262,7 +1183,13 @@ struct CBasePlayer : CBaseMonster {
     char player_nf6;
     char player_nf8;
     char player_nf9;
-    int player_nfb[808];
+    int player_nfb[459];
+
+    char zbEnhance1[0x38];
+    Player_ZBEnhance zbEnhance2[14];
+    int player_nfd[40];
+    int zbEnhanceDNA[18];
+    int player_nfe[178];
 };
 
 struct AutoBuyInfoStruct {
@@ -1296,7 +1223,55 @@ struct WeaponInfoStruct {
     int unk19;
 };
 
-struct CBasePlayerItem : CBaseAnimating {
+class CBasePlayerItem : public CBaseAnimating {
+public:
+    virtual int AddToPlayer();
+    virtual int AddDuplicate(struct CBasePlayerItem* pOriginal);
+    virtual int GetItemInfo(struct ItemInfo* info);
+    virtual void CanDeploy();
+    virtual void CanDrop();
+    virtual void Deploy();
+    virtual void Unknown1();
+    virtual void IsWeapon();
+    virtual void CanHolster();
+    virtual void Holster(int);
+    virtual void UpdateItemInfo_ResetMaxSpeed();
+    virtual void ItemPreFrame();
+    virtual void ItemPostFrame();
+    virtual void Drop();
+    virtual void Kill();
+    virtual void AttachToPlayer();
+    virtual void PrimaryAmmoIndex();
+    virtual void SecondaryAmmoIndex();
+    virtual void UpdateClientData();
+    virtual void GetWeaponPtr();
+    virtual void GetMaxSpeed();
+    virtual void Unknown2();
+    virtual int GetItemSlot();
+    virtual void GetUnk12();
+    virtual BOOL IsWeaponFlag0x400__GetGunPosition();
+    virtual BOOL IsWeaponFlag0x800();
+    virtual BOOL IsWeaponFlag0x8000();
+    virtual BOOL IsWeaponFlag0x10000();
+    virtual BOOL IsWeaponFlag0x1000();
+    virtual BOOL IsWeaponFlag0x40000__SetAnimation();
+    virtual void Unknown3();
+    virtual void Unknown4();
+    virtual void GetAutoaimVector(float* a, float b);
+    virtual double Unknown6();
+    virtual void Unknown7(float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
+    virtual void Unknown8();
+    virtual void Unknown9();
+    virtual void Unknown10();
+    virtual void Unknown11();
+    virtual void Unknown12();
+    virtual void Unknown13();
+    virtual void Unknown14();
+    virtual void Unknown15();
+    virtual void Unknown16();
+    virtual void Unknown17();
+
+public:
     struct CBasePlayer *m_pPlayer;
     CBasePlayerItem *m_pNext;
     int m_iId; // ok, WEAPON_???
@@ -1305,7 +1280,43 @@ struct CBasePlayerItem : CBaseAnimating {
 };
 
 // CAK47 size 0x238
-struct CBasePlayerWeapon : CBasePlayerItem {
+class CBasePlayerWeapon : public CBasePlayerItem {
+public:
+    virtual int ExtractAmmo(CBasePlayerWeapon *pWeapon);
+    virtual int ExtractClipAmmo(CBasePlayerWeapon *pWeapon);
+    virtual int AddWeapon();
+    virtual void AddSpecialAmmo(struct CBasePlayer* pPlayer);
+    virtual void PlayEmptySound();
+    virtual void ResetEmptySound();
+    virtual void SendWeaponAnim(int, bool);
+    virtual void IsUseable();
+    virtual void PrimaryAttack();
+    virtual void SecondaryAttack();
+    virtual void Reload();
+    virtual void WeaponIdle();
+    virtual void RetireWeapon();
+    virtual void Unknown9(); // MPToCL
+    virtual void Unknown10();
+    virtual int UseDecrement();
+    virtual void Unknown12();
+    virtual void Unknown13();
+    virtual void Unknown14();
+    virtual void IsWeaponFlag0x2000();
+    virtual void IsWeaponFlag0x4000();
+    virtual void GetAmmoClip__iMaxClip();
+    virtual void GetAmmoClip2();
+    virtual void Unknown15();
+    virtual void Unknown16();
+    virtual void FireRemaining(int *shotsFired, float *shootTime, int bIsGlock);
+    virtual void ItemPostFrame();
+
+    // Weapon Own
+    virtual void CWeapon__FireEvent(float flSpread, float flCycleTime, BOOL fUseAutoAim);
+    // Fun fact
+    // SIG: 56 FF 15 ? ? ? ? 8B C8 8B 10 FF 92 ? ? ? ? 8B F0 FF 15 ? ? ? ? 6A FE 6A 24 6A 23 6A 20 6A 1D 6A 18 6A 14 6A 0D 8B C8 6A 0B 6A 0E 6A 09 8B 01 6A 08 FF 90 ? ? ? ? 50 E8 ? ? ? ? 83 C4 34 84 C0 75 38 83 FE 1E 74
+    virtual void CWeapon__GetDamage(float flSpread, float flCycleTime, BOOL fUseAutoAim);
+
+public:
     int m_iPlayEmptySound; // ok
     int m_fFireOnEmpty; // ok
     int cso_baseplayer_weapon_1;

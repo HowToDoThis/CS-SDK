@@ -304,7 +304,7 @@ typedef struct enginefuncs_s {
     void* (*MonthlyWpnMgr)();
 } enginefuncs_t;
 
-typedef struct {
+typedef struct _DLL_FUNCTIONS {
     void        (__cdecl *pfnGameInit)        (void);
     int         (__cdecl *pfnSpawn)            (struct edict_t *pent);
     void        (__cdecl *pfnThink)            (struct edict_t *pent);
@@ -357,23 +357,22 @@ typedef struct {
     int         (*pfnInconsistentFile)        (const struct edict_s *player, const char *filename, char *disconnect_message);
     int         (*pfnAllowLagCompensation)    (void);
     // CSO
-    int (__cdecl* CSOFunc01)();
-    int (__cdecl* CSOFunc02)();
-    int (__cdecl* CSOFunc03)(int, int, int, int, int, int, int);
-    int (__cdecl* CSOFunc04)();
-    int (__cdecl* CSOFunc05)();
-    int (__cdecl* CSOFunc06)();
-    int (__cdecl* CSOFunc07)();
-    int (__cdecl* CSOFunc08)();
-    int (__cdecl* CSOFunc09)();
-    int (__cdecl* CSOFunc10)();
-    int (__cdecl* CSOFunc11)();
-    int (__cdecl* CSOFunc12)();
-    void (__cdecl* CSOFunc13)(int userID);
-    // TODO Confirm
-    int (__cdecl* CSOFunc14)();
-    int (__cdecl* CSOFunc15)();
-    int (__cdecl* CSOFunc16)();
+    int (__cdecl* pfnMakeHostReady2)();
+    int (__cdecl* pfnRegisterUserMsg)();
+    int (__cdecl* pfnCSOFunc03)(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
+    char* (__cdecl* pfnCSOFunc04)(); // get some name
+    int (__cdecl* pfnMakeHostReady3)();
+    int (__cdecl* pfnLoadBotNav)();
+    int (__cdecl* pfnMakeHostReady)();
+    int (__cdecl* pfnMakeHostRun)(edict_t* g_psv_edict, int num_edicts, int maxclient);
+    int (__cdecl* pfnHostCrashRestart)(edict_t* edict);
+    int (__cdecl* pfnCSOUnk5)(); // HostCrashRestore called
+    int (__cdecl* pfnHostStart)();
+    int (__cdecl* pfnLoadHostCrash)();
+    int (__cdecl* pfnHostStart2)(int userID);
+    int (__cdecl* pfnCSOUnk6)();
+    int (__cdecl* pfnCSOUnk7)();
+    int (__cdecl* pfnCSOUnk8)();
 } DLL_FUNCTIONS;
 
 typedef struct {
