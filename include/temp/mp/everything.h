@@ -1,3 +1,5 @@
+#include "defines.h"
+
 // CBase
 #include "cbase.h"
 #include "CBase_Others.h"

@@ -78,7 +78,11 @@ public:
     class StrGen* gStrGen;// ok
     char rules_nf92;
     class CZBSItemListener* gCZBSItemListener;// ok
-    int rules_nf94;
+    char m_iNumAliveCT; // ok
+    char m_iNumAliveTR; // ok
+    char m_iNumDeadCT; // ok
+    char m_iNumDeadTR; // ok
+
     char rules_nf95_a;
     char rules_nf95_b;
     char rules_nf95_c;
@@ -119,14 +123,17 @@ public:
 	char multi_nf1c;
 	char multi_nf1d;
 
-    int __undef25;
-    int __undef26;
-    int multi_nf22;
+    short __undef25;
+    short __undef26;
+    short __undef27;
+    short __undef28;
+    short m_iNumSpectator;
+    short m_iNumUnassigned;
 
     float multi_nf23;
     char multi_nf24_a;
     char multi_nf24_b;
-    char multi_nf25;
+    bool m_bNextRound; // CSO_MR
     char multi_nf26;
     int multi_nf27;
     short multi_nf28_a;

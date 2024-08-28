@@ -42,7 +42,7 @@ public:
     virtual void Func29();
     virtual void Func30();
     virtual char Func31(); // related VIP
-    virtual void Func32();
+    virtual char Func32();
     virtual char Func33(); // ret multi_nf1a;
     virtual void GoToIntermission();
     virtual int  Return16000();
@@ -65,6 +65,51 @@ public:
     virtual void Func52();
     virtual void BalanceTeams();
     virtual void InitializePlayerCounts();
+    virtual void Func56(int);
+    virtual bool CheckWinConditions();
+    virtual void Func58();
+    virtual void Broadcast(const char* sentence);
+    virtual void Func60();
+    virtual void Func61();
+    virtual char Func62(int);
+    virtual void Func63(CBaseEntity*); // drop cmd_argv(1)
+    virtual char Func64(int,int);
+    virtual char Func65(int,int,int);
+    virtual void Func66(CBasePlayer*,edict_t*,entvars_t*);
+    virtual void Func67();
+    virtual void PlayerKilled();
+    virtual void Func69(int,int,int*,int*);
+    virtual void Func70(int,int,CBasePlayer*); // send host7
+    virtual void KilledVIP(CBasePlayer*,int,CBasePlayer*,int);
+    virtual void Func72(int,int,CBasePlayer*); // send host7
+    virtual void Func73(int);
+    virtual void Func74(int,int,int);
+    virtual void SendDeathMessage(CBaseEntity *pKiller, CBasePlayer *pVictim, CBasePlayer *pAssister, entvars_t *pevInflictor);
+    virtual void Func76(int,int,int,int,int);
+    virtual void SendKillInfo();
+    virtual void Func78(int,int);
+    virtual void Func79(int,int);
+    virtual void Func80(int,int);
+    virtual void Func81(int);
+    virtual void Func82(int);
+    virtual void Func83(CBasePlayer*, int*); // related FL_ONGROUND
+    virtual void Func84(CBasePlayer*); // related think
+    virtual void Func85(int); // buy_spawn
+    virtual void Func86(int,int);
+    virtual void Func87(int,int);
+    virtual void SetMaxSpeed(CBasePlayer*, float);
+    virtual void IsNotJump(CBasePlayer*);
+    virtual void Func90(int,int,int,int,int);
+    virtual void Func91(int,int,int,int,int);
+    virtual void Func92(CBasePlayer*); // think?
+    virtual void PlayerThink(CBasePlayer*);
+    virtual void Func94(CBasePlayer*); // CSO_MR
+    virtual void Func95(CBasePlayer*); // CSO_WaitEnemy / CSO_WaitOppTeam
+    virtual void Func96(CBasePlayer*);
+    virtual void Func97(int);
+    virtual void Func98(int,int,int,int,int);
+    virtual void Func99(int,int,int,int,int);
+    virtual void Func100(int,int);
     // has 160 funcs
 
 public:

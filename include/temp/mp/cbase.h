@@ -297,7 +297,7 @@ public:
     virtual void ObjectCaps();
     virtual void Activate();
     virtual void SetObjectCollisionBox();
-    virtual int Classify();
+    virtual CLASSIFY Classify();
     virtual void DeathNotice(struct entvars_t*);
     virtual void TraceAttack(entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir01, float vecDir2, TraceResult *ptra, int bitsDamageType);
     virtual void TraceAttack_Proxy(entvars_t *pevAttacker, float flDamage, float vecDir0, float vecDir1, float vecDir2, TraceResult *ptra, int bitsDamageType, int);
@@ -1057,7 +1057,7 @@ public:
     bool m_bJustKilledTeammate;
     int m_iHostagesKilled; // ok
     int m_iMapVote;
-    bool m_bCanShoot;
+    bool m_bCanShoot; // ok
     float m_flLastFired;
     float m_flLastAttackedTeammate;
     bool m_bHeadshotKilled;
@@ -1079,11 +1079,11 @@ public:
     float m_flStopExtraSoundTime; // ok
     float m_flFlashLightTime; // ok
     int m_iFlashBattery; // ok
-    int cso_baseplayer_2;
-    int m_afButtonLast;
+    int m_afButtonLast; // ok
     int m_afButtonPressed;
     int m_afButtonReleased;
     int m_afButtonPressed2; // ADDED
+    int cso_baseplayer_2;
     edict_t *m_pentSndLast;
     float m_flSndRoomtype;
     float m_flSndRange;
@@ -1110,15 +1110,15 @@ public:
     int m_idrowndmg; // ok
     int m_idrownrestored; // ok
     int m_bitsHUDDamage; // ok
-    int m_iStepLeft;
-    BOOL m_fInitHUD;
+    BOOL m_fInitHUD; // ok
+    BOOL m_fGameHUDInitialized; // ok
     int m_iTrain; // ok
     BOOL m_fWeapon; // OK
-    BOOL m_fGameHUDInitialized;
-    BOOL m_fLongJump;
+    EHANDLE m_pTank;
     float m_fDeadTime; // OK
     BOOL m_fNoPlayerSound; // ok
-    EHANDLE m_pTank;
+    int ___unk1;
+    int ___unk2;
     float m_tSneaking;
     int m_iClientHealth; // ok
     int m_iClientBattery; // ok
@@ -1182,7 +1182,9 @@ public:
     char player_nf6;
     char player_nf8;
     char player_nf9;
-    int player_nfb[459];
+    int player_nfb[402];
+    float player_nf10;
+    int player_nff[56];
 
     char zbEnhance1[0x38];
     Player_ZBEnhance zbEnhance2[14];
