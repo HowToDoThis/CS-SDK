@@ -54,12 +54,14 @@ public:
     virtual ~CGameRules();
     virtual void RefreshSkillData();
     virtual void Think();
+    virtual int GameRules_unk01();
+    virtual bool GameRules_unk02();
 
 public:
-    BOOL m_bFreezePeriod; // ok
-    BOOL m_bBombDropped; // ok
+    BOOL m_bFreezePeriod;// ok
+    BOOL m_bBombDropped;// ok
 
-    int* gMonsterManager; // size 0x14DC(5340)
+    int* gMonsterManager;// size 0x14DC(5340)
 
     int rules_nf1[3];
     int* rules_vec1_a;
@@ -67,19 +69,22 @@ public:
     int* rules_vec1_c;
 
     int rules_unk[85];
-    class GameOptionManager* gOption; // ok
-    class CSharedDataMgr* gSharedDataMgr; // ok
-    class IGBuyMenuMgr* gBuyMenuMgr; // ok
-    class IGClassMenuMgr* gClassMenuMgr; // ok
-    class CSOFacade* gCSOFacade; // ok
-    class GamePlayerManager* gGamePlayerMgr; // ok
-    class StrGen* gStrGen; // ok
+    class GameOptionManager* gOption;// ok
+    class CSharedDataMgr* gSharedDataMgr;// ok
+    class IGBuyMenuMgr* gBuyMenuMgr;// ok
+    class IGClassMenuMgr* gClassMenuMgr;// ok
+    class CSOFacade* gCSOFacade;// ok
+    class GamePlayerManager* gGamePlayerMgr;// ok
+    class StrGen* gStrGen;// ok
     char rules_nf92;
-    class CZBSItemListener* gCZBSItemListener; // ok
+    class CZBSItemListener* gCZBSItemListener;// ok
     int rules_nf94;
-    int rules_nf95;
+    char rules_nf95_a;
+    char rules_nf95_b;
+    char rules_nf95_c;
+    char rules_nf95_d;
 
-    bool m_bGameOver;
+    bool m_bGameOver;// ok
     char mp_movingshot;
 };
 
@@ -92,62 +97,71 @@ public:
     float m_flRestartRoundTime;
     float m_flCheckWinConditions;
     float m_fRoundStartTime; // ok
-    int m_iRoundTime;
+    int m_iRoundTime; // ok
     int m_iRoundTimeSecs; // ok
     int m_iIntroRoundTime; // ok
     float m_fRoundStartTimeReal;
-    int m_iNumTR;
-    int m_iNumCT; // ok
-    int m_iAccountCT;
-    int m_iNumTerrorist;
-    char m_iNumSpawnableTerrorist;
-    int m_iNumSpawnableCT;
-    int m_iRoundWinStatus;
-    int m_iSpawnPointCount_CT;
+    int __undef9;
+    char m_iNumTR; // ok
+    char m_iNumCT; // ok
+    char m_iNumSpawnableTerrorist; // ok
+    char m_iNumSpawnableCT; // ok
+    int m_iSpawnPointCount_TR; // ok
+    int m_iSpawnPointCount_CT; // ok
+    char m_iHostagesRescued; // ok
+    int  m_iHostagesTouched; // ok
+    int m_iRoundWinStatus; // ok
+    short m_iNumCTWins; // ok
+    short m_iNumTerroristWins; // ok
 
-	char m_bIsCareer;
-	char multi_nf1a;
+	char m_bIsCareer; // ok
+	char multi_nf1a; // related timeout, #CSO_GameEndByTimeLimit
 	char multi_nf1c;
 	char multi_nf1d;
 
-    int m_iHostagesRescued;
-    int m_iHostagesTouched;
+    int __undef25;
+    int __undef26;
     int multi_nf22;
 
     float multi_nf23;
-    short multi_nf24;
+    char multi_nf24_a;
+    char multi_nf24_b;
     char multi_nf25;
     char multi_nf26;
     int multi_nf27;
-    int multi_nf28;
+    short multi_nf28_a;
+    short multi_nf28_b;
     float multi_32;
     float multi_33;
     float multi_34;
-    float multi_35;    
-    float multi_37;
-    float multi_38;
-    float multi_39;    
+    float multi_35;
+    float sv_accelerate;
+    float sv_friction;
+    float sv_stopspeed;
     
     int undef7;
-    bool m_bLevelInitialized;
-    bool m_bRoundTerminating;
-    bool m_bCompleteReset;
+    bool undef10;
+    bool undef12;
+    bool undef9;
     float m_flRequiredEscapeRatio;
     int m_iNumEscapers;
-    int m_iHaveEscaped;
-    bool m_bCTCantBuy;
-    bool m_bTCantBuy;
-    float m_flBombRadius;
+    int u4;
+    bool u2;
+    bool u3;
+    float u1;
     int undef8[2];
 
-    // ok
-	bool m_bMapHasBombTarget;
-	bool m_bMapHasBombZone;
-	bool m_bMapHasBuyZone;
-    char m_bMapHasRescueZone;
-    char m_bMapHasEscapeZone;
-    int m_bMapHasVIPSafetyZone;
-    int multi_nf50; // unk
+	bool m_bTargetBombed; // ok
+    bool m_bBombDefused; // ok
+	
+    bool m_bMapHasBombTarget; // ok
+	bool m_bMapHasBombZone; // ok
+    bool m_bMapHasBuyZone; // ok
+    bool m_bMapHasRescueZone; // ok
+    bool m_bMapHasEscapeZone; // ok
+    int m_bMapHasVIPSafetyZone; // ok
+
+    int undef;
 	int m_iC4Timer;
 	int m_iC4Guy;
 	int m_iLoserBonus;
@@ -156,7 +170,16 @@ public:
     float m_fMaxIdlePeriod;
 	int m_iLimitTeams;
 
-    int undef_4[4];
+    bool m_bLevelInitialized; // ok
+    char m_bRoundTerminating; // ok
+    bool m_bCompleteReset; // ok
+    char undef10_1;
+    int undef_4_a;
+    char undef_4_b_a;
+    char m_iHaveEscaped; // ok
+    char bCTCantBuy; // ok
+    char bTCantBuy; // ok
+    float m_flBombRadius; // ok
 	char m_iConsecutiveVIP; // ok
 	int m_iTotalGunCount;
 	int m_iTotalGrenadeCount;
@@ -164,14 +187,14 @@ public:
 	int m_iUnBalancedRounds;
 	int m_iNumEscapeRounds;
 
-    int m_iMapVotes[MAX_VOTE_MAPS]; // ok
+    int m_iMapVotes[MAX_VOTE_MAPS];// ok
 
 	int m_iLastPick;
 	int m_iMaxMapTime;
-	int m_iMaxRounds; // ok
+	int m_iMaxRounds;// ok
 	int m_iTotalRoundsPlayed;
-	int m_iMaxRoundsWon; // ok
-	int m_iStoredSpectValue; // ok
+	int m_iMaxRoundsWon;// ok
+	int m_iStoredSpectValue;// ok
 	float m_flForceCameraValue;
 	float m_flForceChaseCamValue;
 	float m_flFadeToBlackValue;
@@ -189,17 +212,17 @@ public:
 	CBasePlayer* m_pVIPQueue[MAX_VIP_QUEUES];
 
 protected:
+    int multi_nf18;
     float m_flIntermissionEndTime;
     float m_flIntermissionStartTime;
-    int multi_nf18;
-    int multi_nf19;
+    int multi_nf19; // m_iEndIntermissionButtonHit?
     int multi_nf20;
     char m_bInCareerGame;
-	float m_fCareerRoundMenuTime;
+	float m_fCareerRoundMenuTime;// ok
     int m_iCareerMatchWins;
     int m_iRoundWinDifference;
-    float m_fCareerMatchMenuTime;
-    char m_bSkipSpawn;
+    float m_fCareerMatchMenuTime;// ok
+    char m_bSkipSpawn;// ok
     int multi_proc_1;
     int multi_proc_2;
 };

@@ -594,10 +594,6 @@ public:
     virtual BOOL FInViewCone_Entity(struct CBaseEntity*);
     virtual int CSO_ADD_15();
 
-    // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
-    // ret 0
-    void Pain(int iLastHitGroup, bool bHasArmour);
-
 public:
     Activity m_Activity; // ok
     Activity m_IdealActivity; // ok
@@ -992,6 +988,9 @@ struct Player_ZBEnhance {
 // Size 0x2350
 class CBasePlayer : public CBaseMonster {
 public:
+    // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
+    // ret 0
+    virtual void Pain(int iLastHitGroup, bool bHasArmour);
 
 public:
     int cso_u1;
@@ -1255,21 +1254,21 @@ public:
     virtual BOOL IsWeaponFlag0x10000();
     virtual BOOL IsWeaponFlag0x1000();
     virtual BOOL IsWeaponFlag0x40000__SetAnimation();
-    virtual void Unknown3();
-    virtual void Unknown4();
+    virtual void BPI_Unknown3();
+    virtual void BPI_Unknown4();
     virtual void GetAutoaimVector(float* a, float b);
-    virtual double Unknown6();
-    virtual void Unknown7(float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
-    virtual void Unknown8();
-    virtual void Unknown9();
-    virtual void Unknown10();
-    virtual void Unknown11();
-    virtual void Unknown12();
-    virtual void Unknown13();
-    virtual void Unknown14();
-    virtual void Unknown15();
-    virtual void Unknown16();
-    virtual void Unknown17();
+    virtual double BPI_Unknown6();
+    virtual void BPI_Unknown7(float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
+    virtual void BPI_Unknown8();
+    virtual void BPI_Unknown9();
+    virtual void BPI_Unknown10();
+    virtual void BPI_Unknown11();
+    virtual void BPI_Unknown12();
+    virtual void BPI_Unknown13();
+    virtual void BPI_Unknown14();
+    virtual void BPI_Unknown15();
+    virtual void BPI_Unknown16();
+    virtual void BPI_Unknown17();
 
 public:
     struct CBasePlayer *m_pPlayer;
@@ -1295,18 +1294,18 @@ public:
     virtual void Reload();
     virtual void WeaponIdle();
     virtual void RetireWeapon();
-    virtual void Unknown9(); // MPToCL
-    virtual void Unknown10();
+    virtual void BPW_Unknown9(); // MPToCL
+    virtual void BPW_Unknown10();
     virtual int UseDecrement();
-    virtual void Unknown12();
-    virtual void Unknown13();
-    virtual void Unknown14();
+    virtual void BPW_Unknown12();
+    virtual void BPW_Unknown13();
+    virtual void BPW_Unknown14();
     virtual void IsWeaponFlag0x2000();
     virtual void IsWeaponFlag0x4000();
     virtual void GetAmmoClip__iMaxClip();
     virtual void GetAmmoClip2();
-    virtual void Unknown15();
-    virtual void Unknown16();
+    virtual void BPW_Unknown15();
+    virtual void BPW_Unknown16();
     virtual void FireRemaining(int *shotsFired, float *shootTime, int bIsGlock);
     virtual void ItemPostFrame();
 

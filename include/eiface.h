@@ -286,18 +286,18 @@ typedef struct enginefuncs_s {
     void* (*IsUnkFunc5or4)();
     void* (*SendHost2)();
     void* (*SomethingPlayerRestore)();
-    void* (*GetUserID)();
+    int   (*GetUserID)();
     void* (*CSOFunction1)();
-    void* (*SendHost3)();
-    void* (*SendHost16)();
-    void* (*SendHost5)();
-    void* (*SendHost4)();
-    void* (*SendHost7)();
-    void* (*SendHost8)();
-    void* (*SendHost9)();
-    void* (*SendHost10)();
-    void* (*SendHost12)();
-    void* (*SendHost17)();
+    void (*SendHost3)();
+    void (*SendHost16)();
+    void (*SendHost5)();
+    void (*SendHost4)();
+    void (*SendHost7)();
+    void (*SendHost8)();
+    void (*SendHost9)();
+    void (*SendHost10)(int,int,int);
+    void (*SendHost12)();
+    void (*SendHost17)();
     void* (*NUM_FOR_EDICT)();
     void* (*PrecacheModelDynamic)();
     void* (*SendHost24)();
@@ -357,11 +357,11 @@ typedef struct _DLL_FUNCTIONS {
     int         (*pfnInconsistentFile)        (const struct edict_s *player, const char *filename, char *disconnect_message);
     int         (*pfnAllowLagCompensation)    (void);
     // CSO
-    int (__cdecl* pfnMakeHostReady2)();
+    int (__cdecl* pfnHalfLifeMultiplay__ReadMultiplayCvars)();
     int (__cdecl* pfnRegisterUserMsg)();
     int (__cdecl* pfnCSOFunc03)(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
-    char* (__cdecl* pfnCSOFunc04)(); // get some name
-    int (__cdecl* pfnMakeHostReady3)();
+    char* (__cdecl* pfnFindBotToKick)(); // get some name
+    int (__cdecl* InstallBotControl)();
     int (__cdecl* pfnLoadBotNav)();
     int (__cdecl* pfnMakeHostReady)();
     int (__cdecl* pfnMakeHostRun)(edict_t* g_psv_edict, int num_edicts, int maxclient);
@@ -371,7 +371,7 @@ typedef struct _DLL_FUNCTIONS {
     int (__cdecl* pfnLoadHostCrash)();
     int (__cdecl* pfnHostStart2)(int userID);
     int (__cdecl* pfnCSOUnk6)();
-    int (__cdecl* pfnCSOUnk7)();
+    int (__cdecl* pfnCSOUnk7)(); // return 4
     int (__cdecl* pfnCSOUnk8)();
 } DLL_FUNCTIONS;
 
