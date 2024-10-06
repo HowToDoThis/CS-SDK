@@ -1,2 +1,6 @@
 .idea/
 /.vscode
+/.vs
+/CSO.SDK
+/x64
+/Debug

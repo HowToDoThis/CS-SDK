@@ -1,4 +1,4 @@
-#define BIT(n) (1<<(n))
+#pragma once
 
 typedef enum TeamName_s {
     UNASSIGNED,
@@ -9,7 +9,7 @@ typedef enum TeamName_s {
 
 typedef enum walkmove_s { WALKMOVE_NORMAL, WALKMOVE_WORLDONLY, WALKMOVE_CHECKONLY, } walkmove_t;
 typedef enum dead_s { DEAD_NO, DEAD_DYING, DEAD_DEAD, DEAD_RESPAWNABLE, DEAD_DISCARDBODY, } dead_t;
-typedef enum damage_s { DAMAGE_NO, DAMAGE_YES, DAMAGE_AIM, } damage_t;
+typedef enum takedamage_s { DAMAGE_NO, DAMAGE_YES, DAMAGE_AIM, } takedamage_t;
 typedef enum solid_s { SOLID_NOT, SOLID_TRIGGER, SOLID_BBOX, SOLID_SLIDEBOX, SOLID_BSP, } solid_t;
 typedef enum movetype_s {
     MOVETYPE_NONE = 0,
@@ -207,22 +207,22 @@ enum _Menu {
 #define MAX_WEAPONS 352
 
 struct AmmoInfo {
-	const char *pszName;
-	int iId;
+    const char *pszName;
+    int iId;
 };
 
 struct ItemInfo {
-	int iSlot;
-	int iPosition;
-	const char *pszAmmo1;
-	int iMaxAmmo1;
-	const char *pszAmmo2;
-	int iMaxAmmo2;
-	const char *pszName;
-	int iMaxClip;
-	int iId;
-	int iFlags;
-	int iWeight;
+    int iSlot;
+    int iPosition;
+    const char *pszAmmo1;
+    int iMaxAmmo1;
+    const char *pszAmmo2;
+    int iMaxAmmo2;
+    const char *pszName;
+    int iMaxClip;
+    int iId;
+    int iFlags;
+    int iWeight;
 };
 
 struct CUtlMemory {
@@ -284,6 +284,12 @@ enum TrackCommands {
     COMMANDS_TO_TRACK,
 };
 
+struct AmmoInventory {
+    int iMaxAmmo;
+    int iAmmo;
+};
+
+class CBasePlayer;
 class CBaseEntity {
 public:
     virtual void Function1(); // unk ptr
@@ -335,14 +341,14 @@ public:
     virtual void GetKnockbackData();
     virtual void GetArmorData();
     virtual void CSO_ADD_1();
-    virtual struct CBaseEntity* GetNextTarget();
+    virtual CBaseEntity* GetNextTarget();
     virtual void Think();
     virtual void Touch(CBaseEntity *pOther);
     virtual void Use(CBaseEntity *pActivator, CBaseEntity *pCaller, USE_TYPE useType, float value);
     virtual void Blocked(CBaseEntity *pOther);
     virtual void UpdateOnRemove();
     virtual void CSO_ADD_2();
-    virtual struct CBaseEntity* Respawn();
+    virtual CBaseEntity* Respawn();
     virtual void CSO_ADD_3();
     virtual void CSO_ADD_4();
     virtual vec_t* Center(vec_t*);
@@ -383,6 +389,10 @@ public:
     int entity_nf7;
     int entity_nf8;
 };
+
+#ifndef IDA
+static_assert(sizeof(CBaseEntity) == 0x16C, "CBaseEntity");
+#endif
 
 class CBaseDelay : public CBaseEntity {
 public:
@@ -431,11 +441,6 @@ public:
     vec3_t m_vecFinalAngle;
     int m_bitsDamageInflict; // ok
     string_t m_sMaster;  // ok
-};
-
-struct AmmoInventory {
-    int iMaxAmmo;
-    int iAmmo;
 };
 
 enum {
@@ -591,7 +596,7 @@ public:
     virtual void Look(int iDistance);
     virtual CBaseEntity* BestVisibleEnemy();
     virtual BOOL FInViewCone_Vector(vec_t* pOrigin);
-    virtual BOOL FInViewCone_Entity(struct CBaseEntity*);
+    virtual BOOL FInViewCone_Entity(CBaseEntity*);
     virtual int CSO_ADD_15();
 
 public:
@@ -610,11 +615,14 @@ public:
     EHANDLE m_hTargetEnt;
     float m_flFieldOfView;
     int m_bloodColor; // ok
-    fVector m_HackedGunPos; // ok
-    fVector m_vecEnemyLKP; // ok
+    Vector m_HackedGunPos; // ok
+    Vector m_vecEnemyLKP; // ok
 
     unsigned char monster_nf1;
 };
+#ifndef IDA
+static_assert(sizeof(CBaseMonster) == 0x264, "CBaseMonster");
+#endif
 
 enum WeaponIdType {
     WEAPON_NONE = 0,
@@ -961,17 +969,17 @@ enum WeaponIdType {
 };
 
 enum PLAYER_ANIM {
-	PLAYER_IDLE,
-	PLAYER_WALK,
-	PLAYER_JUMP,
-	PLAYER_SUPERJUMP,
-	PLAYER_DIE,
-	PLAYER_ATTACK1,
-	PLAYER_ATTACK2,
-	PLAYER_FLINCH,
-	PLAYER_LARGE_FLINCH,
-	PLAYER_RELOAD,
-	PLAYER_HOLDBOMB
+    PLAYER_IDLE,
+    PLAYER_WALK,
+    PLAYER_JUMP,
+    PLAYER_SUPERJUMP,
+    PLAYER_DIE,
+    PLAYER_ATTACK1,
+    PLAYER_ATTACK2,
+    PLAYER_FLINCH,
+    PLAYER_LARGE_FLINCH,
+    PLAYER_RELOAD,
+    PLAYER_HOLDBOMB
 };
 
 struct Player_ZBEnhance {
@@ -985,12 +993,26 @@ struct Player_ZBEnhance {
 };
 
 // GetClassPtr
-// Size 0x2350
+// CHN141219 0x1F8C(8076)
+// CHN160531 0x2350(9040)
+class CBasePlayerItem;
 class CBasePlayer : public CBaseMonster {
 public:
     // CBasePlayer has lots of shits :/ TODO: FIND OUT EVERY SHITS
     // ret 0
     virtual void Pain(int iLastHitGroup, bool bHasArmour);
+    virtual bool Jump();
+    virtual void Duck();
+    virtual void PreThink();
+    virtual void PostThink();
+    virtual float* GetGunPosition();
+    virtual bool IsBot();
+    virtual void SetModel();
+    virtual void UpdateClientData();
+    virtual void DeathSound(); // related death
+    virtual void SetAnimation(PLAYER_ANIM playerAnim);
+    virtual void ImpulseCommands();
+    virtual void RoundRespawn();
 
 public:
     int cso_u1;
@@ -1054,14 +1076,14 @@ public:
     vec3_t m_vLastOrigin;
     int m_iCurrentKickVote;
     float m_flNextVoteTime;
-    bool m_bJustKilledTeammate;
+    bool m_bJustKilledTeammate; // ok
     int m_iHostagesKilled; // ok
     int m_iMapVote;
     bool m_bCanShoot; // ok
     float m_flLastFired;
     float m_flLastAttackedTeammate;
     bool m_bHeadshotKilled;
-    bool m_bPunishedForTK;
+    bool m_bPunishedForTK; // ok
     bool m_bReceivesNoMoneyNextRound;
     int m_iTimeCheckAllowed;
     bool m_bHasChangedName; // ok
@@ -1134,7 +1156,7 @@ public:
     CBasePlayerItem *m_pLastItem; // ok
     int m_rgAmmo[MAX_AMMO_SLOTS]; // ok
     int m_rgAmmoLast[MAX_AMMO_SLOTS]; // ok
-    fVector m_vecAutoAim; // ok
+    Vector m_vecAutoAim; // ok
     BOOL m_fOnTarget; // ok
     int m_iDeaths;
     int m_izSBarState[SBAR_END];
@@ -1154,9 +1176,9 @@ public:
     vec3_t m_prevgaitorigin;
     float m_flPitch;
     float m_flYaw;
-    float m_flGaitMovement;
-    bool m_bVGUIMenus;
-    bool m_bShowHints;
+    int m_iAutoWepSwitch; // ok, SetPrefsFromUserinfo, _cl_autowepswitch
+    bool m_bVGUIMenus; // ok, SetPrefsFromUserinfo, _vgui_menus
+    bool m_bShowHints; // ok, SetPrefsFromUserinfo, _ah
     char m_bWasFollowing; // ok
     char undef7;
     float m_flNextFollowTime; // ok
@@ -1182,7 +1204,9 @@ public:
     char player_nf6;
     char player_nf8;
     char player_nf9;
-    int player_nfb[402];
+    char player_nf11[28];
+    int player_knifeID;
+    int player_nfb[394];
     float player_nf10;
     int player_nff[56];
 
@@ -1192,44 +1216,33 @@ public:
     int zbEnhanceDNA[18];
     int player_nfe[178];
 };
+#ifndef IDA
+static_assert(sizeof(CBasePlayer) == 0x2350, "CBasePlayer");
+#endif
 
 struct AutoBuyInfoStruct {
-	int m_class;
-	char *m_command;
-	char *m_classname;
-};
-
-struct ItemInfo {
-	int iSlot;
-	int iPosition;
-	const char *pszAmmo1;
-	int iMaxAmmo1;
-	const char *pszAmmo2;
-	int iMaxAmmo2;
-	const char *pszName;
-	int iMaxClip;
-	int iId;
-	int iFlags;
-	int iWeight;
+    int m_class;
+    char *m_command;
+    char *m_classname;
 };
 
 struct WeaponInfoStruct {
-	int id;
-	int clipCost;
-	int buyClipSize;
-	int gunClipSize;
-	int maxRounds;
-	AmmoType ammoType;
-	char *entityName;
+    int id;
+    int clipCost;
+    int buyClipSize;
+    int gunClipSize;
+    int maxRounds;
+    AmmoType ammoType;
+    char *entityName;
     int unk19;
 };
 
 class CBasePlayerItem : public CBaseAnimating {
 public:
     virtual int AddToPlayer();
-    virtual int AddDuplicate(struct CBasePlayerItem* pOriginal);
-    virtual int GetItemInfo(struct ItemInfo* info);
-    virtual void CanDeploy();
+    virtual int AddDuplicate(CBasePlayerItem* pOriginal);
+    virtual int GetItemInfo(ItemInfo* info);
+    virtual int CanDeploy();
     virtual void CanDrop();
     virtual void Deploy();
     virtual void Unknown1();
@@ -1248,21 +1261,21 @@ public:
     virtual void GetWeaponPtr();
     virtual void GetMaxSpeed();
     virtual void Unknown2();
-    virtual int GetItemSlot();
-    virtual void GetUnk12();
-    virtual BOOL IsWeaponFlag0x400__GetGunPosition();
+    virtual int  GetWeaponType(); // slot
+    virtual int  GetWeaponPosition();
+    virtual BOOL IsWeaponFlag0x400();
     virtual BOOL IsWeaponFlag0x800();
     virtual BOOL IsWeaponFlag0x8000();
     virtual BOOL IsWeaponFlag0x10000();
     virtual BOOL IsWeaponFlag0x1000();
-    virtual BOOL IsWeaponFlag0x40000__SetAnimation();
-    virtual void BPI_Unknown3();
-    virtual void BPI_Unknown4();
+    virtual BOOL IsWeaponFlag0x40000();
+    virtual int  BPI_Unknown3();
+    virtual int  BPI_Unknown4();
     virtual void GetAutoaimVector(float* a, float b);
     virtual double BPI_Unknown6();
     virtual void BPI_Unknown7(float *a1, float *a2, float *a3, float *a4, float *a5, float *a6, float *a7);
-    virtual void BPI_Unknown8();
-    virtual void BPI_Unknown9();
+    virtual char BPI_Unknown8();
+    virtual char BPI_Unknown9();
     virtual void BPI_Unknown10();
     virtual void BPI_Unknown11();
     virtual void BPI_Unknown12();
@@ -1273,20 +1286,31 @@ public:
     virtual void BPI_Unknown17();
 
 public:
-    struct CBasePlayer *m_pPlayer;
-    CBasePlayerItem *m_pNext;
+    CBasePlayer* m_pPlayer;
+    CBasePlayerItem* m_pNext;
     int m_iId; // ok, WEAPON_???
     int m_iModelIndex;
     int cso_baseplayeritem_1;
 };
 
+// CBasePlayerItem::iMaxAmmo1
+// CHN160531: 55 8B EC 83 EC ? 56 8B F1 8D 4D ? 51
+
+// CBasePlayerWeapon::ExtractAmmo
+// CHN141219: 83 EC ? 33 C0 53 56 8B F1 57
+// CHN160531: 55 8B EC 53 56 57 8B F9 33 C0
+// 
+// CBasePlayerWeapon::AddPrimaryAmmo
+// CHN141219: 53 8B 5C 24 ? 56 83 FB ? 57 8B F1 7D
+// CHN160531: 55 8B EC 53 56 57 8B 7D ? 8B F1 83 FF
+
 // CAK47 size 0x238
 class CBasePlayerWeapon : public CBasePlayerItem {
 public:
-    virtual int ExtractAmmo(CBasePlayerWeapon *pWeapon);
-    virtual int ExtractClipAmmo(CBasePlayerWeapon *pWeapon);
-    virtual int AddWeapon();
-    virtual void AddSpecialAmmo(struct CBasePlayer* pPlayer);
+    virtual int  ExtractAmmo(CBasePlayerWeapon *pWeapon);
+    virtual int  ExtractClipAmmo(CBasePlayerWeapon *pWeapon);
+    virtual int  AddWeapon();
+    virtual void AddSpecialAmmo(CBasePlayer* pPlayer);
     virtual void PlayEmptySound();
     virtual void ResetEmptySound();
     virtual void SendWeaponAnim(int, bool);
@@ -1297,15 +1321,15 @@ public:
     virtual void WeaponIdle();
     virtual void RetireWeapon();
     virtual void BPW_Unknown9(); // MPToCL
-    virtual void BPW_Unknown10();
-    virtual int UseDecrement();
-    virtual void BPW_Unknown12();
-    virtual void BPW_Unknown13();
+    virtual int  BPW_Unknown10();
+    virtual int  UseDecrement();
+    virtual int  BPW_Unknown12();
+    virtual int  BPW_Unknown13();
     virtual void BPW_Unknown14();
     virtual void IsWeaponFlag0x2000();
     virtual void IsWeaponFlag0x4000();
-    virtual void GetAmmoClip__iMaxClip();
-    virtual void GetAmmoClip2();
+    virtual int  GetAmmoClip();
+    virtual int  GetAmmoClip2();
     virtual void BPW_Unknown15();
     virtual void BPW_Unknown16();
     virtual void FireRemaining(int *shotsFired, float *shootTime, int bIsGlock);
@@ -1315,7 +1339,7 @@ public:
     virtual void CWeapon__FireEvent(float flSpread, float flCycleTime, BOOL fUseAutoAim);
     // Fun fact
     // SIG: 56 FF 15 ? ? ? ? 8B C8 8B 10 FF 92 ? ? ? ? 8B F0 FF 15 ? ? ? ? 6A FE 6A 24 6A 23 6A 20 6A 1D 6A 18 6A 14 6A 0D 8B C8 6A 0B 6A 0E 6A 09 8B 01 6A 08 FF 90 ? ? ? ? 50 E8 ? ? ? ? 83 C4 34 84 C0 75 38 83 FE 1E 74
-    virtual void CWeapon__GetDamage(float flSpread, float flCycleTime, BOOL fUseAutoAim);
+    virtual double CWeapon__GetDamage();
 
 public:
     int m_iPlayEmptySound; // ok
@@ -1357,3 +1381,6 @@ public:
 
     unsigned short m_usFireWeapon; // temp var, some own class uses
 };
+#ifndef IDA
+static_assert(sizeof(CBasePlayerWeapon) == 0x238, "CBasePlayerWeapon");
+#endif

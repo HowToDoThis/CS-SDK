@@ -8,3 +8,6 @@
 #include "CGameRules.h"
 #include "CSOGameRules.h"
 #include "CFlyerFlockManager.h"
+
+// weapons
+#include "weapon.h"

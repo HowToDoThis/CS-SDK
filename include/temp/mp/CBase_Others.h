@@ -102,3 +102,11 @@ public:
 	InfoMapBuyParam m_iBuyingStatus;
 	float m_flBombRadius;
 };
+
+// CHN160531 0x194(404)
+class CZombiTrap : CBaseAnimating {
+public:
+	float nf1;
+	float nf2;
+	int nf3;
+};

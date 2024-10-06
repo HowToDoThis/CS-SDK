@@ -66,11 +66,11 @@ struct GameOptionManager_vtables
     void (__thiscall* Function64)(struct GameOptionManager* this);
     void (__thiscall* Function65)(struct GameOptionManager* this);
     void (__thiscall* Function66)(struct GameOptionManager* this);
-    void (__thiscall* Function67)(struct GameOptionManager* this);
+    int  (__thiscall* Function67)(struct GameOptionManager* this);
     void (__thiscall* Function68)(struct GameOptionManager* this);
     void (__thiscall* Function69)(struct GameOptionManager* this);
     void (__thiscall* Function70)(struct GameOptionManager* this);
-    void (__thiscall* Function71)(struct GameOptionManager* this);
+    int  (__thiscall* GetWeaponRestriction)(struct GameOptionManager* this);
     void (__thiscall* Function72)(struct GameOptionManager* this);
     void (__thiscall* Function73)(struct GameOptionManager* this);
     void (__thiscall* Function74)(struct GameOptionManager* this);
@@ -159,7 +159,7 @@ struct GameOptionManager_vtables
     void (__thiscall* Function157)(struct GameOptionManager* this);
     void (__thiscall* Function158)(struct GameOptionManager* this);
     void (__thiscall* Function159)(struct GameOptionManager* this);
-    void (__thiscall* Function160)(struct GameOptionManager* this);
+    unsigned char (__thiscall* ReturnUnk16)(struct GameOptionManager* this);
     void (__thiscall* Function161)(struct GameOptionManager* this);
     void (__thiscall* Function162)(struct GameOptionManager* this);
     void (__thiscall* Function163)(struct GameOptionManager* this);

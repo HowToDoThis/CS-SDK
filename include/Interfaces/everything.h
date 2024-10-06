@@ -1,4 +1,4 @@
-#define CHN240411
+//#define CHN240411
 
 // base
 #include "IBaseInterface.h"
@@ -13,3 +13,6 @@
 
 #include "GameUIFunc.h"
 #include "GameConsole.h"
+
+// vgui2
+#include "IScheme.h"

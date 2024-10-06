@@ -1,30 +1,26 @@
-struct CSVLocalized_vtable
-{
-    void (__thiscall* CreateArray)(struct CSVLocalized* this, int size, int count);
-    void (__thiscall* Function2)(struct CSVLocalized* this);
-    void (__thiscall* DeleteArray)(struct CSVLocalized* this);
-    void (__thiscall* destructor)(struct CSVLocalized* this); // delete
-    void (__thiscall* Function5)(struct CSVLocalized* this, int a2, int a3, char* str);
-    void (__thiscall* LoadFile)(struct CSVLocalized* this);
-    void (__thiscall* Function7)(struct CSVLocalized* this); // null here
-    void (__thiscall* Function8)(struct CSVLocalized* this, const char* szFileName, int unk);
-    void (__thiscall* Function9)(struct CSVLocalized* this);
-};
+class CSVLocalized {
+public:
+    virtual void Init(unsigned int size, unsigned int count);
+    virtual int  Func2(); // call func5
+    virtual void Delete();
+    virtual ~CSVLocalized();
+    virtual int  Func5(int, int, char*);
+    virtual bool Load(const char* szPath);
+    virtual char* ReadString(int, int, char*, int);
+    virtual bool LoadEncrypt(const char* szPath, int);
+    virtual bool Parse(int,int);
 
-struct CSVLocalized
-{
-    CSVLocalized_vtable* vfptr;
-    int iBufferSize; // 256
-    int unk2;
-    int unk3;
-    char unk4;
+public:
+    int   iBufferSize; // 256
+    int   unk2;
+    int   unk3;
+    char  unk4;
     void* unk5; // array
-    int* unk6; // 
 };
 
-struct StringTable : CSVLocalized
-{
-    void* unk1; // array
+class StringTable : CSVLocalized {
+    int   nf1;
+    void* nf2;
 };
 
 struct StringTableWrapper_vtable
@@ -225,29 +221,19 @@ public:
     bool bCouponInquiry;
 };
 
-struct ItemCSV_tables
-{
-    void (__thiscall* Function1)(struct ItemCSV* this);
-    void (__thiscall* Function2)(struct ItemCSV* this);
-    void (__thiscall* Function3)(struct ItemCSV* this);
-    void (__thiscall* Function4)(struct ItemCSV* this);
-    void (__thiscall* Function5)(struct ItemCSV* this);
-    void (__thiscall* Function6)(struct ItemCSV* this);
-    void (__thiscall* Function7)(struct ItemCSV* this);
-    void (__thiscall* Function8)(struct ItemCSV* this);
-    void (__thiscall* Function9)(struct ItemCSV* this);
-    void (__thiscall* Function10)(struct ItemCSV* this);
-};
-
-struct ItemCSV : CSVLocalized
-{
+class ItemTable : CSVLocalized {
+    int nf1; // custom?
     int unk1;
-    int unk2;
+
+    int unk2; // std::map
     int unk3;
-    int unk4;
+
+    int unk4; // std::map
     int unk5;
-    int unk6;
+
+    int unk6; // std::map
     int unk7;
+
     int unk8;
     int unk9;
     int unk10;

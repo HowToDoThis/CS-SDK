@@ -11,21 +11,20 @@ class CSOGameRules {
 public:
     virtual ~CSOGameRules();
     virtual void Func1();
-    virtual void Func2_Save();
-    virtual void Func3_Read();
-    virtual int  Func4(int,int);
+    virtual void Save();
+    virtual void Restore();
     virtual int  Func5(int,int);
-    virtual void Func6();
+    virtual int  Func6(int,int);
     virtual bool ClientCommand_DeadOrAlive(class CBasePlayer* pPlayer, const char* pcmd);
     virtual int  Func7(int,int);
     virtual void Func8();
     virtual void Func9();
-    virtual void Func10();
+    virtual int  Func10(int,int,int,int);
     virtual void Func11();
     virtual void InitHUD(class CBasePlayer* pPlayer);
     virtual void Think();
     virtual void RestartRoundCheck();
-    virtual void OnRoundFreezeEnd(); // func15
+    virtual void OnRoundStart(); // func15
     virtual void SendMsgAllowSpec();
     virtual void SendMsgForceCam();
     virtual void SendMsgMHRSt();
@@ -55,7 +54,7 @@ public:
     virtual char Func42(int, const char*,int,int*);
     virtual void Func43(int,int,int);
     virtual void Func44(); // FlyerFlock
-    virtual void RestartRound();
+    virtual void RestartRound(); // func45
     virtual void TeamBalance();
     virtual void Reset();
     virtual void SetRoundStartTime();
@@ -64,13 +63,13 @@ public:
     virtual void Func51(); // unk
     virtual void Func52();
     virtual void BalanceTeams();
-    virtual void InitializePlayerCounts();
+    virtual void InitializePlayerCounts(); // func55
     virtual void Func56(int);
     virtual bool CheckWinConditions();
     virtual void Func58();
     virtual void Broadcast(const char* sentence);
     virtual void Func60();
-    virtual void Func61();
+    virtual void Func61(); // call Func110(2,0,0)
     virtual char Func62(int);
     virtual void Func63(CBaseEntity*); // drop cmd_argv(1)
     virtual char Func64(int,int);
@@ -110,7 +109,66 @@ public:
     virtual void Func98(int,int,int,int,int);
     virtual void Func99(int,int,int,int,int);
     virtual void Func100(int,int);
-    // has 160 funcs
+    virtual void Func101(CBasePlayer*,int*);
+    virtual void Func102(CBasePlayer*);
+    virtual void Func103();
+    virtual void Func104(int,int,int,int,int,int);
+    virtual void Func105(CBaseEntity*); // firetargets?
+    virtual void Func106();
+    virtual void Func107();
+    virtual void Func108();
+    virtual void Func109();
+    virtual void Func110(int,int,int);
+    virtual void Func111();
+    virtual void Func112(); // return 600.0
+    virtual void Func113();
+    virtual void Func114();
+    virtual void Func115();
+    virtual void Func116();
+    virtual void Func117();
+    virtual void Func118();
+    virtual void Func119();
+    virtual void Func120();
+    virtual void Func121();
+    virtual void Func122();
+    virtual void Func123();
+    virtual void Func124();
+    virtual void Func125();
+    virtual void Func126();
+    virtual void Func127();
+    virtual void Func128();
+    virtual void Func129();
+    virtual void Func130();
+    virtual void Func131();
+    virtual void Func132();
+    virtual void Func133();
+    virtual void Func134();
+    virtual void Func135();
+    virtual void Func136();
+    virtual void Func137();
+    virtual void Func138();
+    virtual void Func139();
+    virtual void Func140();
+    virtual void Func141();
+    virtual void Func142();
+    virtual void Func143();
+    virtual void Func144();
+    virtual void Func145();
+    virtual void Func146();
+    virtual void Func147();
+    virtual void Func148();
+    virtual void Func149();
+    virtual void Func150();
+    virtual void Func151();
+    virtual void Func152();
+    virtual void Func153();
+    virtual void Func154();
+    virtual void Func155();
+    virtual void Func156();
+    virtual void Func157();
+    virtual void Func158();
+    virtual void Func159();
+    virtual void Func160();
 
 public:
     CSOGameRules_unknown_1 rules_nf1;
@@ -188,4 +246,80 @@ public:
     int iceWorld_nf25;
     int iceWorld_nf26;
     int iceWorld_nf27;
+};
+
+struct ZombiUnk {
+    int nf1;
+    int nf2;
+    int nf3;
+    int nf4;
+    int nf5;
+};
+
+// size 4A4
+class CSOGameRulesZombi : public CSOGameRules {
+public:
+    virtual void Zombi_Func1(CBasePlayer *,CBasePlayer *);
+    virtual bool Zombi_Func2(); // call func3
+    virtual void Zombi_Func3(); // Countdown
+    virtual void Zombi_Func4();
+    virtual void Zombi_Func5(CBasePlayer *,CBasePlayer *,char*);
+    virtual void Zombi_Func6();
+
+public:
+    short zombi_nf1;
+    int zombi_nf2;
+    int zombi_nf3;
+
+    void* zombi_nf4; // std::map
+    int zombi_nf5;
+    
+    int zombi_undef1[34];
+    ZombiUnk zombi_unk1[33];
+    int zombi_undef2[5];
+};
+
+// size 4B4
+class CSOGameRulesZombi2 : public CSOGameRulesZombi {
+public:
+    virtual void ZombieSelect(CBasePlayer*, char*); // selzmb
+    virtual void Zombi2_Func2();
+    virtual void Zombi2_Func3(); // Supplybox, weaponbox2_zombie
+
+public:
+    void* zombi2_nf1; // std::map
+    int zombi2_nf2;
+
+    void* zombi2_nf3; // std::map
+    int zombi2_nf4;
+};
+
+// size 4E4
+class CSOGameRulesZombi3 : public CSOGameRulesZombi2 {
+public:
+    virtual void Zombi3_Func1();
+    virtual void Zombi3_Func2(CBasePlayer*,int,float* a3); // a3 = vector
+    virtual void Zombi3_Func3();
+    virtual void Zombi3_Func4();
+    virtual void Zombi3_Func5();
+
+public:
+    int zombi3_nf1;
+    int zombi3_nf2;
+
+    int zombi3_nf3;
+
+    int zombi3_nf4;
+    int zombi3_nf5;
+    int zombi3_nf6;
+    int zombi3_nf7;
+
+
+    int  zombi3_nf8;
+    int  zombi3_nf9;
+
+    char zombi3_nf10;
+
+    void* zombi3_nf11; // std::map
+    int   zombi3_nf12;
 };

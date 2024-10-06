@@ -57,8 +57,8 @@ public:
     virtual unkwpnstruct* Func02(); // return unkwpnstruct
     virtual void Func03(); // 0x384933A8 + (62 * a) | char a[305][68] leftover 33(0x21)
     virtual void Init(); // 372F2720 | 80 3D ? ? ? ? ? 56 8B F1 0F 85
-    virtual void Func05();
-    virtual void Func06();
+    virtual int  Func05();
+    virtual void Func06(int);
     virtual int  Func07(int,int);
     virtual char Func08(int,int);
     virtual const char* Func09(); // return unkwpnstruct->szUnk1
@@ -119,17 +119,19 @@ public:
     virtual void Func64();
 
 public:
-    int nf1_1;
-    int nf1_2;
-    int nf1_3;
+    int iGameMode;
+    int iWeaponRestriction_1;
+    int iWeaponRestriction_2;
     int nf1_4;
-    char undef1[15360]; // 7680 (x = 8, y = 10)
+    //int undef1[3840];
+    int undef1[2][8][10][6][4];
+    //char undef1[15360]; // 7680 (x = 8(32), y = 10(40): (1280))
     char nf2;
     char nf2_1[3];
     char undef2[2240];
     char nf2_2;
     char nf2_3[3];
-    char undef3[64];
+    int undef3[16];
     int nf3_1;
     int nf3_2;
     int nf3_3;

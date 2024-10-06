@@ -76,7 +76,7 @@ struct Packet_SearchRoom : Packet {
     char* unk5;
 
     char* unk6;
-    int unk7; // 0
+    int subType;
     int unk8;
     int unk9;
     int unk10; // 5 (2)

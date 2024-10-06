@@ -349,23 +349,26 @@ typedef struct _DLL_FUNCTIONS {
     void        (*pfnCreateBaseline)          (int player, int eindex, struct entity_state_s *baseline, struct edict_s *entity, int playermodelindex, vec3_t player_mins, vec3_t player_maxs);
     void        (*pfnRegisterEncoders)        (void);
     int         (*pfnGetWeaponData)           (struct edict_s *player, struct weapon_data_s *info);
-    void        (*pfnCmdStart)            (const struct edict_t *player, const struct usercmd_s *cmd, unsigned int random_seed);
+    void        (__cdecl*pfnCmdStart)            (const struct edict_t *player, const struct usercmd_s *cmd, unsigned int random_seed);
     void        (*pfnCmdEnd)              (const struct edict_t *player);
     int         (*pfnConnectionlessPacket)    (const struct netadr_s *net_from_, const char *args, char *response_buffer, int *response_buffer_size);
     int         (*pfnGetHullBounds)           (int hullnumber, float *mins, float *maxs);
     void        (*pfnCreateInstancedBaselines)(void);
     int         (*pfnInconsistentFile)        (const struct edict_s *player, const char *filename, char *disconnect_message);
     int         (*pfnAllowLagCompensation)    (void);
+} DLL_FUNCTIONS;
+
+typedef struct _CSO_DLL_FUNCTIONS : DLL_FUNCTIONS {
     // CSO
     int (__cdecl* pfnHalfLifeMultiplay__ReadMultiplayCvars)();
     int (__cdecl* pfnRegisterUserMsg)();
-    int (__cdecl* pfnCSOFunc03)(int a1, int a2, int a3, int a4, int a5, int a6, int a7);
+    int (__cdecl* pfnCSOFunc03)(int type, int a2, int a3, int a4, int a5, int a6, int a7);
     char* (__cdecl* pfnFindBotToKick)(); // get some name
     int (__cdecl* InstallBotControl)();
     int (__cdecl* pfnLoadBotNav)();
     int (__cdecl* pfnMakeHostReady)();
-    int (__cdecl* pfnMakeHostRun)(edict_t* g_psv_edict, int num_edicts, int maxclient);
-    int (__cdecl* pfnHostCrashRestart)(edict_t* edict);
+    int (__cdecl* pfnMakeHostRun)(struct edict_t* g_psv_edict, int num_edicts, int maxclient);
+    int (__cdecl* pfnHostCrashRestart)(struct edict_t* edict);
     int (__cdecl* pfnCSOUnk5)(); // HostCrashRestore called
     int (__cdecl* pfnHostStart)();
     int (__cdecl* pfnLoadHostCrash)();
@@ -373,7 +376,7 @@ typedef struct _DLL_FUNCTIONS {
     int (__cdecl* pfnCSOUnk6)();
     int (__cdecl* pfnCSOUnk7)(); // return 4
     int (__cdecl* pfnCSOUnk8)();
-} DLL_FUNCTIONS;
+} CSO_DLL_FUNCTIONS;
 
 typedef struct {
     void (__cdecl*pfnOnFreeEntPrivateData)(struct edict_t *pEnt);

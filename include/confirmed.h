@@ -233,7 +233,7 @@ typedef void(*ENTITYINIT)(struct entvars_s *);
 typedef void(*DISPATCHFUNCTION)(struct entvars_s *, void *);
 typedef void(*FIELDIOFUNCTION)(struct SAVERESTOREDATA *, const char *, void *, struct TYPEDESCRIPTION *, int);
 
-typedef int(*pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
+typedef int(__cdecl *pfnUserMsgHook)(const char *pszName, int iSize, void *pbuf);
 
 // common.h
 typedef struct sizebuf_s {

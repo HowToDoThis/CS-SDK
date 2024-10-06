@@ -3,8 +3,8 @@
 
 class IVoiceGameMgrHelper {
 public:
-	virtual ~IVoiceGameMgrHelper();
-	virtual bool CanPlayerHearPlayer(class CBasePlayer *pListener, class CBasePlayer *pTalker);
+    virtual ~IVoiceGameMgrHelper();
+    virtual bool CanPlayerHearPlayer(class CBasePlayer *pListener, class CBasePlayer *pTalker);
 };
 
 class CCStrikeGameMgrHelper: public IVoiceGameMgrHelper {
@@ -13,8 +13,7 @@ class CCStrikeGameMgrHelper: public IVoiceGameMgrHelper {
 
 struct CVoiceGameMgr {
     void* vfptr;
-
-	int voice_nf1;
+    int voice_nf1;
     int m_msgPlayerVoiceMask;
     int m_msgRequestState;
     IVoiceGameMgrHelper *m_pHelper;
@@ -22,28 +21,27 @@ struct CVoiceGameMgr {
     double m_UpdateInterval;
 };
 
-struct skilldata_t
-{
-	int iSkillLevel;
-	float plrDmg9MM;
-	float plrDmg357;
-	float plrDmgMP5;
-	float plrDmgM203Grenade;
-	float plrDmgBuckshot;
-	float plrDmgCrossbowClient;
-	float plrDmgRPG;
-	float monDmg9MM;
-	float monDmgMP5;
-	float monDmg12MM;
-	float suitchargerCapacity;
-	float batteryCapacity;
-	float healthchargerCapacity;
-	float healthkitCapacity;
+struct skilldata_t {
+    int iSkillLevel;
+    float plrDmg9MM;
+    float plrDmg357;
+    float plrDmgMP5;
+    float plrDmgM203Grenade;
+    float plrDmgBuckshot;
+    float plrDmgCrossbowClient;
+    float plrDmgRPG;
+    float monDmg9MM;
+    float monDmgMP5;
+    float monDmg12MM;
+    float suitchargerCapacity;
+    float batteryCapacity;
+    float healthchargerCapacity;
+    float healthkitCapacity;
 };
 
 class CZBSItemListener {
 public:
-    virtual void Func(int, uint16_t, uint8_t);
+    virtual void Func(int, unsigned short, unsigned char);
 
 public:
     class CGameRules* gGameRules;
@@ -54,21 +52,48 @@ public:
     virtual ~CGameRules();
     virtual void RefreshSkillData();
     virtual void Think();
-    virtual int GameRules_unk01();
-    virtual bool GameRules_unk02();
+    virtual bool IsAllowedToSpawn(int);
+    virtual bool AllowFlashlight(); // mp_flashlight
+    virtual bool ShouldSwitchWeapon(CBasePlayer*,CBasePlayerWeapon*);
+    virtual bool GetNextBestWeapon(CBasePlayer*,CBasePlayerWeapon*);
+    virtual bool IsMultiplayer(); // return 1
+    virtual bool IsDeathmatch(); // return 1
+    virtual bool IsTeamplay(); // return 0
+    virtual bool IsCoop(); // return gpGlobal->coop
+    virtual const char* GetGameDescription();
+    virtual bool ClientConnected(edict_t *pEntity, const char *pszName, const char *pszAddress, char *szRejectReason); // CSOGameRules->Func10
+    virtual void InitHUD(); // CSOGameRules->Func11
+    virtual void ClientDisconnected(); // CSOGameRules->Func27
+    virtual void UpdateGameMode(); // msgGameMode = 1
+    virtual void Func17(); // CSOGameRules->Func102
+    virtual void Func18(); // CSOGameRules->Func101
+    virtual void Func19(CBasePlayer *a2, CBasePlayer *a3, entvars_t *a4, int a5);
+    virtual int  PlayerCanTakeDamage(CBasePlayer*, CBasePlayer*); // maybe
+    virtual int  Func21(CBasePlayer*, CBasePlayer*);
+    virtual void Func22(); // CSOGameRules->Func106
+    virtual int  Func23(); // CSOGameRules->Func92
+    virtual bool PlayerCanRespawn(CBasePlayer*);
+    virtual float PlayerSpawnTime(CBasePlayer*);
+    virtual int  Func26(CBasePlayer*); // CSOGameRules->Func105
+    virtual int  Func27(); // return 0
+    virtual void ClientUserInfoChanged(CBasePlayer *a1, char *a2);
+    virtual int  Func29();
+    virtual int  Func30(); // CSOGameRules->Func66
+    virtual int  Func31(); // CSOGameRules->Func75, SendDeathMessage
+    virtual int  Func32(CBasePlayer*, CBasePlayerWeapon*);
 
 public:
     BOOL m_bFreezePeriod;// ok
     BOOL m_bBombDropped;// ok
 
-    int* gMonsterManager;// size 0x14DC(5340)
+    int* gMonsterManager; // size 0x14DC(5340)
 
     int rules_nf1[3];
     int* rules_vec1_a;
     int* rules_vec1_b;
     int* rules_vec1_c;
 
-    int rules_unk[85];
+    int rules_nf2[85];
     class GameOptionManager* gOption;// ok
     class CSharedDataMgr* gSharedDataMgr;// ok
     class IGBuyMenuMgr* gBuyMenuMgr;// ok
@@ -76,20 +101,20 @@ public:
     class CSOFacade* gCSOFacade;// ok
     class GamePlayerManager* gGamePlayerMgr;// ok
     class StrGen* gStrGen;// ok
-    char rules_nf92;
+    char rules_nf3;
     class CZBSItemListener* gCZBSItemListener;// ok
     char m_iNumAliveCT; // ok
     char m_iNumAliveTR; // ok
     char m_iNumDeadCT; // ok
     char m_iNumDeadTR; // ok
 
-    char rules_nf95_a;
-    char rules_nf95_b;
-    char rules_nf95_c;
-    char rules_nf95_d;
+    char rules_nf4;
+    bool bPlayGameStart; // audio GameStart?
+    char rules_nf6;
+    char rules_nf7;
 
     bool m_bGameOver;// ok
-    char mp_movingshot;
+    char mp_movingshot; // ok
 };
 
 // 0x4E8 (1256)
@@ -118,10 +143,10 @@ public:
     short m_iNumCTWins; // ok
     short m_iNumTerroristWins; // ok
 
-	char m_bIsCareer; // ok
-	char multi_nf1a; // related timeout, #CSO_GameEndByTimeLimit
-	char multi_nf1c;
-	char multi_nf1d;
+    char m_bIsCareer; // ok
+    char multi_nf1a; // related timeout, #CSO_GameEndByTimeLimit
+    char multi_nf1c;
+    char multi_nf1d;
 
     short __undef25;
     short __undef26;
@@ -158,24 +183,24 @@ public:
     float u1;
     int undef8[2];
 
-	bool m_bTargetBombed; // ok
+    bool m_bTargetBombed; // ok
     bool m_bBombDefused; // ok
-	
+    
     bool m_bMapHasBombTarget; // ok
-	bool m_bMapHasBombZone; // ok
+    bool m_bMapHasBombZone; // ok
     bool m_bMapHasBuyZone; // ok
     bool m_bMapHasRescueZone; // ok
     bool m_bMapHasEscapeZone; // ok
     int m_bMapHasVIPSafetyZone; // ok
 
     int undef;
-	int m_iC4Timer;
-	int m_iC4Guy;
-	int m_iLoserBonus;
-	int m_iNumConsecutiveCTLoses;
-	int m_iNumConsecutiveTerroristLoses;
+    int m_iC4Timer;
+    int m_iC4Guy;
+    int m_iLoserBonus;
+    int m_iNumConsecutiveCTLoses;
+    int m_iNumConsecutiveTerroristLoses;
     float m_fMaxIdlePeriod;
-	int m_iLimitTeams;
+    int m_iLimitTeams;
 
     bool m_bLevelInitialized; // ok
     char m_bRoundTerminating; // ok
@@ -187,24 +212,24 @@ public:
     char bCTCantBuy; // ok
     char bTCantBuy; // ok
     float m_flBombRadius; // ok
-	char m_iConsecutiveVIP; // ok
-	int m_iTotalGunCount;
-	int m_iTotalGrenadeCount;
-	int m_iTotalArmourCount;
-	int m_iUnBalancedRounds;
-	int m_iNumEscapeRounds;
+    char m_iConsecutiveVIP; // ok
+    int m_iTotalGunCount;
+    int m_iTotalGrenadeCount;
+    int m_iTotalArmourCount;
+    int m_iUnBalancedRounds;
+    int m_iNumEscapeRounds;
 
     int m_iMapVotes[MAX_VOTE_MAPS];// ok
 
-	int m_iLastPick;
-	int m_iMaxMapTime;
-	int m_iMaxRounds;// ok
-	int m_iTotalRoundsPlayed;
-	int m_iMaxRoundsWon;// ok
-	int m_iStoredSpectValue;// ok
-	float m_flForceCameraValue;
-	float m_flForceChaseCamValue;
-	float m_flFadeToBlackValue;
+    int m_iLastPick;
+    int m_iMaxMapTime;
+    int m_iMaxRounds; // ok
+    int m_iTotalRoundsPlayed;
+    int m_iMaxRoundsWon; // ok
+    int m_iStoredSpectValue; // ok
+    float m_flForceCameraValue;
+    float m_flForceChaseCamValue;
+    float m_flFadeToBlackValue;
 
     int undef_2;
     int multi_nf1;
@@ -216,7 +241,7 @@ public:
     int multi_nf7;
     CBasePlayer* m_pVIP;
     int m_pVIP_Index;
-	CBasePlayer* m_pVIPQueue[MAX_VIP_QUEUES];
+    CBasePlayer* m_pVIPQueue[MAX_VIP_QUEUES];
 
 protected:
     int multi_nf18;
@@ -225,7 +250,7 @@ protected:
     int multi_nf19; // m_iEndIntermissionButtonHit?
     int multi_nf20;
     char m_bInCareerGame;
-	float m_fCareerRoundMenuTime;// ok
+    float m_fCareerRoundMenuTime;// ok
     int m_iCareerMatchWins;
     int m_iRoundWinDifference;
     float m_fCareerMatchMenuTime;// ok
@@ -233,6 +258,9 @@ protected:
     int multi_proc_1;
     int multi_proc_2;
 };
+#ifndef IDA
+static_assert(sizeof(CHalfLifeMultiplay) == 0x4E8, "CHalfLifeMultiplay");
+#endif
 
 // 0x500 (1280)
 class CHalfLifeTraining : public CHalfLifeMultiplay {
@@ -243,3 +271,6 @@ public:
     int training_nf4;
     int training_nf5;
 };
+#ifndef IDA
+static_assert(sizeof(CHalfLifeTraining) == 0x500, "CHalfLifeTraining");
+#endif
