@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="CSO.SDK.cpp" />
+    <ClCompile Include="pch.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="pch.h" />
+    <ClInclude Include="include\bspfile.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\common.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\confirmed.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\CUnknown.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\defines.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\eiface.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engfuncs_CHN140121.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\engine.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\enginefuncs.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\enums.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\everything.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\FileSystem_Nar.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mathlib.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\model.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\net.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\studio.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\types.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\VideoMode.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\vector.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\cbase.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\CBase_Others.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\CFlyerFlockManager.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\CGameRules.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\CMiscSave.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\Counter.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\CSOGameRules.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\defines.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\everything.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\unsorted.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\bot.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\edict.h">
+      <Filter>SDK</Filter>
+    </ClInclude>
+    <ClInclude Include="include\weapon.h">
+      <Filter>SDK\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\mp\everything_ida.h">
+      <Filter>SDK\mp</Filter>
+    </ClInclude>
+    <ClInclude Include="include\temp\client\CHud.h">
+      <Filter>SDK\client</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="SDK">
+      <UniqueIdentifier>{f4f8dcb0-fbce-4045-98e2-5966cdb03038}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\mp">
+      <UniqueIdentifier>{b4621cbb-8d04-47ec-a05b-ee498286fca3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\weapon">
+      <UniqueIdentifier>{d62c0c3b-6d2d-4e5a-b20c-e3e5a62f654c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SDK\client">
+      <UniqueIdentifier>{1f1b20ee-7612-4d2e-b910-e49a4c1eaa61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
